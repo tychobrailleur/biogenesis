@@ -439,7 +439,7 @@ public class Organism extends Rectangle {
 				return true;
 			}
 		}
-		// It can't be placed		
+		// It can't be placed
 		return false;
 	}
 	/**

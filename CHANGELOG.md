@@ -1,4 +1,4 @@
-# biogenesis (0.9);
+# biogenesis (0.9) - Sebastien Le Callonnec;
 
   * Added JRuby scripting capability.
   * Added export button in the lab to export genetic code.

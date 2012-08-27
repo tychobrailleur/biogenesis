@@ -341,6 +341,7 @@ public class VisibleWorld extends JPanel {
 			super(text_key, icon_path, desc);
 		}
 		
+		@Override
 		public void actionPerformed(ActionEvent e) {
 			Organism b = getSelectedOrganism();
 			if (b != null && b.isAlive()) {

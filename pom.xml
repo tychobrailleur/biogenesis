@@ -18,11 +18,11 @@
       <version>4.8.2</version>
       <scope>test</scope>
     </dependency>
-	<dependency>
-		<groupId>org.jruby</groupId>
-		<artifactId>jruby</artifactId>
-		<version>1.6.7.2</version>
-	</dependency>
+    <dependency>
+      <groupId>org.jruby</groupId>
+      <artifactId>jruby</artifactId>
+      <version>1.6.7.2</version>
+    </dependency>
   </dependencies>
 
   <build>
@@ -36,7 +36,7 @@
           <target>1.6</target>
         </configuration>
       </plugin>
-	  <plugin>
+      <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-shade-plugin</artifactId>
         <version>1.7.1</version>
@@ -55,6 +55,18 @@
             </configuration>
           </execution>
         </executions>
+      </plugin>
+      <plugin>
+	<groupId>org.apache.maven.plugins</groupId>
+	<artifactId>maven-javadoc-plugin</artifactId>
+	<executions>
+	  <execution>
+	    <id>attach-javadocs</id>
+	    <goals>
+	      <goal>jar</goal>
+	    </goals>
+	  </execution>
+	</executions>
       </plugin>
     </plugins>
   </build>

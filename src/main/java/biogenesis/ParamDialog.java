@@ -225,11 +225,10 @@ public class ParamDialog extends JDialog {
 		hardwareGroup.add(hardwareNoneRadio);
 		hardwareGroup.add(hardwareOpenGLRadio);
 		hardwareNoneRadio.addChangeListener(new ChangeListener() {
+			
+			@Override
 			public void stateChanged(ChangeEvent e) {
-				if (hardwareNoneRadio.isSelected())
-					hardwareFBObjectCheck.setEnabled(false);
-				else
-					hardwareFBObjectCheck.setEnabled(true);				
+				hardwareFBObjectCheck.setEnabled(!hardwareNoneRadio.isSelected());
 			}
 		});
 		panel.add(hardwareNoneRadio);

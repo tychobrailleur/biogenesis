@@ -412,7 +412,7 @@ public class World implements Serializable{
 		synchronized (outCorridors) {
 			for (Iterator<OutCorridor> it = outCorridors.iterator(); it.hasNext();) {
 				c = it.next();
-				c.draw(g);			
+				c.draw(g);
 			}
 		}
 		synchronized (_organisms) {
