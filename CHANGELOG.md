@@ -4,6 +4,8 @@
   * Added export button in the lab to export genetic code.
   * Double-clicking the genetic code panel opens the lab anywhere.
   * Select organism just pasted into the world.
+  * Fixed bug: Division by 0 error when viewing the statistics as the world
+    has no organism left.
 
 biogenesis (0.8);
 

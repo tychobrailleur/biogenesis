@@ -39,7 +39,7 @@ public class StatisticsWindow extends JDialog implements ActionListener {
 	private World world;
 	private VisibleWorld visibleWorld;
 	private WorldStatistics worldStatistics;
-	private List<Organism> organisms;
+	private final List<Organism> organisms;
 	
 	public StatisticsWindow(MainWindow w, WorldStatistics ws, List<Organism> os) {
 		super(w);
@@ -331,7 +331,7 @@ class ColorPanel extends JPanel {
 		super.paintComponent(g);
 		int width = getSize().width;
 		int height = getSize().height;
-		int x, lastX=0;
+		int x, lastX = 0;
 		InfoAndColor infoAndColor;
 		
 		// Check total is greater than 0 (when there is no organism left)

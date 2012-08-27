@@ -1,4 +1,5 @@
 /* Copyright (C) 2006-2010  Joan Queralt Molina
+ * Copyright (c) 2012 Sebastien Le Callonnec
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -143,6 +144,19 @@ public class World implements Serializable{
 		}
 		return deadOrganism;
 	}
+	
+	public Organism findOrganismById(int id) {
+		synchronized (_organisms) {
+			for (Organism organism: _organisms) {
+				if (id == organism.getID()) {
+					return organism;
+				}
+			}
+		}
+		
+		return null;
+	}
+	
 	/**
 	 * Returns the world's width.
 	 * 

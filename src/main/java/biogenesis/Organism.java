@@ -910,7 +910,7 @@ public class Organism extends Rectangle {
 	 * on the center, not on the vertex.
 	 * @param thisOrganism  true if l is a line of this organism, false if l is a line of org.
 	 */
-	private final void touchMove(Organism org, Point2D.Double p, Line2D l, boolean thisOrganism) {
+	private void touchMove(Organism org, Point2D.Double p, Line2D l, boolean thisOrganism) {
 		// Distance vector between centers of mass and p
 		double rapx = p.x - _dCenterX;
 		double rapy = p.y - _dCenterY;
@@ -969,7 +969,7 @@ public class Organism extends Rectangle {
 	 * 
 	 * @return  true if the organism is inside the world, false otherwise.
 	 */
-	private final boolean isInsideWorld() {
+	private boolean isInsideWorld() {
 		// Check it is inside the world
 		if (x<0 || y<0 || x+width>=_world.getWidth() || y+height>=_world.getHeight()) {
 			// Adjust direction
@@ -989,7 +989,7 @@ public class Organism extends Rectangle {
 	 * @param offsety  displacement on the y axis.
 	 * @param offsettheta  rotation degree.
 	 */
-	private final void offset(double offsetx, double offsety, double offsettheta) {
+	private void offset(double offsetx, double offsety, double offsettheta) {
 		_dCenterX += offsetx; _dCenterY += offsety; _theta += offsettheta;
 		_centerX = (int)_dCenterX; _centerY = (int)_dCenterY; 
 	}
@@ -1164,7 +1164,7 @@ public class Organism extends Rectangle {
 	/*
 	 * Perd velocitat pel fregament.
 	 */
-	private final void rubbingFramesEffects() {
+	private void rubbingFramesEffects() {
 		dx *= Utils.RUBBING;
 		if (Math.abs(dx) < Utils.tol) dx=0;
 		dy *= Utils.RUBBING;
@@ -1177,7 +1177,7 @@ public class Organism extends Rectangle {
 	 * Perd el cost de manteniment dels segments
 	 * Aplica l'efecte de cadascun dels segments
 	 */
-	private final void segmentsFrameEffects() {
+	private void segmentsFrameEffects() {
 		if (alive) {
 			int i;
 			// Energy obtained through photosynthesis
@@ -1224,7 +1224,7 @@ public class Organism extends Rectangle {
 	private static final int GRAY=8;
 	private static final int YELLOW=9;
 	private static final int BROWN=10;
-	private static final int getTypeColor(Color c) {
+	private static int getTypeColor(Color c) {
 		if (c.equals(Color.RED) || c.equals(Utils.ColorDARK_RED))
 			return RED;
 		if (c.equals(Color.GREEN) || c.equals(Utils.ColorDARK_GREEN))
@@ -1250,7 +1250,7 @@ public class Organism extends Rectangle {
 		return NOCOLOR;
 	}
 	
-	private final void setColor(Color c) {
+	private void setColor(Color c) {
 		_color = c;
 		_framesColor = 10;
 	}

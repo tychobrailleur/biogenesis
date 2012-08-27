@@ -68,6 +68,7 @@ public class MainWindow extends JFrame {
 	protected JMenu _menuWorld;
 	protected JMenu _menuHelp;
 	protected JMenu _menuNet;
+
 	protected NumberFormat _nf;
 	protected JLabel _statusLabel;
 	protected JToolBar toolBar = new JToolBar(Messages.getString("T_PROGRAM_NAME")); //$NON-NLS-1$
@@ -241,6 +242,7 @@ public class MainWindow extends JFrame {
 		_menuHelp.add(new JMenuItem(manualAction));
 		_menuHelp.add(new JMenuItem(checkLastVersionAction));
 		_menuHelp.add(new JMenuItem(aboutAction));
+		
 		// Only enable file management menu options if at least there is 
 		//permission to read user's home directory
 		SecurityManager sec = System.getSecurityManager();
@@ -417,6 +419,7 @@ public class MainWindow extends JFrame {
 			super(text, icon_path, desc);
 		}
 		
+		@Override
 		public void actionPerformed(ActionEvent e) {
 			_world.addCO2(500);
 		}
@@ -696,7 +699,7 @@ public class MainWindow extends JFrame {
 		JOptionPane.showMessageDialog(this, aboutString, Messages.getString("T_ABOUT"), //$NON-NLS-1$
 				JOptionPane.INFORMATION_MESSAGE,imageIcon);
 	}
-	
+
 	private void setControls() {
 		setIconImage(imageIcon.getImage());
 		JPanel centralPanel = new JPanel();
