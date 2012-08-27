@@ -1,4 +1,5 @@
 /* Copyright (C) 2006-2010  Joan Queralt Molina
+ * Copyright (c) 2012 Sebastien Le Callonnec
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -300,6 +301,7 @@ public class StatisticsWindow extends JDialog implements ActionListener {
 		return colorPanel;
 	}
 
+	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == updateButton) {
 			getContentPane().removeAll();
@@ -331,13 +333,16 @@ class ColorPanel extends JPanel {
 		int height = getSize().height;
 		int x, lastX=0;
 		InfoAndColor infoAndColor;
-		for (Iterator<InfoAndColor> it = infoList.iterator(); it.hasNext();) {
-			infoAndColor = it.next();
-			x = width * infoAndColor.info / total;
-			g.setColor(infoAndColor.color);
-			g.fillRect(lastX, 0, x, height);
-			lastX += x;
-		}
+		
+		// Check total is greater than 0 (when there is no organism left)
+		if (total > 0)
+			for (Iterator<InfoAndColor> it = infoList.iterator(); it.hasNext();) {
+				infoAndColor = it.next();
+				x = width * infoAndColor.info / total;
+				g.setColor(infoAndColor.color);
+				g.fillRect(lastX, 0, x, height);
+				lastX += x;
+			}
 	}
 }
 
@@ -350,6 +355,7 @@ class InfoAndColor implements Comparable<InfoAndColor> {
 		color = c;
 	}
 
+	@Override
 	public int compareTo(InfoAndColor o) {
 		if (info < o.info) return -1;
 		if (info > o.info) return 1;

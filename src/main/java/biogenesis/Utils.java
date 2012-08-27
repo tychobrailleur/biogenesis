@@ -37,7 +37,7 @@ public final class Utils {
 	 * All serializable classes use this value as their serialVersionUID.
 	 */
 	static final int FILE_VERSION = 700;
-	static final int VERSION = 800; //two digits for version, subversion and revision
+	static final int VERSION = 900; //two digits for version, subversion and revision
 
 	// Default values for parameters
 	final static int DEF_WINDOW_X = 0;
@@ -489,7 +489,7 @@ public final class Utils {
 	 * 
 	 * @return  a random -1 or 1
 	 */
-	public static final int randomSign() {
+	public static int randomSign() {
 		return (random.nextInt(2)<<1)-1;
 	}
 	/**
@@ -500,7 +500,7 @@ public final class Utils {
 	 * @param c
 	 * @return  The minimum of a, b, and c
 	 */
-	public static final int min(int a, int b, int c) {
+	public static int min(int a, int b, int c) {
 		return Math.min(Math.min(a,b),c);
 	}
 	/**
@@ -511,7 +511,7 @@ public final class Utils {
 	 * @param c
 	 * @return  The minimum of a, b, and c
 	 */
-	public static final double min(double a, double b, double c) {
+	public static double min(double a, double b, double c) {
 		return Math.min(Math.min(a,b),c);
 	}
 	/**
@@ -522,7 +522,7 @@ public final class Utils {
 	 * @param c
 	 * @return  The maximum of a, b, and c
 	 */
-	public static final int max(int a, int b, int c) {
+	public static int max(int a, int b, int c) {
 		return Math.max(Math.max(a,b),c);
 	}
 	/**
@@ -533,7 +533,7 @@ public final class Utils {
 	 * @param c
 	 * @return  The maximum of a, b, and c
 	 */
-	public static final double max(double a, double b, double c) {
+	public static double max(double a, double b, double c) {
 		return Math.max(Math.max(a,b),c);
 	}
 	/**
@@ -544,7 +544,7 @@ public final class Utils {
 	 * @param max
 	 * @return  min if value<min, max if value>max and value otherwise
 	 */
-	public static final int between(int value, int min, int max) {
+	public static int between(int value, int min, int max) {
 		return Math.max(Math.min(max, value), min);
 	}
 	/**
@@ -555,7 +555,7 @@ public final class Utils {
 	 * @param max
 	 * @return  min if value<min, max if value>max and value otherwise
 	 */
-	public static final double between(double value, double min, double max) {
+	public static double between(double value, double min, double max) {
 		return Math.max(Math.min(max, value), min);
 	}
 	/**
@@ -563,7 +563,7 @@ public final class Utils {
 	 * 
 	 * @return  true if a mutations is produced and false otherwise
 	 */
-	public static final boolean randomMutation() {
+	public static boolean randomMutation() {
 		if (random.nextDouble() < MUTATION_RATE)
 			return true;
 		return false;
@@ -574,7 +574,7 @@ public final class Utils {
 	 * @param c  A color
 	 * @return  A String representing the name of the color
 	 */
-	public static final String colorToString(Color c) {
+	public static String colorToString(Color c) {
 		if (c.equals(Color.RED)) return Messages.getString("T_RED"); //$NON-NLS-1$
 		if (c.equals(Color.GREEN)) return Messages.getString("T_GREEN"); //$NON-NLS-1$
 		if (c.equals(Color.BLUE)) return Messages.getString("T_BLUE"); //$NON-NLS-1$
@@ -590,7 +590,7 @@ public final class Utils {
 	/**
 	 * Save user preferences to disk
 	 */
-	public static final void savePreferences() {
+	public static void savePreferences() {
 		try {
 			Preferences prefs = Preferences.userNodeForPackage(Utils.class);
 			prefs.putInt("VERSION",FILE_VERSION); //$NON-NLS-1$
@@ -644,7 +644,7 @@ public final class Utils {
 	/**
 	 * Read user preferences from disc
 	 */
-	public static final void readPreferences() {
+	public static void readPreferences() {
 		try {
 			Preferences prefs = Preferences.userNodeForPackage(Utils.class);
 			int previous_version = prefs.getInt("VERSION",0); //$NON-NLS-1$
