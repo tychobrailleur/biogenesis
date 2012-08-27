@@ -44,6 +44,7 @@ public class GeneticCodePanel extends JPanel {
 		popup = new JPopupMenu();
 	    JMenuItem menuCopy = new JMenuItem(Messages.getString("T_COPY")); //$NON-NLS-1$
 	    menuCopy.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				visible.setClippedGeneticCode(code);
 			}
@@ -55,7 +56,11 @@ public class GeneticCodePanel extends JPanel {
 			public void mousePressed(MouseEvent e) {
 				if (e.isPopupTrigger()) {
 					popup.show(e.getComponent(), e.getX(), e.getY());
+				} else if (e.getClickCount() == 2) {
+					// double-click opens the lab
+					new LabWindow(visible._mainWindow, code);
 				}
+				
 			}
 			@Override
 			public void mouseReleased(MouseEvent e) {

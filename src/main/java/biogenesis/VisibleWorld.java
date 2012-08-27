@@ -52,55 +52,66 @@ public class VisibleWorld extends JPanel {
 	 * Menu option in {@link popupAlive} used to keep an organism on the center of the view. 
 	 */
 	protected TrackAction trackAction;
-	protected StdAction feedAction;
-	protected StdAction weakenAction;
-	protected StdAction killAction;
-	protected StdAction copyAction;
-	protected StdAction saveImageAction;
-	protected StdAction reviveAction;
-	protected StdAction disperseAction;
+	
 	/**
 	 * Menu option in {@link popupAlive} used to give extra energy to an organism.
 	 */
+	protected StdAction feedAction;
+	
+	/**
+	 * Menu option in {@link popupAlive} used to remove energy from an organism.
+	 */
+	protected StdAction weakenAction;
+	
+	/**
+	 * Menu option in {@link popupAlive} used to kill an organism.
+	 */
+	protected StdAction killAction;
+	
+	/**
+	 * Menu option in {@link popupAlive} used to copy an organism genetic code
+	 * to use it to create new organisms or to edit it in the genetic lab.
+	 */
+	protected StdAction copyAction;
+	
+	/**
+	 * Menu option in {@link popupAlive} used to save an image of an organism
+	 * to a jpg file.
+	 */
+	protected StdAction saveImageAction;
+	
+	/**
+	 * Menu option in {@link popupDead} used to give live to a dead organism.
+	 */
+	protected StdAction reviveAction;
+	
+	/**
+	 * Menu option in {@link popupDead} used to return all its carbony back to
+	 * the atmosphere, in form of CO2, and make the corpse disappear.
+	 */
+	protected StdAction disperseAction;
 	/**
 	 * Menu option in {@link popupAlive} used to force the reproduction of the organism,
 	 * even if it dies.
 	 */
 	protected StdAction reproduceAction;
-	/**
-	 * Menu option in {@link popupAlive} used to kill an organism.
-	 */
+
 	/**
 	 * Menu option in {@link popupAlive} used to set the age counter of the organism back to 0.
 	 */
 	protected StdAction rejuvenateAction;
-	/**
-	 * Menu option in {@link popupAlive} used to remove energy from an organism.
-	 */
-	/**
-	 * Menu option in {@link popupAlive} used to copy an organism genetic code
-	 * to use it to create new organisms or to edit it in the genetic lab.
-	 */
+
 	/**
 	 * Menu option in {@link popupAlive} used to save the genetic code of
 	 * an organism to a file.
 	 */
 	protected StdAction exportAction;
-	/**
-	 * Menu option in {@link popupAlive} used to save an image of an organism
-	 * to a jpg file.
-	 */
+
 	/**
 	 * The context menu showed when right clicking on a dead organism.
 	 */
 	protected JPopupMenu popupDead;
-	/**
-	 * Menu option in {@link popupDead} used to give live to a dead organism.
-	 */
-	/**
-	 * Menu option in {@link popupDead} used to return all its carbony back to
-	 * the atmosphere, in form of CO2, and make the corpse disappear.
-	 */
+
 	/**
 	 * The context menu showed when right clicking on a void plave in the world.
 	 */
@@ -155,6 +166,7 @@ public class VisibleWorld extends JPanel {
 			desc_key2 = desc2;
 		}
 		
+		@Override
 		public void actionPerformed(ActionEvent e) {
 			Organism b = getSelectedOrganism();
 			if (b != null && b.isAlive()) {
@@ -184,6 +196,7 @@ public class VisibleWorld extends JPanel {
 			super(text_key, icon_path, desc);
 		}
 		
+		@Override
 		public void actionPerformed(ActionEvent e) {
 			Organism b = getSelectedOrganism();
 			if (b != null && b.isAlive()) {
@@ -201,6 +214,7 @@ public class VisibleWorld extends JPanel {
 			super(text_key, icon_path, desc);
 		}
 		
+		@Override
 		public void actionPerformed(ActionEvent e) {
 			Organism b = getSelectedOrganism();
 			if (b != null && b.isAlive()) {
@@ -215,6 +229,7 @@ public class VisibleWorld extends JPanel {
 			super(text_key, icon_path, desc);
 		}
 		
+		@Override
 		public void actionPerformed(ActionEvent e) {
 			Organism b = getSelectedOrganism();
 			if (b != null && b.isAlive()) {
@@ -229,6 +244,7 @@ public class VisibleWorld extends JPanel {
 			super(text_key, icon_path, desc);
 		}
 		
+		@Override
 		public void actionPerformed(ActionEvent e) {
 			Organism b = getSelectedOrganism();
 			if (b != null && b.isAlive()) {
@@ -243,6 +259,7 @@ public class VisibleWorld extends JPanel {
 			super(text_key, icon_path, desc);
 		}
 		
+		@Override
 		public void actionPerformed(ActionEvent e) {
 			Organism b = getSelectedOrganism();
 			if (b != null && b.isAlive()) {
@@ -338,6 +355,7 @@ public class VisibleWorld extends JPanel {
 			super(text_key, icon_path, desc);
 		}
 		
+		@Override
 		public void actionPerformed(ActionEvent e) {
 			Organism b = getSelectedOrganism();
 			if (b != null && b.isAlive()) {
@@ -352,6 +370,7 @@ public class VisibleWorld extends JPanel {
 			super(text_key, icon_path, desc);
 		}
 		
+		@Override
 		public void actionPerformed(ActionEvent e) {
 			Organism b = getSelectedOrganism();
 			if (b != null && b.isAlive()) {
@@ -665,6 +684,8 @@ public class VisibleWorld extends JPanel {
 		Organism newOrganism = new Organism(_mainWindow.getWorld(), gc);
 		if (newOrganism.pasteOrganism(x, y)) {
 			_mainWindow.getWorld().addOrganism(newOrganism, null);
+			// select organism that has just been pasted.
+			setSelectedOrganism(newOrganism);
 			return true;
 		}
 		return false;

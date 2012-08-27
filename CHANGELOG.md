@@ -2,6 +2,8 @@
 
   * Added JRuby scripting capability.
   * Added export button in the lab to export genetic code.
+  * Double-clicking the genetic code panel opens the lab anywhere.
+  * Select organism just pasted into the world.
 
 biogenesis (0.8);
 

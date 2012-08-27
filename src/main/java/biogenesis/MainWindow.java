@@ -305,6 +305,7 @@ public class MainWindow extends JFrame {
 			super(text_key, icon_path, desc);
 		}
 		
+		@Override
 		public void actionPerformed(ActionEvent e) {
 			_trackedOrganism = null;
 			_world.genesis();
@@ -342,6 +343,7 @@ public class MainWindow extends JFrame {
 			putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(Messages.getString("T_PAUSE_ACCELERATOR")));
 		}
 		
+		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (_isProcessActive)
 				pauseGame();
