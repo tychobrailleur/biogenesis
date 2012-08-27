@@ -1045,6 +1045,7 @@ public class Organism extends Rectangle {
 		}
 		return false;
 	}
+
 	/**
 	 * Applies the effects produced by two touching segments.
 	 * 
@@ -1054,7 +1055,7 @@ public class Organism extends Rectangle {
 	 * @param firstCall  Indicates if this organism is the one that has detected the collision
 	 * or this method is called by this same method in the other organism. 
 	 */
-	private final void touchEffects(Organism org, int seg, int oseg, boolean firstCall) {
+	private void touchEffects(Organism org, int seg, int oseg, boolean firstCall) {
 		if ((_parentID == org._ID || _ID == org._parentID) && org.alive)
 			return;
 		double takenEnergy = 0;
@@ -1072,7 +1073,7 @@ public class Organism extends Rectangle {
 						// Get energy depending on segment length
 						takenEnergy = Utils.between(_m[seg] * Utils.ORGANIC_OBTAINED_ENERGY, 0, org._energy);
 						// The other organism will be shown in yellow
-						org.setColor(Color.YELLOW);						
+						org.setColor(Color.YELLOW);
 					}	
 				}
 				break;

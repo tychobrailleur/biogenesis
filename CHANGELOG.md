@@ -1,3 +1,8 @@
+# biogenesis (0.9);
+
+  * Added JRuby scripting capability.
+  * Added export button in the lab to export genetic code.
+
 biogenesis (0.8);
 
   * Added import button in the laboratory, to import genetic code files.

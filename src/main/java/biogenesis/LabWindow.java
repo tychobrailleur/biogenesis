@@ -1,4 +1,5 @@
 /* Copyright (C) 2006-2010  Joan Queralt Molina
+ * Copyright (c) 2012 Sebastien Le Callonnec
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -48,9 +49,9 @@ public class LabWindow extends JDialog implements ActionListener, ChangeListener
 	protected JComboBox mirrorCombo;
 	protected JComboBox disperseCombo;
 	
-	protected int symmetry=2;
-	protected int energy=40;
-	protected int mirror=0;
+	protected int symmetry = 2;
+	protected int energy = 40;
+	protected int mirror = 0;
 	protected boolean disperseChildren = false;
 	
 	public LabWindow(MainWindow v, GeneticCode gc) {
@@ -73,17 +74,19 @@ public class LabWindow extends JDialog implements ActionListener, ChangeListener
 		pack();
 		//setResizable(false);
 		cancelButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-            	dispose();
-            }
-            });
+			@Override
+			public void actionPerformed(ActionEvent evt) {
+				dispose();
+			}
+		});
 		okButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-            	if (genesList.size() > 0)
-            		mainWindow.getVisibleWorld().setClippedGeneticCode(new GeneticCode(genesList,symmetry, mirror, disperseChildren));
-            	dispose();
-            }
-            });
+			@Override
+			public void actionPerformed(ActionEvent evt) {
+				if (genesList.size() > 0)
+					mainWindow.getVisibleWorld().setClippedGeneticCode(new GeneticCode(genesList,symmetry, mirror, disperseChildren));
+				dispose();
+			}
+		});
 		setVisible(true);
 	}
 	
@@ -135,6 +138,8 @@ public class LabWindow extends JDialog implements ActionListener, ChangeListener
 		symmetryCombo = new JComboBox(symmetryValues);
 		symmetryCombo.setSelectedItem(Integer.toString(symmetry));
 		symmetryCombo.addItemListener(new ItemListener() {
+			
+			@Override
 			public void itemStateChanged(ItemEvent evt) {
 				if (evt.getStateChange() == ItemEvent.SELECTED) {
 					symmetry = Integer.parseInt((String)symmetryCombo.getSelectedItem());
@@ -155,6 +160,8 @@ public class LabWindow extends JDialog implements ActionListener, ChangeListener
 		mirrorCombo = new JComboBox(noyesValues);
 		mirrorCombo.setSelectedIndex(mirror);
 		mirrorCombo.addItemListener(new ItemListener() {
+			
+			@Override
 			public void itemStateChanged(ItemEvent evt) {
 				if (evt.getStateChange() == ItemEvent.SELECTED) {
 					mirror = mirrorCombo.getSelectedIndex();
@@ -171,6 +178,8 @@ public class LabWindow extends JDialog implements ActionListener, ChangeListener
 		disperseCombo = new JComboBox(noyesValues);
 		disperseCombo.setSelectedIndex(disperseChildren==false?0:1);
 		disperseCombo.addItemListener(new ItemListener() {
+			
+			@Override
 			public void itemStateChanged(ItemEvent evt) {
 				if (evt.getStateChange() == ItemEvent.SELECTED)
 					disperseChildren = disperseCombo.getSelectedIndex()==0? false: true; 
@@ -205,14 +214,17 @@ public class LabWindow extends JDialog implements ActionListener, ChangeListener
 		buttonsPanel.add(cancelButton);
 		JButton clearButton = new JButton(Messages.getString("T_CLEAR")); //$NON-NLS-1$
 		clearButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-            	genesList.clear();
-            	refreshGenesPanel();
-            }
-            });
+			@Override
+			public void actionPerformed(ActionEvent evt) {
+				genesList.clear();
+				refreshGenesPanel();
+			}
+		});
 		buttonsPanel.add(clearButton);
+		
 		JButton importButton = new JButton(Messages.getString("T_IMPORT")); //$NON_NLS-1$
 		importButton.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				GeneticCode g;
 	    		try {
@@ -236,17 +248,29 @@ public class LabWindow extends JDialog implements ActionListener, ChangeListener
 						}
 	    			}
 	    		} catch (SecurityException ex) {
-	    			System.err.println(ex.getMessage());
-	    			JOptionPane.showMessageDialog(null,Messages.getString("T_PERMISSION_DENIED"),Messages.getString("T_PERMISSION_DENIED"),JOptionPane.ERROR_MESSAGE); //$NON-NLS-1$ //$NON-NLS-2$
-	    		}
+					System.err.println(ex.getMessage());
+					JOptionPane.showMessageDialog(null,Messages.getString("T_PERMISSION_DENIED"),Messages.getString("T_PERMISSION_DENIED"),JOptionPane.ERROR_MESSAGE); //$NON-NLS-1$ //$NON-NLS-2$
+				}
 			}
 		});
 		buttonsPanel.add(importButton);
-		getContentPane().add(buttonsPanel,BorderLayout.SOUTH);
+		
+		final JButton exportButton = new JButton(Messages.getString("T_EXPORT"));
+		exportButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent ae) {
+				mainWindow.saveObjectAs(new GeneticCode(genesList, symmetry, mirror, disperseChildren));
+			}
+		});
+		buttonsPanel.add(exportButton);
+		
+		getContentPane().add(buttonsPanel, BorderLayout.SOUTH);
 		
 		getRootPane().setDefaultButton(okButton);
 	}
 	
+	@Override
 	public void actionPerformed(ActionEvent evt) {
 		if (evt.getActionCommand().startsWith("c")) {
 			int modifiedGene = Integer.parseInt(evt.getActionCommand().substring(1));

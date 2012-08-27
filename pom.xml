@@ -5,7 +5,7 @@
   <groupId>biogenesis</groupId>
   <artifactId>biogenesis</artifactId>
   <version>0.9.0-SNAPSHOT</version>
-  <name>TODO app name</name>
+  <name>Biogenesis</name>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -18,6 +18,11 @@
       <version>4.8.2</version>
       <scope>test</scope>
     </dependency>
+	<dependency>
+		<groupId>org.jruby</groupId>
+		<artifactId>jruby-complete</artifactId>
+		<version>1.6.7.2</version>
+	</dependency>
   </dependencies>
 
   <build>

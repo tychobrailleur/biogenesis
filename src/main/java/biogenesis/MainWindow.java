@@ -1,4 +1,5 @@
 /* Copyright (C) 2006-2010  Joan Queralt Molina
+ * Copyright (c) 2012 Sebastien Le Callonnec
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -17,6 +18,7 @@
  */
 package biogenesis;
 
+import biogenesis.scripting.ScriptHandler;
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 
@@ -26,6 +28,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.text.NumberFormat;
 import java.util.*;
+import org.jruby.embed.ScriptingContainer;
 
 public class MainWindow extends JFrame {
 	private static final long serialVersionUID = Utils.FILE_VERSION;
@@ -77,6 +80,8 @@ public class MainWindow extends JFrame {
 	
 	protected transient NetServerThread serverThread = null;
 	
+	private final ScriptingContainer _scriptingContainer;
+	
 	
 	protected StatisticsWindow _statisticsWindow = null;
 //	 Comptador de frames, per saber quan actualitzar la finestra d'informaci�
@@ -121,6 +126,10 @@ public class MainWindow extends JFrame {
 		setControls();
 		configureApp();
 		_world = new World(_visibleWorld);
+		_scriptingContainer = new ScriptingContainer();
+		_scriptingContainer.put("world", _world);
+		_scriptingContainer.put("window", this);
+		
 		startApp();
 		_world.genesis();
 		scrollPane.setViewportView(_visibleWorld);
@@ -667,7 +676,7 @@ public class MainWindow extends JFrame {
 		_isProcessActive = true;
 		startStopAction.toogle();
 		_menuStartStopGame.setIcon(null);
-    	setStatusMessage(Messages.getString("T_GAME_RESUMED")); //$NON-NLS-1$
+		setStatusMessage(Messages.getString("T_GAME_RESUMED")); //$NON-NLS-1$
 	}
 	
 	protected File saveGameAs() {
@@ -686,13 +695,13 @@ public class MainWindow extends JFrame {
 				JOptionPane.INFORMATION_MESSAGE,imageIcon);
 	}
 	
-	private void setControls () {
+	private void setControls() {
 		setIconImage(imageIcon.getImage());
 		JPanel centralPanel = new JPanel();
 		centralPanel.setLayout(new BorderLayout());
 		
-        _visibleWorld=new VisibleWorld(this);
-        scrollPane = new JScrollPane(_visibleWorld);
+		_visibleWorld = new VisibleWorld(this);
+		scrollPane = new JScrollPane(_visibleWorld);
         scrollPane.getHorizontalScrollBar().setUnitIncrement(10);
         scrollPane.getVerticalScrollBar().setUnitIncrement(10);
         setLocation(Utils.WINDOW_X, Utils.WINDOW_Y);
@@ -712,8 +721,8 @@ public class MainWindow extends JFrame {
         getContentPane().add(_statusLabel, BorderLayout.SOUTH);
         getContentPane().add(toolBar, BorderLayout.NORTH);
         
-        worldChooser.setFileFilter(new BioFileFilter(BioFileFilter.WORLD_EXTENSION));
-        geneticCodeChooser.setFileFilter(new BioFileFilter(BioFileFilter.GENETIC_CODE_EXTENSION));
+		worldChooser.setFileFilter(new BioFileFilter(BioFileFilter.WORLD_EXTENSION));
+		geneticCodeChooser.setFileFilter(new BioFileFilter(BioFileFilter.GENETIC_CODE_EXTENSION));
     }
 		
 	public File saveObjectAs(Object obj) {
@@ -826,14 +835,13 @@ public class MainWindow extends JFrame {
 	}
 	
 	final transient Runnable lifeProcess = new Runnable() {
+		@Override
 	    public void run() {
 	    	if (_isProcessActive) {
 	    		// executa un torn
 	    		_world.time();
 	    		nFrames++;
 	    		if (nFrames % 20 == 0) {
-	    			//if (_statisticsWindow != null)
-	    			//	_statisticsWindow.recalculate();
 	    			updateStatusLabel();
 	    		}
 	    		// dibuixa de nou si cal
@@ -858,19 +866,14 @@ public class MainWindow extends JFrame {
 	};
 	
 	public void startApp() {
-		/*GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
-		if (gd.isFullScreenSupported()) {
-			setResizable(false);
-			setUndecorated(true);
-			gd.setFullScreenWindow(this);
-			validate();
-		} else {*/
-			setResizable(true);
-			setSize(new Dimension(Utils.WINDOW_WIDTH,Utils.WINDOW_HEIGHT));
-			setVisible(true);
-		//}
-		
+		setResizable(true);
+		setSize(new Dimension(Utils.WINDOW_WIDTH,Utils.WINDOW_HEIGHT));
+		setVisible(true);
+
 		_timer = new java.util.Timer();
+		ScriptHandler handler = new ScriptHandler();
+		handler.runScript(_scriptingContainer);
+		
 		startLifeProcess(Utils.DELAY);
 		if (isAcceptingConnections())
 			startServer();
@@ -892,11 +895,17 @@ public class MainWindow extends JFrame {
 	 * the program's speed.
 	 */
 	protected long lastPaintTime;
+
+        
+	/**
+	 * starts the life process, using <code>delay</code> between ticks.
+	 * @param delay 
+     */
 	public void startLifeProcess(int delay) {
 		if (updateTask != null)
 			updateTask.cancel();
 		updateTask = new TimerTask() {
-		    @Override
+			@Override
 			public void run() {
 		    	try {
 					EventQueue.invokeAndWait(lifeProcess);
@@ -907,10 +916,10 @@ public class MainWindow extends JFrame {
 					long actualTime = System.currentTimeMillis();
 					if (actualTime - lastPaintTime > currentDelay*1.5 || currentDelay < Utils.DELAY) {
 		    			// We can't run so fast
-		    			failedTime=Math.max(failedTime+1, 0);
+		    			failedTime = Math.max(failedTime+1, 0);
 		    			if (failedTime >= 2) {
 		    				failedTime = 0;
-		    				currentDelay*=1.5;
+		    				currentDelay *= 1.5;
 		    				startLifeProcess(currentDelay);
 		    			}
 		    		} else {

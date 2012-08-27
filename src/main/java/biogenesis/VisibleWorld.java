@@ -645,7 +645,7 @@ public class VisibleWorld extends JPanel {
 	    copyAction.changeLocale();
 	    exportAction.changeLocale();
 	    saveImageAction.changeLocale();
-	    reviveAction.changeLocale();	    
+	    reviveAction.changeLocale();
 	    disperseAction.changeLocale();
 	    pasteAction.changeLocale();
 	    randomCreateAction.changeLocale();
