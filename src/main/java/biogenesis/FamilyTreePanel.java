@@ -20,7 +20,6 @@ package biogenesis;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.util.Iterator;
-import java.util.List;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -85,8 +84,9 @@ public class FamilyTreePanel extends JPanel {
 		public OrganismEntryPanel(Organism organism) {
 			setLayout(new BorderLayout(5,5));
 			setMaximumSize(new Dimension(100, 100));
-			add(new GeneticCodePanel(organism.getGeneticCode(), organism._visibleWorld), 
-					BorderLayout.CENTER);
+			
+			final JPanel geneticCodePanel = new GeneticCodePanel(organism.getGeneticCode(), organism._visibleWorld);
+			add(geneticCodePanel, BorderLayout.CENTER);
 			
 			String label = String.valueOf(organism.getID());
 			if (!organism.isAlive()) 

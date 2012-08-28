@@ -238,6 +238,18 @@ public class StatisticsWindow extends JDialog implements ActionListener {
 		notableBeingsPanel.add(new JLabel(Messages.getString("T_NUMBER_OF_INFECTED")+worldStatistics.getBeingMostInfectionsNumber()),gbc); //$NON-NLS-1$
 		gbc.gridy = 12;
 		notableBeingsPanel.add(new JLabel(Messages.getString("T_TIME")+worldStatistics.getBeingMostInfectionsTime()),gbc); //$NON-NLS-1$
+		
+		gbc.gridx = 1;
+		gbc.gridy = 13;
+		notableBeingsPanel.add(new JLabel(Messages.getString("T_OLDEST_BEING_ALIVE")), gbc);
+		gbc.gridy = 14;
+		GeneticCodePanel oldestAliveBeingPanel = new GeneticCodePanel(worldStatistics.getOldestAliveBeing().getGeneticCode(),
+				visibleWorld);
+		notableBeingsPanel.add(oldestAliveBeingPanel, gbc);
+		gbc.gridy = 15;
+		notableBeingsPanel.add(new JLabel(Messages.getString("T_AGE_OLDEST_BEING", 
+				nf.format(worldStatistics.getOldestAliveBeing().getAge()>>8))),gbc);
+		
 		title = BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED),
 				Messages.getString("T_REMARKABLE_ORGANISMS"), TitledBorder.LEFT, TitledBorder.TOP); //$NON-NLS-1$
 		notableBeingsPanel.setBorder(title);

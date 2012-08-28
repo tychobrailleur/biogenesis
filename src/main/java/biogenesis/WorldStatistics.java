@@ -117,6 +117,8 @@ public class WorldStatistics implements Serializable {
 	private GeneticCode lastDeadBeing;
 
 	private GeneticCode lastInfectedBeing;
+	
+	private Organism oldestAliveBeing;
 
 	private List<Double> populationList = new ArrayList<Double>(100);
 
@@ -291,6 +293,10 @@ public class WorldStatistics implements Serializable {
 	public GeneticCode getLastInfectedBeing() {
 		return lastInfectedBeing;
 	}
+	
+	public Organism getOldestAliveBeing() {
+		return oldestAliveBeing;
+	}
 
 	public List<Double> getPopulationList() {
 		return populationList;
@@ -451,6 +457,7 @@ public class WorldStatistics implements Serializable {
 		aliveBeingMostKillsNumber = 0;
 		aliveBeingMostInfections = null;
 		aliveBeingMostInfectionsNumber = 0;
+		oldestAliveBeing = null;
 		synchronized(organisms) {
 			for (Iterator<Organism> it = organisms.iterator(); it.hasNext();) {
 				org = it.next();
@@ -466,6 +473,9 @@ public class WorldStatistics implements Serializable {
 					if (org.getTotalInfected() > aliveBeingMostInfectionsNumber) {
 						aliveBeingMostInfectionsNumber = org.getTotalInfected();
 						aliveBeingMostInfections = org.getGeneticCode();
+					}
+					if (oldestAliveBeing == null || org.getAge() > oldestAliveBeing.getAge()) {
+						oldestAliveBeing = org;
 					}
 				}
 			}
