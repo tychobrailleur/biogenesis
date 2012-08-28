@@ -6,6 +6,7 @@
   * Select organism just pasted into the world.
   * Fixed bug: Division by 0 error when viewing the statistics as the world
     has no organism left.
+  * Added family tree.
 
 biogenesis (0.8);
 

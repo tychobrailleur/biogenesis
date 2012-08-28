@@ -1,4 +1,5 @@
 /* Copyright (C) 2006-2010  Joan Queralt Molina
+ * Copyright (c) 2012 Sebastien Le Callonnec
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -24,6 +25,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.NumberFormat;
 
+import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JToolBar;
@@ -55,7 +57,7 @@ public class InfoToolbar extends JToolBar {
 	private JLabel _lT_INFECTED;
 
 	private JLabel _lT_MASS;
-	
+
 	public void setSelectedOrganism(Organism selectedOrganism) {
 		_selOrganism = selectedOrganism;
 		_lID.setText(_selOrganism!=null?_nf.format(_selOrganism.getID()):"-1");
@@ -195,6 +197,7 @@ public class InfoToolbar extends JToolBar {
 		// Button to view genes
 		_buttonGenes = new JButton(Messages.getString("T_EXAMINE_GENES")); //$NON-NLS-1$
 		_buttonGenes.addActionListener(new ActionListener() {
+			@Override
             public void actionPerformed(ActionEvent evt) {
             	new LabWindow(_mainWindow, _selOrganism.getGeneticCode());
             }
@@ -204,6 +207,22 @@ public class InfoToolbar extends JToolBar {
 		gridBagConstraints.gridy = 2;
 		gridBagConstraints.gridwidth = 2;
 		add(_buttonGenes, gridBagConstraints);
+		
+		// Add family tree button
+		JButton buttonFamilyTree = new JButton(Messages.getString("T_FAMILY_TREE_BUTTON"));
+		buttonFamilyTree.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent ae) {
+				_mainWindow.displayFamilyTree(_selOrganism);
+			}
+		});
+		gridBagConstraints.gridx = 2;
+		gridBagConstraints.gridy = 2;
+		gridBagConstraints.gridwidth = 2;
+		add(buttonFamilyTree, gridBagConstraints);
+		
+		
 		// Reproduce energy
 		gridBagConstraints.gridx = 3;
 		gridBagConstraints.gridy = 2;

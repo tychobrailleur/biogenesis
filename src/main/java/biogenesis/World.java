@@ -97,6 +97,11 @@ public class World implements Serializable{
 	 * Reference to the object that keeps track of all world statistics. 
 	 */
 	protected WorldStatistics worldStatistics;
+	
+	/**
+	 * keeps track of all the organisms that ever lived in the world.
+	 */
+	private final WorldMemory memory = new WorldMemory();
 	/**
 	 * Called by the JRE when an instance of this class is read from a file
 	 * 
@@ -145,6 +150,11 @@ public class World implements Serializable{
 		return deadOrganism;
 	}
 	
+	/**
+	 * returns an organism by its ID.
+	 * @param id - ID of the organism we are looking for.
+	 * @return Organism - Organism if found, <code>null</code> otherwise.
+	 */
 	public Organism findOrganismById(int id) {
 		synchronized (_organisms) {
 			for (Organism organism: _organisms) {
@@ -198,6 +208,16 @@ public class World implements Serializable{
 	public int getNCorpses() {
 		return _organisms.size() - _population;
 	}
+	
+	/**
+	 * returns the {@link WorldMemory} for this world
+	 * to retrieve family trees of organisms.
+	 * @return  WorldMemory.
+	 */
+	public WorldMemory getWorldMemory() {
+		return this.memory;
+	}
+	
 	/**
 	 * Returns the number of alive organisms that populate the world.
 	 * 
@@ -610,6 +630,7 @@ public class World implements Serializable{
 	 */
 	public void addOrganism(Organism child, Organism parent) {
 		_organisms.add(child);
+		memory.addOrganism(child);
 		if (parent == _visibleWorld.getSelectedOrganism())
 			_visibleWorld._mainWindow.getInfoPanel().changeNChildren();
 		if (parent != null) {

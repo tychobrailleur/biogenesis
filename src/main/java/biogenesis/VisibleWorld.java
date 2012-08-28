@@ -462,9 +462,14 @@ public class VisibleWorld extends JPanel {
 		_mainWindow.getInfoPanel().setSelectedOrganism(b);
 		if (_selectedOrganism != null)
 			repaint(_selectedOrganism);
+		else
+			_mainWindow.hideFamilyTree();
+		
 		// Make sure to don't create the tool bar twice when starting the program
 		// because this causes spurious exceptions.
 		if (_selectedOrganism != lastSelectedOrganism) {
+			_mainWindow.updateFamilyTree(_selectedOrganism);
+			
 			if (_selectedOrganism != null) {
 				if (_selectedOrganism.isAlive())
 					showAliveToolbar();

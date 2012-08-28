@@ -83,6 +83,8 @@ public class MainWindow extends JFrame {
 	
 	private final ScriptingContainer _scriptingContainer;
 	
+	private final FamilyTreePanel _familyTree = new FamilyTreePanel();
+	
 	
 	protected StatisticsWindow _statisticsWindow = null;
 //	 Comptador de frames, per saber quan actualitzar la finestra d'informaci�
@@ -399,6 +401,7 @@ public class MainWindow extends JFrame {
 			putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(Messages.getString("T_SAVE_ACCELERATOR")));
 		}
 		
+		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (_gameFile != null)
 				saveObject(_world, _gameFile);
@@ -431,6 +434,7 @@ public class MainWindow extends JFrame {
 			super(text, icon_path, desc);
 		}
 		
+		@Override
 		public void actionPerformed(ActionEvent e) {
 			_world.decreaseCO2(500);
 		}
@@ -442,6 +446,7 @@ public class MainWindow extends JFrame {
 			super(text, icon_path, desc);
 		}
 		
+		@Override
 		public void actionPerformed(ActionEvent e) {
 			netConnectionsWindow();
 		}
@@ -453,6 +458,7 @@ public class MainWindow extends JFrame {
 			super(text, icon_path, desc);
 		}
 		
+		@Override
 		public void actionPerformed(ActionEvent e) {
 			setTrackedOrganism(null);
 		}
@@ -715,21 +721,22 @@ public class MainWindow extends JFrame {
         
         infoToolbar = new InfoToolbar(null, this);
         centralPanel.add(scrollPane, BorderLayout.CENTER);
-        centralPanel.add(infoToolbar, BorderLayout.SOUTH);
+		centralPanel.add(infoToolbar, BorderLayout.SOUTH);
         
-        getContentPane().add(centralPanel, BorderLayout.CENTER);
+		getContentPane().add(centralPanel, BorderLayout.CENTER);
+		getContentPane().add(_familyTree, BorderLayout.EAST);
         
-        _statusLabel = new JLabel(" "); //$NON-NLS-1$
-        _statusLabel.setBorder(new EtchedBorder());
-        _nf = NumberFormat.getInstance();
+		_statusLabel = new JLabel(" "); //$NON-NLS-1$
+		_statusLabel.setBorder(new EtchedBorder());
+		_nf = NumberFormat.getInstance();
 		_nf.setMaximumFractionDigits(1);
-        getContentPane().add(_statusLabel, BorderLayout.SOUTH);
-        getContentPane().add(toolBar, BorderLayout.NORTH);
+		getContentPane().add(_statusLabel, BorderLayout.SOUTH);
+		getContentPane().add(toolBar, BorderLayout.NORTH);
         
 		worldChooser.setFileFilter(new BioFileFilter(BioFileFilter.WORLD_EXTENSION));
 		geneticCodeChooser.setFileFilter(new BioFileFilter(BioFileFilter.GENETIC_CODE_EXTENSION));
     }
-		
+
 	public File saveObjectAs(Object obj) {
 		File resultFile = null;
 		boolean processState = _isProcessActive;
@@ -951,6 +958,20 @@ public class MainWindow extends JFrame {
 		    }
 		};
 		_timer.schedule(updateTask, delay, delay);
+	}
+	
+	public void displayFamilyTree(final Organism organism) {
+		_familyTree.display(organism);
+	}
+	
+	public void hideFamilyTree() {
+		_familyTree.hide();
+	}
+	
+	void updateFamilyTree(final Organism selectedOrganism) {
+		if (_familyTree.isVisible()) {
+			displayFamilyTree(selectedOrganism);
+		}
 	}
 	
 	public void changeLocale() {
