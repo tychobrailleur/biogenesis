@@ -564,9 +564,7 @@ public final class Utils {
 	 * @return  true if a mutations is produced and false otherwise
 	 */
 	public static boolean randomMutation() {
-		if (random.nextDouble() < MUTATION_RATE)
-			return true;
-		return false;
+		return (random.nextDouble() < MUTATION_RATE);
 	}
 	/**
 	 * Return the localized name of a color.

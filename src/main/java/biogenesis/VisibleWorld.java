@@ -307,6 +307,7 @@ public class VisibleWorld extends JPanel {
 			super(text_key, icon_path, desc);
 		}
 		
+		@Override
 		public void actionPerformed(ActionEvent e) {
 			Organism b = getSelectedOrganism();
 			if (b != null && !b.isAlive()) {
@@ -327,6 +328,7 @@ public class VisibleWorld extends JPanel {
 			super(text_key, icon_path, desc);
 		}
 		
+		@Override
 		public void actionPerformed(ActionEvent e) {
 			Organism b = getSelectedOrganism();
 			if (b != null && !b.isAlive()) {
@@ -386,6 +388,7 @@ public class VisibleWorld extends JPanel {
 			super(text_key, icon_path, desc);
 		}
 		
+		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (clippedGeneticCode != null) {
 				pasteGeneticCode(clippedGeneticCode, mouseX, mouseY);
@@ -399,6 +402,7 @@ public class VisibleWorld extends JPanel {
 			super(text_key, icon_path, desc);
 		}
 		
+		@Override
 		public void actionPerformed(ActionEvent e) {
 			GeneticCode g = new GeneticCode();
 			Organism newBiot = new Organism(_mainWindow.getWorld(), g);
@@ -413,6 +417,7 @@ public class VisibleWorld extends JPanel {
 			super(text_key, icon_path, desc);
 		}
 		
+		@Override
 		public void actionPerformed(ActionEvent e) {
 			GeneticCode g;
 			Organism newBiot;
@@ -662,9 +667,9 @@ public class VisibleWorld extends JPanel {
 	 */
 	public void changeLocale() {
 		trackAction.changeLocale();
-	    feedAction.changeLocale();
-	    weakenAction.changeLocale();
-	    reproduceAction.changeLocale();
+		feedAction.changeLocale();
+		weakenAction.changeLocale();
+		reproduceAction.changeLocale();
 	    rejuvenateAction.changeLocale();
 	    killAction.changeLocale();
 	    copyAction.changeLocale();
