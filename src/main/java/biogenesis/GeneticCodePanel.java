@@ -39,6 +39,7 @@ public class GeneticCodePanel extends JPanel {
 	public GeneticCodePanel(GeneticCode geneticCode, VisibleWorld visibleWorld) {
 		setBackground(Color.BLACK);
 		setPreferredSize(defaultSize);
+		setMinimumSize(defaultSize);
 		code = geneticCode;
 		visible = visibleWorld;
 		popup = new JPopupMenu();

@@ -64,6 +64,7 @@ public class StatisticsWindow extends JDialog implements Observer {
 		// Prepare number format
 		NumberFormat nf = NumberFormat.getInstance();
 		nf.setMaximumFractionDigits(1);
+		nf.setMinimumFractionDigits(1);
 		
 		// Population graphic
 		GraphPanel populationGraphPanel = new GraphPanel(100, 80);
@@ -151,26 +152,42 @@ public class StatisticsWindow extends JDialog implements Observer {
 		GridBagConstraints gbc = new GridBagConstraints();
 		JPanel currentStatePanel = new JPanel();
 		currentStatePanel.setLayout(new GridBagLayout());
+		gbc.ipadx = 5;
+		gbc.ipady = 5;
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		gbc.fill = GridBagConstraints.BOTH;
+		gbc.anchor = GridBagConstraints.WEST;
+		currentStatePanel.add(new JLabel(Messages.getString("T_TIME")), gbc);
 		gbc.gridx = 1;
+		currentStatePanel.add(new JLabel(String.valueOf(world.getTime())), gbc);
+		
+		gbc.gridx = 2;
+		currentStatePanel.add(new JLabel(Messages.getString("T_OXYGEN2")), gbc); //$NON-NLS-1$
+		gbc.gridx = 3;
+		currentStatePanel.add(new JLabel(nf.format(world.getO2())), gbc);
+
+		gbc.gridx = 0;
 		gbc.gridy = 1;
-		gbc.anchor = GridBagConstraints.CENTER;
-		currentStatePanel.add(new JLabel(Messages.getString("T_TIME")+world.getTime()), gbc); //$NON-NLS-1$
-		gbc.gridx = 2;
-		currentStatePanel.add(new JLabel(Messages.getString("T_OXYGEN2")+nf.format(world.getO2())), gbc); //$NON-NLS-1$
+		currentStatePanel.add(new JLabel(Messages.getString("T_POPULATION2")), gbc); //$NON-NLS-1$
 		gbc.gridx = 1;
+		currentStatePanel.add(new JLabel(String.valueOf(world.getPopulation())), gbc);
+		gbc.gridx = 2;
+		currentStatePanel.add(new JLabel(Messages.getString("T_CARBON_DIOXIDE2")), gbc); //$NON-NLS-1$
+		gbc.gridx = 3;
+		currentStatePanel.add(new JLabel(nf.format(world.getCO2())), gbc);
+		gbc.gridx = 0;
 		gbc.gridy = 2;
-		currentStatePanel.add(new JLabel(Messages.getString("T_POPULATION2")+world.getPopulation()), gbc); //$NON-NLS-1$
-		gbc.gridx = 2;
-		currentStatePanel.add(new JLabel(Messages.getString("T_CARBON_DIOXIDE2")+nf.format(world.getCO2())), gbc); //$NON-NLS-1$
+		currentStatePanel.add(new JLabel(Messages.getString("T_REMAINS_OF_BEINGS")), gbc); //$NON-NLS-1$
 		gbc.gridx = 1;
+		currentStatePanel.add(new JLabel(String.valueOf(world.getNCorpses())), gbc);
+		gbc.gridx = 0;
 		gbc.gridy = 3;
-		currentStatePanel.add(new JLabel(Messages.getString("T_REMAINS_OF_BEINGS")+world.getNCorpses()), gbc); //$NON-NLS-1$
-		gbc.gridx = 1;
-		gbc.gridy = 4;
 		gbc.anchor = GridBagConstraints.WEST;
 		currentStatePanel.add(new JLabel(Messages.getString("T_COLOR_PROPORTION")), gbc); //$NON-NLS-1$
 		ColorPanel colorPanel = createColorPanel();
-		gbc.gridx = 2;
+		gbc.gridx = 1;
+		gbc.gridwidth = 3;
 		currentStatePanel.add(colorPanel, gbc);
 		title = BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED),
 				Messages.getString("T_CURRENT_STATE"), TitledBorder.LEFT, TitledBorder.TOP); //$NON-NLS-1$
@@ -182,11 +199,15 @@ public class StatisticsWindow extends JDialog implements Observer {
 		notableBeingsPanel.setLayout(new GridBagLayout());
 		gbc.gridx = 1;
 		gbc.gridy = 1;
+		gbc.gridwidth = 1;
+		gbc.fill = GridBagConstraints.VERTICAL;
 		notableBeingsPanel.add(new JLabel(Messages.getString("T_ALIVE_BEING_HAVING_THE_MOST_CHILDREN")), gbc); //$NON-NLS-1$
 		gbc.gridx = 2;
 		notableBeingsPanel.add(new JLabel(Messages.getString("T_BEING_HAVING_THE_MOST_CHILDREN")), gbc); //$NON-NLS-1$
 		gbc.gridx = 1;
 		gbc.gridy = 2;
+		gbc.weighty = 1.0;
+		gbc.weightx = 1.0;
 		GeneticCodePanel aliveMostChildrenPanel = new GeneticCodePanel(worldStatistics.getAliveBeingMostChildren(),
 				visibleWorld);
 		notableBeingsPanel.add(aliveMostChildrenPanel, gbc);
@@ -299,6 +320,7 @@ public class StatisticsWindow extends JDialog implements Observer {
 		getContentPane().setLayout(new BorderLayout());
 		getContentPane().add(leftPanel, BorderLayout.WEST);
 		getContentPane().add(rightPanel, BorderLayout.EAST);
+		pack();
 	}
 	
 	private ColorPanel createColorPanel() {
