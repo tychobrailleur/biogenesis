@@ -26,11 +26,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.*;
 import javax.swing.border.*;
 
-public class StatisticsWindow extends JDialog implements ActionListener {
+
+public class StatisticsWindow extends JDialog implements Observer {
 	private static final long serialVersionUID = Utils.FILE_VERSION;
 	
 	private JButton updateButton;
@@ -40,6 +43,8 @@ public class StatisticsWindow extends JDialog implements ActionListener {
 	private VisibleWorld visibleWorld;
 	private WorldStatistics worldStatistics;
 	private final List<Organism> organisms;
+	
+	private boolean pauseUpdate = false;
 	
 	public StatisticsWindow(MainWindow w, WorldStatistics ws, List<Organism> os) {
 		super(w);
@@ -257,19 +262,36 @@ public class StatisticsWindow extends JDialog implements ActionListener {
 		
 		// Buttons
 		JPanel buttonsPanel = new JPanel();
-		updateButton = new JButton(Messages.getString("T_UPDATE")); //$NON-NLS-1$
+		updateButton = new JButton(Messages.getString("T_PAUSE")); //$NON-NLS-1$
 		closeButton = new JButton(Messages.getString("T_CLOSE")); //$NON-NLS-1$
+		
+		updateButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				pauseUpdate = !pauseUpdate;
+				updateButton.setText(pauseUpdate ? Messages.getString("T_UNPAUSE") : Messages.getString("T_PAUSE"));
+			}
+		});
+		closeButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				pauseUpdate = true;
+				dispose();
+			}
+		});
+		
 		buttonsPanel.add(updateButton);
 		buttonsPanel.add(closeButton);
-		updateButton.addActionListener(this);
-		closeButton.addActionListener(this);
 		
 		// Add all components to the content pane
-		JPanel leftPanel = new JPanel();
+		JPanel leftPanel = new JPanel();																																																																																			
 		leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS));
 		leftPanel.add(currentStatePanel);
 		leftPanel.add(notableBeingsPanel);
 		JPanel rightPanel = new JPanel();
+		rightPanel.setPreferredSize(new Dimension(350, 700));
 		rightPanel.setLayout(new BoxLayout(rightPanel, BoxLayout.Y_AXIS));
 		rightPanel.add(worldHistoryPanel);
 		rightPanel.add(buttonsPanel);
@@ -313,16 +335,17 @@ public class StatisticsWindow extends JDialog implements ActionListener {
 		return colorPanel;
 	}
 
+	private void refreshStats() {
+		getContentPane().removeAll();
+		setComponents();
+		pack();
+		invalidate();
+	}
+
 	@Override
-	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == updateButton) {
-			getContentPane().removeAll();
-			setComponents();
-			pack();
-			invalidate();
-		}
-		if (e.getSource() == closeButton) {
-			dispose();
+	public void update(Observable o, Object arg) {
+		if (!pauseUpdate) {
+			refreshStats();
 		}
 	}
 }

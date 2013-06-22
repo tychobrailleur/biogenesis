@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Collections;
 import java.io.*;
 import java.awt.*;
+import java.util.Observable;
 /**
  * This class contains all the information needed to run a world:
  * the organisms, the substances and the biological corridors. It
@@ -32,7 +33,7 @@ import java.awt.*;
  * There are methods to do all needed operations to the world: manage
  * organisms and substances.
  */
-public class World implements Serializable{
+public class World extends Observable implements Serializable {
 	/**
 	 * Version number of the class
 	 */
@@ -519,6 +520,9 @@ public class World implements Serializable{
 			nFrames = 0;
 			worldStatistics.eventTime(_population, _O2, _CO2);
 		}
+		
+		setChanged();
+		notifyObservers();
 	}
 	/**
 	 * Add a pair of biological corridors to the world.
