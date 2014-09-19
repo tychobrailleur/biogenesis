@@ -269,7 +269,12 @@ public class StatisticsWindow extends JDialog implements Observer {
 		gbc.gridy = 13;
 		notableBeingsPanel.add(new JLabel(Messages.getString("T_OLDEST_BEING_ALIVE")), gbc);
 		gbc.gridy = 14;
-		GeneticCodePanel oldestAliveBeingPanel = new GeneticCodePanel(worldStatistics.getOldestAliveBeing().getGeneticCode(),
+		
+		GeneticCode oldestBeing = null;
+		if (worldStatistics.getOldestAliveBeing() != null) {
+			oldestBeing = worldStatistics.getOldestAliveBeing().getGeneticCode();
+		}
+		GeneticCodePanel oldestAliveBeingPanel = new GeneticCodePanel(oldestBeing,
 				visibleWorld);
 		notableBeingsPanel.add(oldestAliveBeingPanel, gbc);
 		gbc.gridy = 15;

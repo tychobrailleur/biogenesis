@@ -30,12 +30,14 @@ import javax.imageio.*;
 import org.xml.sax.SAXException;
 
 import java.awt.image.*;
+
 /**
  * This class is associated with a {@link World} and represents its visible
- * part: it's the place where organisms are drawn and is in charge of
- * the context menus management.
+ * part: it's the place where organisms are drawn and is in charge of the
+ * context menus management.
  */
 public class VisibleWorld extends JPanel {
+
 	/**
 	 * The version of this class
 	 */
@@ -49,69 +51,61 @@ public class VisibleWorld extends JPanel {
 	 */
 	protected JPopupMenu popupAlive;
 	/**
-	 * Menu option in {@link popupAlive} used to keep an organism on the center of the view. 
+	 * Menu option in {@link popupAlive} used to keep an organism on the center
+	 * of the view.
 	 */
 	protected TrackAction trackAction;
-	
 	/**
-	 * Menu option in {@link popupAlive} used to give extra energy to an organism.
+	 * Menu option in {@link popupAlive} used to give extra energy to an
+	 * organism.
 	 */
 	protected StdAction feedAction;
-	
 	/**
 	 * Menu option in {@link popupAlive} used to remove energy from an organism.
 	 */
 	protected StdAction weakenAction;
-	
 	/**
 	 * Menu option in {@link popupAlive} used to kill an organism.
 	 */
 	protected StdAction killAction;
-	
 	/**
 	 * Menu option in {@link popupAlive} used to copy an organism genetic code
 	 * to use it to create new organisms or to edit it in the genetic lab.
 	 */
 	protected StdAction copyAction;
-	
 	/**
-	 * Menu option in {@link popupAlive} used to save an image of an organism
-	 * to a jpg file.
+	 * Menu option in {@link popupAlive} used to save an image of an organism to
+	 * a jpg file.
 	 */
 	protected StdAction saveImageAction;
-	
 	/**
 	 * Menu option in {@link popupDead} used to give live to a dead organism.
 	 */
 	protected StdAction reviveAction;
-	
 	/**
 	 * Menu option in {@link popupDead} used to return all its carbony back to
 	 * the atmosphere, in form of CO2, and make the corpse disappear.
 	 */
 	protected StdAction disperseAction;
 	/**
-	 * Menu option in {@link popupAlive} used to force the reproduction of the organism,
-	 * even if it dies.
+	 * Menu option in {@link popupAlive} used to force the reproduction of the
+	 * organism, even if it dies.
 	 */
 	protected StdAction reproduceAction;
-
 	/**
-	 * Menu option in {@link popupAlive} used to set the age counter of the organism back to 0.
+	 * Menu option in {@link popupAlive} used to set the age counter of the
+	 * organism back to 0.
 	 */
 	protected StdAction rejuvenateAction;
-
 	/**
-	 * Menu option in {@link popupAlive} used to save the genetic code of
-	 * an organism to a file.
+	 * Menu option in {@link popupAlive} used to save the genetic code of an
+	 * organism to a file.
 	 */
 	protected StdAction exportAction;
-
 	/**
 	 * The context menu showed when right clicking on a dead organism.
 	 */
 	protected JPopupMenu popupDead;
-
 	/**
 	 * The context menu showed when right clicking on a void plave in the world.
 	 */
@@ -126,57 +120,60 @@ public class VisibleWorld extends JPanel {
 	 */
 	protected StdAction randomCreateAction;
 	/**
-	 * Menu option in {@link popupVoid} used to create a new organism with a 
+	 * Menu option in {@link popupVoid} used to create a new organism with a
 	 * genetic code obtained from a file.
 	 */
 	protected StdAction importAction;
 	/**
-	 * This is the selected organism. It is drawn with an orange bounding rectangle
-	 * and, if there is an {@link InfoWindow}, it shows information about this organism. 
+	 * This is the selected organism. It is drawn with an orange bounding
+	 * rectangle and, if there is an {@link InfoWindow}, it shows information
+	 * about this organism.
 	 */
 	protected Organism _selectedOrganism = null;
 	/**
-	 * This is the last genetic code obtained using a Copy option. It is used when
-	 * pasting new organisms or in the genetic lab. 
+	 * This is the last genetic code obtained using a Copy option. It is used
+	 * when pasting new organisms or in the genetic lab.
 	 */
 	protected GeneticCode clippedGeneticCode = null;
 	/**
-	 * X coordinate of the mouse pointer when the user clicks or right clicks on the
-	 * visible world.
+	 * X coordinate of the mouse pointer when the user clicks or right clicks on
+	 * the visible world.
 	 */
 	protected int mouseX;
 	/**
-	 * Y coordinate of the mouse pointer when the user clicks or right clicks on the
-	 * visible world.
+	 * Y coordinate of the mouse pointer when the user clicks or right clicks on
+	 * the visible world.
 	 */
 	protected int mouseY;
+
 	/**
 	 * A reference to the {@link InfoWindow}, that is created from this class.
 	 */
 	//transient protected InfoWindow _infoWindow = null;
-	
 	class TrackAction extends StdAction {
+
 		private static final long serialVersionUID = 1L;
 		protected String name_key2;
 		protected String desc_key2;
-		
+
 		public TrackAction(String text_key, String text_key2, String icon_path, String desc, String desc2) {
 			super(text_key, icon_path, desc);
 			name_key2 = text_key2;
 			desc_key2 = desc2;
 		}
-		
+
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			Organism b = getSelectedOrganism();
 			if (b != null && b.isAlive()) {
-				if (_mainWindow._trackedOrganism == b)
+				if (_mainWindow._trackedOrganism == b) {
 					_mainWindow.setTrackedOrganism(null);
-				else
+				} else {
 					_mainWindow.setTrackedOrganism(b);
+				}
 			}
 		}
-		
+
 		public void setTracking(boolean isTracking) {
 			if (isTracking) {
 				putValue(NAME, Messages.getString(name_key2));
@@ -189,13 +186,15 @@ public class VisibleWorld extends JPanel {
 			}
 		}
 	}
-	
+
 	class FeedAction extends StdAction {
+
 		private static final long serialVersionUID = 1L;
+
 		public FeedAction(String text_key, String icon_path, String desc) {
 			super(text_key, icon_path, desc);
 		}
-		
+
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			Organism b = getSelectedOrganism();
@@ -207,28 +206,32 @@ public class VisibleWorld extends JPanel {
 			}
 		}
 	}
-	
+
 	class WeakenAction extends StdAction {
+
 		private static final long serialVersionUID = 1L;
+
 		public WeakenAction(String text_key, String icon_path, String desc) {
 			super(text_key, icon_path, desc);
 		}
-		
+
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			Organism b = getSelectedOrganism();
 			if (b != null && b.isAlive()) {
-				b.useEnergy(b.getEnergy()/2);
+				b.useEnergy(b.getEnergy() / 2);
 			}
 		}
 	}
-	
+
 	class KillAction extends StdAction {
+
 		private static final long serialVersionUID = 1L;
+
 		public KillAction(String text_key, String icon_path, String desc) {
 			super(text_key, icon_path, desc);
 		}
-		
+
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			Organism b = getSelectedOrganism();
@@ -237,13 +240,15 @@ public class VisibleWorld extends JPanel {
 			}
 		}
 	}
-	
+
 	class CopyAction extends StdAction {
+
 		private static final long serialVersionUID = 1L;
+
 		public CopyAction(String text_key, String icon_path, String desc) {
 			super(text_key, icon_path, desc);
 		}
-		
+
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			Organism b = getSelectedOrganism();
@@ -252,13 +257,15 @@ public class VisibleWorld extends JPanel {
 			}
 		}
 	}
-	
+
 	class SaveImageAction extends StdAction {
+
 		private static final long serialVersionUID = 1L;
+
 		public SaveImageAction(String text_key, String icon_path, String desc) {
 			super(text_key, icon_path, desc);
 		}
-		
+
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			Organism b = getSelectedOrganism();
@@ -273,18 +280,18 @@ public class VisibleWorld extends JPanel {
 					JFileChooser chooser = new JFileChooser();
 					chooser.setFileFilter(new BioFileFilter("png")); //$NON-NLS-1$
 					int returnVal = chooser.showSaveDialog(null);
-					if(returnVal == JFileChooser.APPROVE_OPTION) {
+					if (returnVal == JFileChooser.APPROVE_OPTION) {
 						int canWrite = JOptionPane.YES_OPTION;
 						File f = chooser.getSelectedFile();
 						// Check if file already exists and ask for confirmation
 						if (f.exists()) {
-							canWrite = JOptionPane.showConfirmDialog(null,Messages.getString("T_CONFIRM_FILE_OVERRIDE"), //$NON-NLS-1$
-									Messages.getString("T_FILE_EXISTS"),JOptionPane.YES_NO_OPTION,JOptionPane.WARNING_MESSAGE); //$NON-NLS-1$
+							canWrite = JOptionPane.showConfirmDialog(null, Messages.getString("T_CONFIRM_FILE_OVERRIDE"), //$NON-NLS-1$
+									Messages.getString("T_FILE_EXISTS"), JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE); //$NON-NLS-1$
 						}
 						if (canWrite == JOptionPane.YES_OPTION) {
 							// Write image to file
 							try {
-								ImageIO.write(image,"PNG",f); //$NON-NLS-1$
+								ImageIO.write(image, "PNG", f); //$NON-NLS-1$
 							} catch (FileNotFoundException ex) {
 								System.err.println(ex.getMessage());
 							} catch (IOException ex) {
@@ -294,25 +301,28 @@ public class VisibleWorld extends JPanel {
 					}
 				} catch (SecurityException ex) {
 					System.err.println(ex.getMessage());
-					JOptionPane.showMessageDialog(null,Messages.getString("T_PERMISSION_DENIED"),Messages.getString("T_PERMISSION_DENIED"),JOptionPane.ERROR_MESSAGE); //$NON-NLS-1$ //$NON-NLS-2$
+					JOptionPane.showMessageDialog(null, Messages.getString("T_PERMISSION_DENIED"), Messages.getString("T_PERMISSION_DENIED"), JOptionPane.ERROR_MESSAGE); //$NON-NLS-1$ //$NON-NLS-2$
 				}
 				_mainWindow._isProcessActive = processState;
 			}
 		}
 	}
-	
+
 	class ReviveAction extends StdAction {
+
 		private static final long serialVersionUID = 1L;
+
 		public ReviveAction(String text_key, String icon_path, String desc) {
 			super(text_key, icon_path, desc);
 		}
-		
+
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			Organism b = getSelectedOrganism();
 			if (b != null && !b.isAlive()) {
-				for (int i = 0; i < b._segments; i++)
-					b._segColor[i] = b.getGeneticCode().getGene(i%b.getGeneticCode().getNGenes()).getColor();
+				for (int i = 0; i < b._segments; i++) {
+					b._segColor[i] = b.getGeneticCode().getGene(i % b.getGeneticCode().getNGenes()).getColor();
+				}
 				b.alive = true;
 				b.hasMoved = true;
 				b._age = 0;
@@ -321,13 +331,15 @@ public class VisibleWorld extends JPanel {
 			}
 		}
 	}
-	
+
 	class DisperseAction extends StdAction {
+
 		private static final long serialVersionUID = 1L;
+
 		public DisperseAction(String text_key, String icon_path, String desc) {
 			super(text_key, icon_path, desc);
 		}
-		
+
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			Organism b = getSelectedOrganism();
@@ -336,13 +348,15 @@ public class VisibleWorld extends JPanel {
 			}
 		}
 	}
-	
+
 	class ReproduceAction extends StdAction {
+
 		private static final long serialVersionUID = 1L;
+
 		public ReproduceAction(String text_key, String icon_path, String desc) {
 			super(text_key, icon_path, desc);
 		}
-		
+
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			Organism b = getSelectedOrganism();
@@ -351,13 +365,15 @@ public class VisibleWorld extends JPanel {
 			}
 		}
 	}
-	
+
 	class RejuvenateAction extends StdAction {
+
 		private static final long serialVersionUID = 1L;
+
 		public RejuvenateAction(String text_key, String icon_path, String desc) {
 			super(text_key, icon_path, desc);
 		}
-		
+
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			Organism b = getSelectedOrganism();
@@ -366,13 +382,15 @@ public class VisibleWorld extends JPanel {
 			}
 		}
 	}
-	
+
 	class ExportAction extends StdAction {
+
 		private static final long serialVersionUID = 1L;
+
 		public ExportAction(String text_key, String icon_path, String desc) {
 			super(text_key, icon_path, desc);
 		}
-		
+
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			Organism b = getSelectedOrganism();
@@ -381,13 +399,15 @@ public class VisibleWorld extends JPanel {
 			}
 		}
 	}
-	
+
 	class PasteAction extends StdAction {
+
 		private static final long serialVersionUID = 1L;
+
 		public PasteAction(String text_key, String icon_path, String desc) {
 			super(text_key, icon_path, desc);
 		}
-		
+
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (clippedGeneticCode != null) {
@@ -395,123 +415,136 @@ public class VisibleWorld extends JPanel {
 			}
 		}
 	}
-	
+
 	class RandomCreateAction extends StdAction {
+
 		private static final long serialVersionUID = 1L;
+
 		public RandomCreateAction(String text_key, String icon_path, String desc) {
 			super(text_key, icon_path, desc);
 		}
-		
+
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			GeneticCode g = new GeneticCode();
 			Organism newBiot = new Organism(_mainWindow.getWorld(), g);
-			if (newBiot.pasteOrganism(mouseX, mouseY))
+			if (newBiot.pasteOrganism(mouseX, mouseY)) {
 				_mainWindow.getWorld().addOrganism(newBiot, null);
+			}
 		}
 	}
-	
+
 	class ImportAction extends StdAction {
+
 		private static final long serialVersionUID = 1L;
+
 		public ImportAction(String text_key, String icon_path, String desc) {
 			super(text_key, icon_path, desc);
 		}
-		
+
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			GeneticCode g;
 			Organism newBiot;
 			boolean processState = _mainWindow._isProcessActive;
 			// Stop time
-    		_mainWindow._isProcessActive = false;
-    		try {
-    			JFileChooser chooser = _mainWindow.getGeneticCodeChooser();
-    			int returnVal = chooser.showOpenDialog(null);
-    			if (returnVal == JFileChooser.APPROVE_OPTION) {
-    				try {
-    					// Read XML code from file
-    					BioXMLParser parser = new BioXMLParser();
+			_mainWindow._isProcessActive = false;
+			try {
+				JFileChooser chooser = _mainWindow.getGeneticCodeChooser();
+				int returnVal = chooser.showOpenDialog(null);
+				if (returnVal == JFileChooser.APPROVE_OPTION) {
+					try {
+						// Read XML code from file
+						BioXMLParser parser = new BioXMLParser();
 						g = parser.parseGeneticCode(chooser.getSelectedFile());
 						// Create organism
-    					newBiot = new Organism(_mainWindow.getWorld(), g);
-    					if (newBiot.pasteOrganism(mouseX, mouseY))
-    						_mainWindow.getWorld().addOrganism(newBiot, null);
-    				} catch (SAXException ex) {
-    					System.err.println(ex.getMessage());
-    					JOptionPane.showMessageDialog(null,Messages.getString("T_WRONG_FILE_VERSION"),Messages.getString("T_READ_ERROR"),JOptionPane.ERROR_MESSAGE); //$NON-NLS-1$ //$NON-NLS-2$
-    				} catch (IOException ex) {
-    					System.err.println(ex.getMessage());
-    					JOptionPane.showMessageDialog(null,Messages.getString("T_CANT_READ_FILE"),Messages.getString("T_READ_ERROR"),JOptionPane.ERROR_MESSAGE); //$NON-NLS-1$ //$NON-NLS-2$
+						newBiot = new Organism(_mainWindow.getWorld(), g);
+						if (newBiot.pasteOrganism(mouseX, mouseY)) {
+							_mainWindow.getWorld().addOrganism(newBiot, null);
+						}
+					} catch (SAXException ex) {
+						System.err.println(ex.getMessage());
+						JOptionPane.showMessageDialog(null, Messages.getString("T_WRONG_FILE_VERSION"), Messages.getString("T_READ_ERROR"), JOptionPane.ERROR_MESSAGE); //$NON-NLS-1$ //$NON-NLS-2$
+					} catch (IOException ex) {
+						System.err.println(ex.getMessage());
+						JOptionPane.showMessageDialog(null, Messages.getString("T_CANT_READ_FILE"), Messages.getString("T_READ_ERROR"), JOptionPane.ERROR_MESSAGE); //$NON-NLS-1$ //$NON-NLS-2$
 					}
-    			}
-    		} catch (SecurityException ex) {
-    			System.err.println(ex.getMessage());
-    			JOptionPane.showMessageDialog(null,Messages.getString("T_PERMISSION_DENIED"),Messages.getString("T_PERMISSION_DENIED"),JOptionPane.ERROR_MESSAGE); //$NON-NLS-1$ //$NON-NLS-2$
-    		}
-    		_mainWindow._isProcessActive = processState;
+				}
+			} catch (SecurityException ex) {
+				System.err.println(ex.getMessage());
+				JOptionPane.showMessageDialog(null, Messages.getString("T_PERMISSION_DENIED"), Messages.getString("T_PERMISSION_DENIED"), JOptionPane.ERROR_MESSAGE); //$NON-NLS-1$ //$NON-NLS-2$
+			}
+			_mainWindow._isProcessActive = processState;
 		}
 	}
-	
+
 	/**
 	 * Sets an organism as the selected organism. If required, it creates an
 	 * {@link InfoWindow} with information of this organism.
-	 * 
-	 * @param b  The new selected organism
-	 * @param showInfo  true if an InfoWindow should be created
+	 *
+	 * @param b The new selected organism
+	 * @param showInfo true if an InfoWindow should be created
 	 */
 	public void setSelectedOrganism(Organism b) {
 		Organism lastSelectedOrganism = _selectedOrganism;
 		_selectedOrganism = b;
-		if (lastSelectedOrganism != null)
+		if (lastSelectedOrganism != null) {
 			repaint(lastSelectedOrganism);
+		}
 		_mainWindow.getInfoPanel().setSelectedOrganism(b);
-		if (_selectedOrganism != null)
+		if (_selectedOrganism != null) {
 			repaint(_selectedOrganism);
-		else
+		} else {
 			_mainWindow.hideFamilyTree();
-		
+		}
+
 		// Make sure to don't create the tool bar twice when starting the program
 		// because this causes spurious exceptions.
 		if (_selectedOrganism != lastSelectedOrganism) {
 			_mainWindow.updateFamilyTree(_selectedOrganism);
-			
+
 			if (_selectedOrganism != null) {
-				if (_selectedOrganism.isAlive())
+				if (_selectedOrganism.isAlive()) {
 					showAliveToolbar();
-				else
+				} else {
 					showDeadToolbar();
-			}
-			else
+				}
+			} else {
 				_mainWindow.createToolBar();
+			}
 		}
 	}
+
 	/**
-	 * Return the selected organism. 
-	 * 
-	 * @return  The selected organism, if any.
+	 * Return the selected organism.
+	 *
+	 * @return The selected organism, if any.
 	 */
 	public Organism getSelectedOrganism() {
 		return _selectedOrganism;
 	}
+
 	/**
 	 * Set a genetic code as the clipped genetic code, that will be used when
 	 * pasting a new organism or in the genetic lab as the staring genetic code.
-	 * 
-	 * @param gc  The clipped genetic code
+	 *
+	 * @param gc The clipped genetic code
 	 */
 	public void setClippedGeneticCode(GeneticCode gc) {
-		if (gc != null)
+		if (gc != null) {
 			clippedGeneticCode = gc;
+		}
 	}
+
 	/**
-	 * Creates a new VisibleWorld associated with a {@link MainWindow}.
-	 * Creates the menus and the MouseAdapter.
-	 * 
-	 * @param mainWindow  The MainWindow associated with this VisibleWorld.
+	 * Creates a new VisibleWorld associated with a {@link MainWindow}. Creates
+	 * the menus and the MouseAdapter.
+	 *
+	 * @param mainWindow The MainWindow associated with this VisibleWorld.
 	 */
 	public VisibleWorld(MainWindow mainWindow) {
 		_mainWindow = mainWindow;
-		setPreferredSize(new Dimension(Utils.WORLD_WIDTH,Utils.WORLD_HEIGHT));
+		setPreferredSize(new Dimension(Utils.WORLD_WIDTH, Utils.WORLD_HEIGHT));
 		setBackground(Color.BLACK);
 		createActions();
 		createPopupMenu();
@@ -519,62 +552,66 @@ public class VisibleWorld extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (e.getButton() == MouseEvent.BUTTON1) {
-					setSelectedOrganism(findOrganismFromPosition(e.getX(),e.getY()));
+					setSelectedOrganism(findOrganismFromPosition(e.getX(), e.getY()));
 				}
 			}
+
 			@Override
 			public void mousePressed(MouseEvent e) {
 				maybeShowPopupMenu(e);
 			}
+
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				maybeShowPopupMenu(e);
 			}
 		});
 	}
+
 	/**
-	 * Finds an organism that has the given coordinates inside its bounding box and
-	 * returns a reference to it. If more than on organism satisfies this condition,
-	 * if possible, an alive organism is returned. If non organism satisfies this
-	 * condition, this method returns null.
-	 * 
-	 * @param x  X coordinate
-	 * @param y  Y coordinate
-	 * @return  An organism with the point (x,y) inside its bounding box, or null
+	 * Finds an organism that has the given coordinates inside its bounding box
+	 * and returns a reference to it. If more than on organism satisfies this
+	 * condition, if possible, an alive organism is returned. If non organism
+	 * satisfies this condition, this method returns null.
+	 *
+	 * @param x X coordinate
+	 * @param y Y coordinate
+	 * @return An organism with the point (x,y) inside its bounding box, or null
 	 * if such organism doesn't exist.
 	 */
 	Organism findOrganismFromPosition(int x, int y) {
 		return _mainWindow.getWorld().findOrganismFromPosition(x, y);
 	}
+
 	/**
-	 * Calls World.draw to draw all world elements and paints the bounding rectangle
-	 * of the selected organism.
+	 * Calls World.draw to draw all world elements and paints the bounding
+	 * rectangle of the selected organism.
 	 *
 	 * @see javax.swing.JComponent#paintComponent(java.awt.Graphics)
 	 */
 	@Override
-	public void paintComponent (Graphics g) {
+	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		_mainWindow.getWorld().draw(g);
 		if (getSelectedOrganism() != null) {
 			g.setColor(Color.ORANGE);
 			g.drawRect(_selectedOrganism.x, _selectedOrganism.y,
-					_selectedOrganism.width-1, _selectedOrganism.height-1);
+					_selectedOrganism.width - 1, _selectedOrganism.height - 1);
 		}
-    }
-	
+	}
+
 	private void createActions() {
 		trackAction = new TrackAction("T_TRACK", "T_ABORT_TRACKING", "images/menu_track.png", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				"T_TRACK_ORGANISM", "T_ABORT_TRACKING_ORGANISM"); //$NON-NLS-1$ //$NON-NLS-2$
-		feedAction = new FeedAction("T_FEED", "images/menu_feed.png",  //$NON-NLS-1$//$NON-NLS-2$
+		feedAction = new FeedAction("T_FEED", "images/menu_feed.png", //$NON-NLS-1$//$NON-NLS-2$
 				"T_FEED_ORGANISM"); //$NON-NLS-1$
-		weakenAction = new WeakenAction("T_WEAKEN", "images/menu_weaken.png",  //$NON-NLS-1$//$NON-NLS-2$
+		weakenAction = new WeakenAction("T_WEAKEN", "images/menu_weaken.png", //$NON-NLS-1$//$NON-NLS-2$
 				"T_WEAKEN_ORGANISM"); //$NON-NLS-1$
-		killAction = new KillAction("T_KILL", "images/menu_kill.png",  //$NON-NLS-1$//$NON-NLS-2$
+		killAction = new KillAction("T_KILL", "images/menu_kill.png", //$NON-NLS-1$//$NON-NLS-2$
 				"T_KILL_ORGANISM"); //$NON-NLS-1$
-		copyAction = new CopyAction("T_COPY", "images/menu_copy.png",  //$NON-NLS-1$//$NON-NLS-2$
+		copyAction = new CopyAction("T_COPY", "images/menu_copy.png", //$NON-NLS-1$//$NON-NLS-2$
 				"T_COPY_GENETIC_CODE"); //$NON-NLS-1$
-		saveImageAction = new SaveImageAction("T_SAVE_IMAGE", "images/menu_save_image.png",  //$NON-NLS-1$//$NON-NLS-2$
+		saveImageAction = new SaveImageAction("T_SAVE_IMAGE", "images/menu_save_image.png", //$NON-NLS-1$//$NON-NLS-2$
 				"T_SAVE_IMAGE"); //$NON-NLS-1$
 		reviveAction = new ReviveAction("T_REVIVE", "images/menu_revive.png", //$NON-NLS-1$ //$NON-NLS-2$
 				"T_REVIVE_ORGANISM"); //$NON-NLS-1$
@@ -601,7 +638,7 @@ public class VisibleWorld extends JPanel {
 		toolBar.invalidate();
 		toolBar.repaint();
 	}
-	
+
 	public void showDeadToolbar() {
 		JToolBar toolBar = _mainWindow.toolBar;
 		toolBar.removeAll();
@@ -610,87 +647,91 @@ public class VisibleWorld extends JPanel {
 		toolBar.invalidate();
 		toolBar.repaint();
 	}
-	
+
 	/**
 	 * Creates all popup menus.
 	 */
 	private void createPopupMenu() {
 		JMenuItem menuItem;
-	    popupAlive = new JPopupMenu();
-	    menuItem = new JMenuItem(trackAction);
-	    menuItem.setIcon(null);
-	    popupAlive.add(menuItem);
-	    menuItem = new JMenuItem(feedAction);
-	    menuItem.setIcon(null);
-	    popupAlive.add(menuItem);
-	    menuItem = new JMenuItem(weakenAction);
-	    menuItem.setIcon(null);
-	    popupAlive.add(menuItem);
-	    popupAlive.add(new JMenuItem(reproduceAction));
-	    popupAlive.add(new JMenuItem(rejuvenateAction));
-	    menuItem = new JMenuItem(killAction);
-	    menuItem.setIcon(null);
-	    popupAlive.add(menuItem);
-	    menuItem = new JMenuItem(copyAction);
-	    menuItem.setIcon(null);
-	    popupAlive.add(menuItem);
-	    popupAlive.add(new JMenuItem(exportAction));
-	    menuItem = new JMenuItem(saveImageAction);
-	    menuItem.setIcon(null);
-	    popupAlive.add(menuItem);
-	    popupDead = new JPopupMenu();
-	    menuItem = new JMenuItem(reviveAction);
-	    menuItem.setIcon(null);
-	    popupDead.add(menuItem);
-	    menuItem = new JMenuItem(disperseAction);
-	    menuItem.setIcon(null);
-	    popupDead.add(menuItem);
-	    popupVoid = new JPopupMenu();
-	    popupVoid.add(new JMenuItem(pasteAction));
-	    popupVoid.add(new JMenuItem(randomCreateAction));
-	    popupVoid.add(new JMenuItem(importAction));
-	    // Only enable file management menu options if at least there is 
+		popupAlive = new JPopupMenu();
+		menuItem = new JMenuItem(trackAction);
+		menuItem.setIcon(null);
+		popupAlive.add(menuItem);
+		menuItem = new JMenuItem(feedAction);
+		menuItem.setIcon(null);
+		popupAlive.add(menuItem);
+		menuItem = new JMenuItem(weakenAction);
+		menuItem.setIcon(null);
+		popupAlive.add(menuItem);
+		popupAlive.add(new JMenuItem(reproduceAction));
+		popupAlive.add(new JMenuItem(rejuvenateAction));
+		menuItem = new JMenuItem(killAction);
+		menuItem.setIcon(null);
+		popupAlive.add(menuItem);
+		menuItem = new JMenuItem(copyAction);
+		menuItem.setIcon(null);
+		popupAlive.add(menuItem);
+		popupAlive.add(new JMenuItem(exportAction));
+		menuItem = new JMenuItem(saveImageAction);
+		menuItem.setIcon(null);
+		popupAlive.add(menuItem);
+		popupDead = new JPopupMenu();
+		menuItem = new JMenuItem(reviveAction);
+		menuItem.setIcon(null);
+		popupDead.add(menuItem);
+		menuItem = new JMenuItem(disperseAction);
+		menuItem.setIcon(null);
+		popupDead.add(menuItem);
+		popupVoid = new JPopupMenu();
+		popupVoid.add(new JMenuItem(pasteAction));
+		popupVoid.add(new JMenuItem(randomCreateAction));
+		popupVoid.add(new JMenuItem(importAction));
+		// Only enable file management menu options if at least there is 
 		//permission to read user's home directory
 		SecurityManager sec = System.getSecurityManager();
 		try {
-			if (sec != null)
+			if (sec != null) {
 				sec.checkPropertyAccess("user.home"); //$NON-NLS-1$
+			}
 		} catch (SecurityException ex) {
 			exportAction.setEnabled(false);
 			importAction.setEnabled(false);
 			saveImageAction.setEnabled(false);
 		}
 	}
+
 	/**
-	 * Called from MainWindow when the locale is changed in order to update the menu
-	 * entries to the new language.
+	 * Called from MainWindow when the locale is changed in order to update the
+	 * menu entries to the new language.
 	 */
 	public void changeLocale() {
 		trackAction.changeLocale();
 		feedAction.changeLocale();
 		weakenAction.changeLocale();
 		reproduceAction.changeLocale();
-	    rejuvenateAction.changeLocale();
-	    killAction.changeLocale();
-	    copyAction.changeLocale();
-	    exportAction.changeLocale();
-	    saveImageAction.changeLocale();
-	    reviveAction.changeLocale();
-	    disperseAction.changeLocale();
-	    pasteAction.changeLocale();
-	    randomCreateAction.changeLocale();
-	    importAction.changeLocale();
-	    createPopupMenu();
+		rejuvenateAction.changeLocale();
+		killAction.changeLocale();
+		copyAction.changeLocale();
+		exportAction.changeLocale();
+		saveImageAction.changeLocale();
+		reviveAction.changeLocale();
+		disperseAction.changeLocale();
+		pasteAction.changeLocale();
+		randomCreateAction.changeLocale();
+		importAction.changeLocale();
+		createPopupMenu();
 	}
+
 	/**
-	 * Creates a new organism with the given genetic code and puts it in the world,
-	 * at the specified position.
-	 * 
-	 * @param gc  The genetic code for the new organism
-	 * @param x  X coordinate
-	 * @param y  Y coordinate
-	 * @return  true if the organism has been created (if there is space for it), false otherwise
-	 */	
+	 * Creates a new organism with the given genetic code and puts it in the
+	 * world, at the specified position.
+	 *
+	 * @param gc The genetic code for the new organism
+	 * @param x X coordinate
+	 * @param y Y coordinate
+	 * @return true if the organism has been created (if there is space for it),
+	 * false otherwise
+	 */
 	public boolean pasteGeneticCode(GeneticCode gc, int x, int y) {
 		Organism newOrganism = new Organism(_mainWindow.getWorld(), gc);
 		if (newOrganism.pasteOrganism(x, y)) {
@@ -701,28 +742,30 @@ public class VisibleWorld extends JPanel {
 		}
 		return false;
 	}
+
 	/**
-	 * This method is called when a mouse event occurs. If the mouse event is
-	 * a popup trigger, this method decide which popup menu is shown, based on
-	 * the position of the mouse.
-	 * 
+	 * This method is called when a mouse event occurs. If the mouse event is a
+	 * popup trigger, this method decide which popup menu is shown, based on the
+	 * position of the mouse.
+	 *
 	 * @param e
 	 */
 	void maybeShowPopupMenu(MouseEvent e) {
 		if (e.isPopupTrigger()) {
 			mouseX = e.getX();
 			mouseY = e.getY();
-			Organism b = findOrganismFromPosition(mouseX,mouseY);
+			Organism b = findOrganismFromPosition(mouseX, mouseY);
 			if (b != null) {
 				setSelectedOrganism(b);
 				if (b.isAlive()) {
 					trackAction.setTracking(_mainWindow._trackedOrganism == b);
 					popupAlive.show(e.getComponent(), mouseX, mouseY);
-				}
-				else
+				} else {
 					popupDead.show(e.getComponent(), mouseX, mouseY);
-			} else
+				}
+			} else {
 				popupVoid.show(e.getComponent(), mouseX, mouseY);
+			}
 		}
 	}
 }
