@@ -48,10 +48,10 @@ public class Gene implements Cloneable, Serializable {
 	/**
 	 * Creates a gene with the specified final point and color.
 	 * 
-	 * @param x
-	 *            x coordinate of the final point
-	 * @param y
-	 *            t coordinate of the final point
+	 * @param length
+	 *            length of the gene
+	 * @param theta
+	 *            angle of the gene
 	 * @param color
 	 *            segment's color
 	 */

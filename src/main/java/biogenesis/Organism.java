@@ -17,14 +17,22 @@
  */
 package biogenesis;
 
+import biogenesis.event.*;
 import java.awt.*;
 import java.awt.image.*;
 import java.awt.geom.*;
+import biogenesis.music.*;
+import org.apache.commons.lang3.event.EventListenerSupport;
 /**
  * This class implements an organism.
  * The body of the organism is drawn inside the Rectangle from which it inherits.
  */
 public class Organism extends Rectangle {
+	private final EventListenerSupport<OrganismCreatedListener> actionListeners = EventListenerSupport.create(OrganismCreatedListener.class);
+	
+		private final EventListenerSupport<OrganismCollidedListener> actionCollidedListeners = EventListenerSupport.create(OrganismCollidedListener.class);
+	
+	
 	/**
 	 * The version of this class
 	 */
@@ -313,6 +321,8 @@ public class Organism extends Rectangle {
 		_world = world;
 		_visibleWorld = world._visibleWorld;
 		_theta = Utils.random.nextDouble() * Math.PI * 2d;
+		addListener((OrganismCreatedListener)new MusicPlayer());
+		addListener((OrganismCollidedListener)new MusicPlayer());
 	}
 	/**
 	 * Construct an organism with a given genetic code. Doesn't initialize it:
@@ -327,6 +337,8 @@ public class Organism extends Rectangle {
 		_visibleWorld = world._visibleWorld;
 		_theta = Utils.random.nextDouble() * Math.PI * 2d;
 		_geneticCode = geneticCode;
+		addListener((OrganismCreatedListener)new MusicPlayer());
+		addListener((OrganismCollidedListener)new MusicPlayer());
 	}
 	/**
 	 * Creates all data structures of this organism. Must be used after the organism
@@ -348,6 +360,9 @@ public class Organism extends Rectangle {
 		y1 = new int[_segments];
 		x2 = new int[_segments];
 		y2 = new int[_segments];
+		
+		OrganismCreatedEvent event = new OrganismCreatedEvent();
+		actionListeners.fire().perform(event);
 	}
 	/**
 	 * Initializes variables for a new random organism and finds a place
@@ -378,6 +393,7 @@ public class Organism extends Rectangle {
 	 * and finds a place in the world to put it.
 	 * 
 	 * @param parent  The organism from which this organism is born. 
+	 * @param	first 
 	 * @return  true if it found a place for this organism or false otherwise.
 	 */
 	public boolean inherit(Organism parent, boolean first) {
@@ -1035,6 +1051,10 @@ public class Organism extends Rectangle {
 									touchMove(org,intersec,bline,false);
 								else
 									touchMove(org,intersec,line,true);
+								
+								OrganismCollidedEvent event = new OrganismCollidedEvent();
+								actionCollidedListeners.fire().perform(event);
+								
 								// Find only one collision to speed up.
 								return true;
 							}
@@ -1265,5 +1285,13 @@ public class Organism extends Rectangle {
 				g.drawLine(x1[i] -x + _centerX, y1[i] - y + _centerY, x2[i] - x + _centerX, y2[i] - y+_centerY);
 		}
 		return image;
+	}
+	
+	public void addListener(OrganismCreatedListener listener) {
+		actionListeners.addListener(listener);
+	}
+	
+	public void addListener(OrganismCollidedListener listener) {
+		actionCollidedListeners.addListener(listener);
 	}
 }
