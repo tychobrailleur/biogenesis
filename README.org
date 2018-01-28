@@ -1,0 +1,52 @@
+Biogenesis is an artificial life program that simulates the processes involved
+in the evolution of organisms. It shows colored segment based organisms that
+mutate and evolve in a 2D environment. Biogenesis is based on Primordial Life.
+
+This repo contains my[fn:1] own changes to the Biogenesis source code.
+See http://biogenesis.sourceforge.net/ for original application.
+
+* Changes
+
+  Changes to the original application include:
+
+  - Mavenized project :: it is now much easier to build and release Biogenesis,
+  - Family tree :: it is possible to view the ancestors of a given
+                   organism,
+  - Music :: organisms can now make sounds when colliding,
+  - Scripting :: JRuby scripts can be used to extend Biogenesis,
+  - Several UI improvements,
+  - etc.
+
+* Building
+
+  Maven is required to build this project.
+
+  You must first ensure that the =jfugue= dependency is installed in
+  your local Maven repository by running the following command at the
+  root of your project:
+
+#+BEGIN_SRC bash
+mvn initialize
+#+END_SRC
+
+  Once this is done, the project can be packaged by running the
+  following command:
+
+#+BEGIN_SRC bash
+mvn package
+#+END_SRC
+
+  This creates a JAR file in the =target/= directory which can be
+  executed directly.
+
+* License
+
+  Copyright (c) 2006-2010  Joan Queralt Molina
+  Copyright (c) 2006-2014  Biogenesis Development team
+  Copyright (c) 2014-2018  Sébastien Le Callonnec
+
+  Licensed under GPLv2.
+
+* Footnotes
+
+[fn:1] Sébastien Le Callonnec (tychobrailleur)

@@ -126,7 +126,7 @@ public class VisibleWorld extends JPanel {
 	protected StdAction importAction;
 	/**
 	 * This is the selected organism. It is drawn with an orange bounding
-	 * rectangle and, if there is an {@link InfoWindow}, it shows information
+	 * rectangle and, if there is an {@link InfoToolbar}, it shows information
 	 * about this organism.
 	 */
 	protected Organism _selectedOrganism = null;
@@ -146,10 +146,6 @@ public class VisibleWorld extends JPanel {
 	 */
 	protected int mouseY;
 
-	/**
-	 * A reference to the {@link InfoWindow}, that is created from this class.
-	 */
-	//transient protected InfoWindow _infoWindow = null;
 	class TrackAction extends StdAction {
 
 		private static final long serialVersionUID = 1L;
@@ -480,10 +476,9 @@ public class VisibleWorld extends JPanel {
 
 	/**
 	 * Sets an organism as the selected organism. If required, it creates an
-	 * {@link InfoWindow} with information of this organism.
+	 * {@link InfoToolbar} with information of this organism.
 	 *
 	 * @param b The new selected organism
-	 * @param showInfo true if an InfoWindow should be created
 	 */
 	public void setSelectedOrganism(Organism b) {
 		Organism lastSelectedOrganism = _selectedOrganism;
@@ -686,7 +681,7 @@ public class VisibleWorld extends JPanel {
 		popupVoid.add(new JMenuItem(pasteAction));
 		popupVoid.add(new JMenuItem(randomCreateAction));
 		popupVoid.add(new JMenuItem(importAction));
-		// Only enable file management menu options if at least there is 
+		// Only enable file management menu options if at least there is
 		//permission to read user's home directory
 		SecurityManager sec = System.getSecurityManager();
 		try {

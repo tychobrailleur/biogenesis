@@ -1,4 +1,4 @@
-/* Copyright (C) 2014 Sébastien Le Callonnec
+/* Copyright (C) 2014-2018 Sébastien Le Callonnec
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -25,8 +25,9 @@ import java.util.Random;
 import org.jfugue.Player;
 
 /**
+ * Plays music on different events, using JFugue.
  *
- * @author sebastien
+ * @author Sébastien Le Callonnec
  */
 public class MusicPlayer implements OrganismCreatedListener, OrganismCollidedListener {
 

@@ -1,155 +1,139 @@
+<!--
+
+  Copyright (c) 2014-2018  Sébastien Le Callonnec
+
+ This program is free software; you can redistribute it and/or
+ modify it under the terms of the GNU General Public License
+ as published by the Free Software Foundation; either version 2
+ of the License, or (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program; if not, write to the Free Software
+ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+
+-->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>biogenesis</groupId>
   <artifactId>biogenesis</artifactId>
-  <version>0.9.0-SNAPSHOT</version>
+  <version>0.9.1-SNAPSHOT</version>
   <name>Biogenesis</name>
 
+  <licenses>
+    <license>
+      <name>GPLv2</name>
+      <url>https://www.gnu.org/licenses/old-licenses/gpl-2.0.txt</url>
+    </license>
+  </licenses>
+
   <properties>
-	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <javadoc.opts>-Xdoclint:none</javadoc.opts>
   </properties>
 
   <dependencies>
-	<dependency>
+    <dependency>
 	  <groupId>junit</groupId>
 	  <artifactId>junit</artifactId>
-	  <version>4.12-beta-1</version>
+	  <version>4.12</version>
 	  <scope>test</scope>
-	</dependency>
-	<dependency>
+    </dependency>
+    <dependency>
 	  <groupId>org.jruby</groupId>
 	  <artifactId>jruby</artifactId>
-	  <version>1.7.15</version>
-	</dependency>
-	<dependency>
-		<groupId>org.scala-lang</groupId>
-		<artifactId>scala-library</artifactId>
-		<version>2.11.2</version>
-	</dependency>
-	<dependency>
-		<groupId>org.jfugue</groupId>
-		<artifactId>jfugue</artifactId>
-		<version>4.1.0-20120125</version>
-	</dependency>
-	<!-- JFugue dependencies -->
-	<dependency>
-		<groupId>log4j</groupId>
-		<artifactId>log4j</artifactId>
-		<version>1.2.17</version>
-	</dependency>
-	
-	<dependency>
-		<groupId>com.netflix.rxjava</groupId>
-		<artifactId>rxjava-core</artifactId>
-		<version>0.20.5</version>
-	</dependency>
-	<dependency>
-		<groupId>com.netflix.rxjava</groupId>
-		<artifactId>rxjava-scala</artifactId>
-		<version>0.20.5</version>
-	</dependency>
-	<dependency>
-		<!--  org.apache.commons:commons-lang3:3.3.2:jar -->
-		<groupId>org.apache.commons</groupId>
-		<artifactId>commons-lang3</artifactId>
-		<version>3.3.2</version>
-	</dependency>
+	  <version>1.7.16</version>
+    </dependency>
+    <dependency>
+	  <groupId>org.jfugue</groupId>
+	  <artifactId>jfugue</artifactId>
+	  <version>4.1.0-20120125</version>
+    </dependency>
+    <dependency>
+	  <groupId>log4j</groupId>
+	  <artifactId>log4j</artifactId>
+	  <version>1.2.17</version>
+    </dependency>
+    <dependency>
+	  <groupId>org.apache.commons</groupId>
+	  <artifactId>commons-lang3</artifactId>
+	  <version>3.4</version>
+    </dependency>
   </dependencies>
 
   <build>
-	<finalName>biogenesis</finalName>
-	<plugins>
+    <finalName>biogenesis</finalName>
+    <plugins>
 	  <plugin>
-		<artifactId>maven-compiler-plugin</artifactId>
-		<version>3.1</version>
-		<configuration>
+	    <artifactId>maven-compiler-plugin</artifactId>
+	    <version>3.7.0</version>
+	    <configuration>
 		  <source>1.7</source>
 		  <target>1.7</target>
-		</configuration>
+	    </configuration>
 	  </plugin>
 	  <plugin>
-		<groupId>org.apache.maven.plugins</groupId>
-		<artifactId>maven-shade-plugin</artifactId>
-		<version>2.3</version>
-		<executions>
+	    <groupId>org.apache.maven.plugins</groupId>
+	    <artifactId>maven-shade-plugin</artifactId>
+	    <version>2.4.3</version>
+	    <executions>
 		  <execution>
-			<phase>package</phase>
-			<goals>
+		    <phase>package</phase>
+		    <goals>
 			  <goal>shade</goal>
-			</goals>
-			<configuration>
+		    </goals>
+		    <configuration>
 			  <transformers>
-				<transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+			    <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
 				  <mainClass>biogenesis.MainWindow</mainClass>
-				</transformer>
+			    </transformer>
 			  </transformers>
-			</configuration>
+		    </configuration>
 		  </execution>
-		</executions>
+	    </executions>
 	  </plugin>
 	  <plugin>
-		<groupId>org.scala-tools</groupId>
-		<artifactId>maven-scala-plugin</artifactId>
-		<version>2.15.2</version>
-		<executions>
+	    <artifactId>maven-javadoc-plugin</artifactId>
+	    <version>2.10.4</version>
+	    <executions>
 		  <execution>
-			<id>compile</id>
-			<goals>
-			  <goal>compile</goal>
-			</goals>
-			<phase>compile</phase>
-		  </execution>
-		  <execution>
-			<id>test-compile</id>
-			<goals>
-			  <goal>testCompile</goal>
-			</goals>
-			<phase>test-compile</phase>
-		  </execution>
-		  <execution>
-			<phase>process-resources</phase>
-			<goals>
-			  <goal>compile</goal>
-			</goals>
-		  </execution>
-		</executions>
-	  </plugin>
-	  <plugin>
-		<groupId>org.apache.maven.plugins</groupId>
-		<artifactId>maven-javadoc-plugin</artifactId>
-		<version>2.9.1</version>
-		<executions>
-		  <execution>
-			<id>attach-javadocs</id>
-			<goals>
+		    <id>attach-javadocs</id>
+		    <goals>
 			  <goal>jar</goal>
-			</goals>
+		    </goals>
+            <configuration>
+              <additionalparam>${javadoc.opts}</additionalparam>
+            </configuration>
 		  </execution>
-		</executions>
+	    </executions>
 	  </plugin>
 	  <plugin>
-            <artifactId>maven-install-plugin</artifactId>
-			<version>2.5.2</version>
-            <executions>
-                <execution>
-                    <phase>initialize</phase>
-                    <goals>
-                        <goal>install-file</goal>
-                    </goals>
-                    <configuration>
-						<file>${basedir}/lib/jfugue-4.1.0-20120125.jar</file>
-						<artifactId>jfugue</artifactId>
-						<groupId>org.jfugue</groupId>
-						<version>4.1.0-20120125</version>
-						<packaging>jar</packaging>
-						<generatePom>true</generatePom>
-                    </configuration>
-                </execution>  
-			</executions>
+        <artifactId>maven-install-plugin</artifactId>
+	    <version>2.5.2</version>
+        <executions>
+          <execution>
+            <phase>initialize</phase>
+            <goals>
+              <goal>install-file</goal>
+            </goals>
+            <configuration>
+			  <file>${basedir}/lib/jfugue-4.1.0-20120125.jar</file>
+			  <artifactId>jfugue</artifactId>
+			  <groupId>org.jfugue</groupId>
+			  <version>4.1.0-20120125</version>
+			  <packaging>jar</packaging>
+			  <generatePom>true</generatePom>
+            </configuration>
+          </execution>
+	    </executions>
 	  </plugin>
-	</plugins>
+    </plugins>
   </build>
-
 </project>

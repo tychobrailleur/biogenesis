@@ -25,9 +25,7 @@ import javax.swing.JOptionPane;
 public class Cleaner {
 	private static final String[] success={"Uninstalled","Se ha desinstalado","S'ha desinstal·lat"};  //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
 	private static final String[] failed={"Uninstallation failed","Ha fallado la desinstalación","Ha fallat la desinstal·lació"};  //$NON-NLS-1$ //$NON-NLS-2$//$NON-NLS-3$
-	/**
-	 * @param args
-	 */
+
 	public static void main(String[] args) {
 		Preferences prefs = Preferences.userNodeForPackage(Utils.class);
 		String locale = prefs.get("LOCALE","en"); //$NON-NLS-1$ //$NON-NLS-2$

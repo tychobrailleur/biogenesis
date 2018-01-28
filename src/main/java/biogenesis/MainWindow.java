@@ -1,5 +1,5 @@
 /* Copyright (C) 2006-2010  Joan Queralt Molina
- * Copyright (c) 2012 Sebastien Le Callonnec
+ * Copyright (c) 2012-2018 Sebastien Le Callonnec
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -71,7 +71,7 @@ public class MainWindow extends JFrame {
 	protected JToolBar toolBar = new JToolBar(Messages.getString("T_PROGRAM_NAME")); //$NON-NLS-1$
 	protected InfoToolbar infoToolbar;
 	private String statusMessage = ""; //$NON-NLS-1$
-	private StringBuilder statusLabelText = new StringBuilder(100);
+	private final StringBuilder statusLabelText = new StringBuilder(100);
 	protected Organism _trackedOrganism = null;
 	protected transient NetServerThread serverThread = null;
 	private final ScriptingContainer _scriptingContainer = new ScriptingContainer();
@@ -79,7 +79,7 @@ public class MainWindow extends JFrame {
 	protected StatisticsWindow _statisticsWindow = null;
 	// Count frames to know when to update the info window
 	protected long nFrames = 0;
-	private ImageIcon imageIcon = new ImageIcon(getClass().getResource("images/bullet.jpg")); //$NON-NLS-1$
+	private final ImageIcon imageIcon = new ImageIcon(getClass().getResource("images/bullet.jpg")); //$NON-NLS-1$
 
 	public JFileChooser getWorldChooser() {
 		return worldChooser;
@@ -128,9 +128,7 @@ public class MainWindow extends JFrame {
 		scrollPane.setViewportView(_visibleWorld);
 	}
 
-	/**
-	 * @param args
-	 */
+
 	public static void main(String[] args) {
 		if (args.length > 1) {
 			System.err.println("java -jar biogenesis.jar [random seed]");
@@ -208,7 +206,7 @@ public class MainWindow extends JFrame {
 		_menuGame.add(new JMenuItem(saveGameAsAction));
 		_menuGame.add(new JMenuItem(quitAction));
 		_menuWorld = new JMenu(Messages.getString("T_WORLD")); //$NON-NLS-1$
-		_menuWorld.setMnemonic(Messages.getMnemonic("T_WORLD").intValue()); //$NON-NLS-1$
+		_menuWorld.setMnemonic(Messages.getMnemonic("T_WORLD")); //$NON-NLS-1$
 		menuBar.add(_menuWorld);
 		_menuWorld.add(new JMenuItem(statisticsAction));
 		_menuWorld.add(new JMenuItem(labAction));
@@ -222,14 +220,14 @@ public class MainWindow extends JFrame {
 		_menuWorld.add(new JMenuItem(disperseAllAction));
 		_menuWorld.add(new JMenuItem(parametersAction));
 		_menuNet = new JMenu(Messages.getString("T_NETWORK")); //$NON-NLS-1$
-		_menuNet.setMnemonic(Messages.getMnemonic("T_NETWORK").intValue()); //$NON-NLS-1$
+		_menuNet.setMnemonic(Messages.getMnemonic("T_NETWORK")); //$NON-NLS-1$
 		menuBar.add(_menuNet);
 		_menuNet.add(new JMenuItem(netConfigAction));
 		menuItem = new JMenuItem(manageConnectionsAction);
 		menuItem.setIcon(null);
 		_menuNet.add(menuItem);
 		_menuHelp = new JMenu(Messages.getString("T_HELP")); //$NON-NLS-1$
-		_menuHelp.setMnemonic(Messages.getMnemonic("T_HELP").intValue()); //$NON-NLS-1$
+		_menuHelp.setMnemonic(Messages.getMnemonic("T_HELP")); //$NON-NLS-1$
 		menuBar.add(_menuHelp);
 		_menuHelp.add(new JMenuItem(manualAction));
 		_menuHelp.add(new JMenuItem(checkLastVersionAction));
@@ -484,6 +482,7 @@ public class MainWindow extends JFrame {
 			super(text, icon_path, desc);
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e) {
 			boolean processState = _isProcessActive;
 			_isProcessActive = false;
@@ -539,6 +538,7 @@ public class MainWindow extends JFrame {
 			super(text, icon_path, desc);
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e) {
 			saveGameAs();
 		}
@@ -552,6 +552,7 @@ public class MainWindow extends JFrame {
 			super(text, icon_path, desc);
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e) {
 			quit();
 		}
@@ -589,6 +590,7 @@ public class MainWindow extends JFrame {
 			super(text, icon_path, desc);
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (_statisticsWindow != null) {
 				_statisticsWindow.dispose();
@@ -606,6 +608,7 @@ public class MainWindow extends JFrame {
 			super(text, icon_path, desc);
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e) {
 			new LabWindow(MainWindow.this);
 		}
@@ -619,6 +622,7 @@ public class MainWindow extends JFrame {
 			super(text, icon_path, desc);
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e) {
 			_world.killAll();
 		}
@@ -645,6 +649,7 @@ public class MainWindow extends JFrame {
 			super(text, icon_path, desc);
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e) {
 			paramDialog();
 		}
@@ -658,6 +663,7 @@ public class MainWindow extends JFrame {
 			super(text, icon_path, desc);
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e) {
 			BareBonesBrowserLaunch.openURL("http://biogenesis.sourceforge.net/manual.php." + Messages.getLanguage()); //$NON-NLS-1$
 		}
@@ -671,6 +677,7 @@ public class MainWindow extends JFrame {
 			super(text, icon_path, desc);
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e) {
 			checkLastVersion();
 		}
@@ -997,9 +1004,7 @@ public class MainWindow extends JFrame {
 						pauseGame();
 					}
 					lastPaintTime = actualTime;
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				} catch (InvocationTargetException e) {
+				} catch (InterruptedException | InvocationTargetException e) {
 					e.printStackTrace();
 				}
 			}
@@ -1026,7 +1031,7 @@ public class MainWindow extends JFrame {
 		UIManager.put("OptionPane.noButtonText", Messages.getString("T_NO"));
 		UIManager.put("OptionPane.cancelButtonText", Messages.getString("T_CANCEL"));
 		_menuGame.setText(Messages.getString("T_GAME")); //$NON-NLS-1$
-		_menuGame.setMnemonic(Messages.getMnemonic("T_GAME").intValue()); //$NON-NLS-1$
+		_menuGame.setMnemonic(Messages.getMnemonic("T_GAME")); //$NON-NLS-1$
 		newGameAction.changeLocale();
 		startStopAction.changeLocale();
 		openGameAction.changeLocale();
@@ -1034,7 +1039,7 @@ public class MainWindow extends JFrame {
 		saveGameAsAction.changeLocale();
 		quitAction.changeLocale();
 		_menuWorld.setText(Messages.getString("T_WORLD")); //$NON-NLS-1$
-		_menuWorld.setMnemonic(Messages.getMnemonic("T_WORLD").intValue()); //$NON-NLS-1$
+		_menuWorld.setMnemonic(Messages.getMnemonic("T_WORLD")); //$NON-NLS-1$
 		statisticsAction.changeLocale();
 		increaseCO2Action.changeLocale();
 		decreaseCO2Action.changeLocale();

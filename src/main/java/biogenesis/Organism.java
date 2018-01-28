@@ -1,5 +1,5 @@
 /* Copyright (C) 2006-2010  Joan Queralt Molina
- *           (C) 2014 Sébastien Le Callonnec
+ *           (C) 2014-2018 Sébastien Le Callonnec
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -30,8 +30,7 @@ import org.apache.commons.lang3.event.EventListenerSupport;
  */
 public class Organism extends Rectangle {
 	private final EventListenerSupport<OrganismCreatedListener> actionListeners = EventListenerSupport.create(OrganismCreatedListener.class);
-	
-		private final EventListenerSupport<OrganismCollidedListener> actionCollidedListeners = EventListenerSupport.create(OrganismCollidedListener.class);
+	private final EventListenerSupport<OrganismCollidedListener> actionCollidedListeners = EventListenerSupport.create(OrganismCollidedListener.class);
 	
 	
 	/**
@@ -394,7 +393,7 @@ public class Organism extends Rectangle {
 	 * and finds a place in the world to put it.
 	 * 
 	 * @param parent  The organism from which this organism is born. 
-	 * @param	first 
+	 * @param first   
 	 * @return  true if it found a place for this organism or false otherwise.
 	 */
 	public boolean inherit(Organism parent, boolean first) {
@@ -775,6 +774,8 @@ public class Organism extends Rectangle {
 	 * This includes segments upkeep and activation,
 	 * movement, growth, collision detection, reproduction,
 	 * respiration and death.
+	 * 
+	 * @return boolean – true if the organism has energy after this move, false otherwise.
 	 */
 	public boolean move() {
 		boolean collision = false;
@@ -849,9 +850,7 @@ public class Organism extends Rectangle {
 		}
 		double respiration = _world.respiration(q);
 		_energy -= respiration;
-		if (respiration < q)
-			return false;
-		return true;
+		return respiration >= q;
 	}
 	/**
 	 * Realize the respiration process to maintain its structure.

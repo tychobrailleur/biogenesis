@@ -1,4 +1,5 @@
 /* Copyright (C) 2006-2010  Joan Queralt Molina
+ * Copyright (c) 2018  Sébastien Le Callonnec
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -134,14 +135,13 @@ public class Messages {
 	 */
 	public static String[] getSupportedLocalesNames() {
 		String[] names = new String[supportedLocalesNames.length];
-		for (int i=0; i<names.length; i++)
-			names[i] = supportedLocalesNames[i];
+		System.arraycopy(supportedLocalesNames, 0, names, 0, names.length);
 		return names;
 	}
 	/**
 	 * Set a new locale using its index in the list of supported locales
 	 * 
-	 * @param index
+	 * @param index Index of the locale to use based on its index.
 	 */
 	public static void setLocale(int index) {
 		currentLocale = new Locale(supportedLocalesCodes[index]);
@@ -151,7 +151,7 @@ public class Messages {
 	/**
 	 * Set a new locale from a language code
 	 * 
-	 * @param language
+	 * @param language Locale to use base on the language code.
 	 */
 	public static void setLocale(String language) {
 		currentLocale = new Locale(language);

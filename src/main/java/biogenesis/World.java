@@ -1,5 +1,5 @@
 /* Copyright (C) 2006-2010  Joan Queralt Molina
- * Copyright (c) 2012 Sebastien Le Callonnec
+ * Copyright (c) 2012-2018 Sebastien Le Callonnec
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -49,9 +49,9 @@ public class World extends Observable implements Serializable {
 	/**
 	 * A list of the organisms in the world, even dead ones.
 	 * Note that this must be a synchronized list so it is mandatory to
-	 * manually synchronize when iterating over it. 
+	 * manually synchronize when iterating over it.
 	 */
-	protected List<Organism> _organisms;
+	protected final List<Organism> _organisms;
 	/**
 	 * A list of all input biological corridors from where organisms
 	 * of other hosts will arrive.
@@ -87,7 +87,7 @@ public class World extends Observable implements Serializable {
 	 */
 	private int nFrames;
 	/**
-	 * The amount of O2 in the atmosphere of this world. 
+	 * The amount of O2 in the atmosphere of this world.
 	 */
 	protected double _O2;
 	/**
@@ -95,20 +95,20 @@ public class World extends Observable implements Serializable {
 	 */
 	protected double _CO2;
 	/**
-	 * Reference to the object that keeps track of all world statistics. 
+	 * Reference to the object that keeps track of all world statistics.
 	 */
 	protected WorldStatistics worldStatistics;
-	
+
 	/**
 	 * keeps track of all the organisms that ever lived in the world.
 	 */
 	private final WorldMemory memory = new WorldMemory();
 	/**
 	 * Called by the JRE when an instance of this class is read from a file
-	 * 
+	 *
 	 * @param in  The stream from where the object comes from
-	 * @throws IOException
-	 * @throws ClassNotFoundException 
+	 * @throws ClassNotFoundException if class cannot be found.
+     * @throws IOException if object cannot be read due to I/O problem.
 	 */
 	private void readObject(java.io.ObjectInputStream in)
     throws IOException, ClassNotFoundException {
@@ -118,7 +118,7 @@ public class World extends Observable implements Serializable {
 	}
 	/**
 	 * Returns a new StatisticsWindow refering to this world.
-	 * 
+	 *
 	 * @return  A newly created StatisticsWindow.
 	 */
 	public StatisticsWindow createStatisticsWindow() {
@@ -129,7 +129,7 @@ public class World extends Observable implements Serializable {
 	 * returns a reference to it. If more than on organism satisfies this condition,
 	 * if possible, an alive organism is returned. If non organism satisfies this
 	 * condition, this method returns null.
-	 * 
+	 *
 	 * @param x  X coordinate
 	 * @param y  Y coordinate
 	 * @return  An organism with the point (x,y) inside its bounding box, or null
@@ -150,7 +150,7 @@ public class World extends Observable implements Serializable {
 		}
 		return deadOrganism;
 	}
-	
+
 	/**
 	 * returns an organism by its ID.
 	 * @param id - ID of the organism we are looking for.
@@ -164,13 +164,13 @@ public class World extends Observable implements Serializable {
 				}
 			}
 		}
-		
+
 		return null;
 	}
-	
+
 	/**
 	 * Returns the world's width.
-	 * 
+	 *
 	 * @return  The world's width.
 	 */
 	public int getWidth() {
@@ -178,7 +178,7 @@ public class World extends Observable implements Serializable {
 	}
 	/**
 	 * Returns the world's height.
-	 * 
+	 *
 	 * @return  The world's height.
 	 */
 	public int getHeight() {
@@ -186,7 +186,7 @@ public class World extends Observable implements Serializable {
 	}
 	/**
 	 * Returns the next available organism identification number.
-	 * 
+	 *
 	 * @return  A unique number used to identify an organism.
 	 */
 	public int getNewId() {
@@ -194,7 +194,7 @@ public class World extends Observable implements Serializable {
 	}
 	/**
 	 * Returns the actual time.
-	 * 
+	 *
 	 * @return  The actual time.
 	 */
 	public long getTime() {
@@ -203,13 +203,13 @@ public class World extends Observable implements Serializable {
 	/**
 	 * Returns the number of corpses that still have energy and drawn in the
 	 * world.
-	 * 
+	 *
 	 * @return  The number of corpses in the world.
 	 */
 	public int getNCorpses() {
 		return _organisms.size() - _population;
 	}
-	
+
 	/**
 	 * returns the {@link WorldMemory} for this world
 	 * to retrieve family trees of organisms.
@@ -218,10 +218,10 @@ public class World extends Observable implements Serializable {
 	public WorldMemory getWorldMemory() {
 		return this.memory;
 	}
-	
+
 	/**
 	 * Returns the number of alive organisms that populate the world.
-	 * 
+	 *
 	 * @return  The number of alive organisms in the world.
 	 */
 	public int getPopulation() {
@@ -229,7 +229,7 @@ public class World extends Observable implements Serializable {
 	}
 	/**
 	 * Increase the population counter by one.
-	 * 
+	 *
 	 * This method should be called every time a new organism is
 	 * created. Normally, it is called by addOrganism, but in some
 	 * cases it may be used directly.
@@ -240,7 +240,7 @@ public class World extends Observable implements Serializable {
 	}
 	/**
 	 * Decrease the population counter by one.
-	 * 
+	 *
 	 * This method should be called every time an organism dies.
 	 * Normally, it is called by Organism.die or Organism.breath,
 	 * but in some cases it may be used directly.
@@ -251,7 +251,7 @@ public class World extends Observable implements Serializable {
 	}
 	/**
 	 * Returns the amount of O2 that exist in the atmosphere.
-	 * 
+	 *
 	 * @return  The amount of O2.
 	 */
 	public double getO2() {
@@ -259,7 +259,7 @@ public class World extends Observable implements Serializable {
 	}
 	/**
 	 * Returns the amount of CO2 that exist in the atmosphere.
-	 * 
+	 *
 	 * @return  The amount of CO2.
 	 */
 	public double getCO2() {
@@ -267,7 +267,7 @@ public class World extends Observable implements Serializable {
 	}
 	/**
 	 * Add O2 to the atmosphere.
-	 * 
+	 *
 	 * @param q  The amount of O2 to add.
 	 */
 	public void addO2(double q) {
@@ -275,7 +275,7 @@ public class World extends Observable implements Serializable {
 	}
 	/**
 	 * Add CO2 to the atmosphere.
-	 * 
+	 *
 	 * @param q  The amount of CO2 to add.
 	 */
 	public void addCO2(double q) {
@@ -283,7 +283,7 @@ public class World extends Observable implements Serializable {
 	}
 	/**
 	 * Substracts O2 from the atmosphere.
-	 * 
+	 *
 	 * @param q  The amount of O2 to substract.
 	 */
 	public void decreaseO2(double q) {
@@ -291,7 +291,7 @@ public class World extends Observable implements Serializable {
 	}
 	/**
 	 * Substract CO2 from the atmosphere.
-	 * 
+	 *
 	 * @param q  The amount of CO2 to substract.
 	 */
 	public void decreaseCO2(double q) {
@@ -301,7 +301,7 @@ public class World extends Observable implements Serializable {
 	 * Consume O2 from the atmosphere to realize the respiration process
 	 * needed to consume accumulated chemical energy. Frees the same
 	 * amount of CO2 to the atmosphere than O2 consumed.
-	 * 
+	 *
 	 * @param q  The amount of O2 required.
 	 * @return  The amount of O2 obtained. This is always <code>q</code>
 	 * unless there weren't enough O2 in the atmosphere.
@@ -316,7 +316,7 @@ public class World extends Observable implements Serializable {
 	 * Consume CO2 from the atmosphere to realize the photosynthesis process
 	 * needed to obtain chemical energy from the Sun. Frees the same amount
 	 * of O2 to the atmosphere than CO2 consumed.
-	 * 
+	 *
 	 * The CO2 obtained is calculated as follows: the total length of the
 	 * organism's green segments is divided by a fixed parameter that indicates
 	 * green segment effectiveness. Then, the result is multiplied by the total
@@ -325,9 +325,9 @@ public class World extends Observable implements Serializable {
 	 * amount of CO2 that the organism can get. This value can't be greater than
 	 * the total amount of CO2 in the atmosphere, nor the effectiveness of the
 	 * initial length.
-	 * 
+	 *
 	 * @param q  The total length of the organism's green segments.
-	 * @return  The amount of CO2 obtained. 
+	 * @return  The amount of CO2 obtained.
 	 */
 	public double photosynthesis(double q) {
 		q /= Utils.GREEN_OBTAINED_ENERGY_DIVISOR;
@@ -339,7 +339,7 @@ public class World extends Observable implements Serializable {
 	/**
 	 * Constructor of the World class. All internal structures are initialized and
 	 * the world's size is obtained from parameters.
-	 * 
+	 *
 	 * @param visibleWorld  A reference to the visual representation of this world.
 	 */
 	public World(VisibleWorld visibleWorld) {
@@ -354,7 +354,7 @@ public class World extends Observable implements Serializable {
 	/**
 	 * When a world object is read from a file, it must be linked with its visualization.
 	 * That is what this method does.
-	 * 
+	 *
 	 * @param visibleWorld  A reference to the visual representation of this world.
 	 */
 	public void init(VisibleWorld visibleWorld) {
@@ -418,7 +418,7 @@ public class World extends Observable implements Serializable {
 	/**
 	 * Draws all visible components of the world to a graphic context.
 	 * This includes organisms and corridors. Called from {@link biogenesis.VisibleWorld.paintComponents}.
-	 * 
+	 *
 	 * @param g  The graphic context to draw to.
 	 */
 	public void draw(Graphics g) {
@@ -446,7 +446,7 @@ public class World extends Observable implements Serializable {
 	/**
 	 * Determines the world's region that needs to be repainted in the associated
 	 * {@link biogenesis.VisualWorld} and instructs it to do it.
-	 * 
+	 *
 	 * For optimization, only paints organisms that has moved in the last frame.
 	 */
 	public void setPaintingRegion() {
@@ -480,8 +480,8 @@ public class World extends Observable implements Serializable {
 	 * Executes a frame. This method iterates through all objects in the world
 	 * and make them to execute a movement. Here is the place where all action
 	 * occurs: organism movement, interaction, birth and death.
-	 * 
-	 * Additionally, every 20 frames the {@link InfoWindow} is updated, if showed,
+	 *
+	 * Additionally, every 20 frames the {@link InfoToolbar} is updated, if showed,
 	 * and every 256 frames the time counter is increased by 1.
 	 */
 	public void time() {
@@ -520,16 +520,16 @@ public class World extends Observable implements Serializable {
 			nFrames = 0;
 			worldStatistics.eventTime(_population, _O2, _CO2);
 		}
-		
+
 		setChanged();
 		notifyObservers();
 	}
 	/**
 	 * Add a pair of biological corridors to the world.
-	 * This method is called by {@link biogenesis.Connection.setState} when
+	 * This method is called by {@link biogenesis.Connection#setState(int)} when
 	 * a new connection is stablished in order to activate the pair
 	 * of corridors associated with the new connection.
-	 * 
+	 *
 	 * @param in  The corridor where organisms will arrive from another world.
 	 * @param out  The corridor where organisms will leave this world.
 	 */
@@ -539,10 +539,10 @@ public class World extends Observable implements Serializable {
 	}
 	/**
 	 * Remove a pair of biological corridors from the world.
-	 * This method is called by {@link biogenesis.Connection.setState} when
+	 * This method is called by {@link biogenesis.Connection#setState(int)} when
 	 * a connection is closed in order to remove the pair of corridors
 	 * associated with the closing connection.
-	 * 
+	 *
 	 * @param in  The corridor where organisms were arriving from the other world.
 	 * @param out  The corridor where organisms were leaving from this world.
 	 */
@@ -560,7 +560,7 @@ public class World extends Observable implements Serializable {
 	 * Checks if an organism enters an output corridor. It is considered
 	 * that the organism has entered a corridor if its center is inside
 	 * the corridor.
-	 * 
+	 *
 	 * @param org  The organism that is being checked.
 	 * @return  The corridor that the organism is in, or null if it is not
 	 * inside any corridor.
@@ -579,16 +579,16 @@ public class World extends Observable implements Serializable {
 	/**
 	 * Checks if an organism has a high probability of being in touch with
 	 * another organism. This is done by checking if the bounding rectangles
-	 * of both organisms overlaps. 
-	 * 
+	 * of both organisms overlaps.
+	 *
 	 * @param b1  The organism that is being checked.
 	 * @return  The organism which bounding rectangle is touching the bounding
-	 * rectangle of {@code b1} or null if there is no such organism. 
+	 * rectangle of {@code b1} or null if there is no such organism.
 	 */
 	public Organism fastCheckHit(Organism b1) {
 		Organism b;
 		synchronized (_organisms) {
-			for (Iterator<Organism> it = _organisms.iterator(); it.hasNext(); ) { 
+			for (Iterator<Organism> it = _organisms.iterator(); it.hasNext(); ) {
 				b = it.next();
 				if (b1 != b) {
 					if (b1.intersects(b)) {
@@ -601,15 +601,15 @@ public class World extends Observable implements Serializable {
 	}
 	/**
 	 * Checks if an organism hits another organism.
-	 * 
+	 *
 	 * @param org1  The organism to check.
 	 * @return  The organism that is touching {@code org1} or null if not such
-	 * organism exists. 
+	 * organism exists.
 	 */
 	public Organism checkHit(Organism org1) {
 		Organism org;
 		synchronized(_organisms) {
-			for (Iterator<Organism> it = _organisms.iterator(); it.hasNext(); ) { 
+			for (Iterator<Organism> it = _organisms.iterator(); it.hasNext(); ) {
 				org = it.next();
 				if (org1 != org) {
 					// First check if the bounding boxes intersect
@@ -626,9 +626,9 @@ public class World extends Observable implements Serializable {
 	/**
 	 * Adds an organism to the world. Once added, the new organism will move at every
 	 * frame and interact with other organisms in the world.
-	 * 
-	 * Updates world statistics, population and the {@link biogenesis.InfoWindow}, if necessary.
-	 * 
+	 *
+	 * Updates world statistics, population and the {@link biogenesis.InfoToolbar}, if necessary.
+	 *
 	 * @param child  The organism that needs to be added.
 	 * @param parent  The parent of the added organism, or null if there is no parent.
 	 */
@@ -645,7 +645,7 @@ public class World extends Observable implements Serializable {
 	}
 	/**
 	 * Informs the world of a defunction event. This will update statistics.
-	 * 
+	 *
 	 * @param dyingOrganism  The organism that has just died.
 	 * @param killingOrganism  The organism that has killed the other organism, if any.
 	 */
@@ -658,7 +658,7 @@ public class World extends Observable implements Serializable {
 	}
 	/**
 	 * Informs the world of an infection event. This will update statistics.
-	 * 
+	 *
 	 * @param infectedOrganism  The organism that has just been infected.
 	 * @param infectingOrganism  The organism that has infected the other organism.
 	 */

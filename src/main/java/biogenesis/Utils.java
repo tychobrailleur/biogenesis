@@ -1,4 +1,5 @@
 /* Copyright (C) 2006-2010  Joan Queralt Molina
+ * Copyright (c) 2018  Sébastien Le Callonnec
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -495,9 +496,6 @@ public final class Utils {
 	/**
 	 * Calculates the minimum of three integers
 	 * 
-	 * @param a
-	 * @param b
-	 * @param c
 	 * @return  The minimum of a, b, and c
 	 */
 	public static int min(int a, int b, int c) {
@@ -506,9 +504,6 @@ public final class Utils {
 	/**
 	 * Calculates the minimum of three doubles
 	 * 
-	 * @param a
-	 * @param b
-	 * @param c
 	 * @return  The minimum of a, b, and c
 	 */
 	public static double min(double a, double b, double c) {
@@ -517,9 +512,6 @@ public final class Utils {
 	/**
 	 * Calculates the maximum of three integers
 	 * 
-	 * @param a
-	 * @param b
-	 * @param c
 	 * @return  The maximum of a, b, and c
 	 */
 	public static int max(int a, int b, int c) {
@@ -528,9 +520,6 @@ public final class Utils {
 	/**
 	 * Calculates the maximum of three doubles 
 	 * 
-	 * @param a
-	 * @param b
-	 * @param c
 	 * @return  The maximum of a, b, and c
 	 */
 	public static double max(double a, double b, double c) {
@@ -539,9 +528,6 @@ public final class Utils {
 	/**
 	 * Return min if value<min, max if value>max and value otherwise.
 	 * 
-	 * @param value
-	 * @param min
-	 * @param max
 	 * @return  min if value<min, max if value>max and value otherwise
 	 */
 	public static int between(int value, int min, int max) {
