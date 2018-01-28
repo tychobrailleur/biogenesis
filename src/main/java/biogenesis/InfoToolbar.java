@@ -1,5 +1,5 @@
 /* Copyright (C) 2006-2010  Joan Queralt Molina
- * Copyright (c) 2012 Sebastien Le Callonnec
+ * Copyright (c) 2012-2018  Sebastien Le Callonnec
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -36,25 +36,17 @@ public class InfoToolbar extends JToolBar {
 	protected JLabel _lEnergy, _lID, _lGeneration, _lAge, _lChildren, _lKills, _lInfected, _lMass, _lReproduceEnergy;
 	protected JButton _buttonGenes;
 	protected GeneticCodePanel _geneticCodePanel;
-	static private NumberFormat _nf = NumberFormat.getInstance();
+	private final static NumberFormat _nf = NumberFormat.getInstance();
 	protected MainWindow _mainWindow;
 
 	private JLabel _lT_REPRODUCTION;
-
 	private JLabel _lT_ID;
-
 	private JLabel _lT_GENERATION;
-
 	private JLabel _lT_AGE;
-
 	private JLabel _lT_ENERGY;
-
 	private JLabel _lT_CHILDREN;
-
 	private JLabel _lT_VICTIMS;
-
 	private JLabel _lT_INFECTED;
-
 	private JLabel _lT_MASS;
 
 	public void setSelectedOrganism(Organism selectedOrganism) {
@@ -118,7 +110,7 @@ public class InfoToolbar extends JToolBar {
 
 	    _lT_ID = new JLabel(Messages.getString("T_ID"), JLabel.CENTER); //$NON-NLS-1$
 		add(_lT_ID, gridBagConstraints);
-		_lID = new JLabel(_selOrganism!=null?_nf.format(_selOrganism.getID()):"-1",JLabel.CENTER); //$NON-NLS-1$
+		_lID = new JLabel(_selOrganism!=null?_nf.format(_selOrganism.getID()):"-1",JLabel.LEFT); //$NON-NLS-1$
 		_lID.setPreferredSize(dimension);
 		gridBagConstraints.gridx = 2;
 		gridBagConstraints.gridy = 0;
@@ -128,7 +120,7 @@ public class InfoToolbar extends JToolBar {
 		gridBagConstraints.gridy = 0;
 		_lT_GENERATION = new JLabel(Messages.getString("T_GENERATION"),JLabel.CENTER); //$NON-NLS-1$
 		add(_lT_GENERATION, gridBagConstraints);
-		_lGeneration = new JLabel(_selOrganism!=null?_nf.format(_selOrganism.getGeneration()):"0",JLabel.CENTER); //$NON-NLS-1$
+		_lGeneration = new JLabel(_selOrganism!=null?_nf.format(_selOrganism.getGeneration()):"0", JLabel.LEFT); //$NON-NLS-1$
 		_lGeneration.setPreferredSize(dimension);
 		gridBagConstraints.gridx = 4;
 		gridBagConstraints.gridy = 0;
@@ -138,7 +130,7 @@ public class InfoToolbar extends JToolBar {
 		gridBagConstraints.gridy = 0;
 		_lT_AGE = new JLabel(Messages.getString("T_AGE"),JLabel.CENTER); //$NON-NLS-1$
 		add(_lT_AGE, gridBagConstraints);
-		_lAge = new JLabel(_selOrganism!=null?_nf.format(_selOrganism.getAge()>>8):"0",JLabel.CENTER); //$NON-NLS-1$
+		_lAge = new JLabel(_selOrganism!=null?_nf.format(_selOrganism.getAge()>>8):"0", JLabel.LEFT); //$NON-NLS-1$
 		_lAge.setPreferredSize(dimension);
 		gridBagConstraints.gridx = 6;
 		gridBagConstraints.gridy = 0;
@@ -148,7 +140,7 @@ public class InfoToolbar extends JToolBar {
 		gridBagConstraints.gridy = 0;
 		_lT_ENERGY = new JLabel(Messages.getString("T_ENERGY"),JLabel.CENTER); //$NON-NLS-1$
 		add(_lT_ENERGY, gridBagConstraints);
-		_lEnergy = new JLabel(_selOrganism!=null?_nf.format(_selOrganism.getEnergy()):"0", JLabel.CENTER); //$NON-NLS-1$
+		_lEnergy = new JLabel(_selOrganism!=null?_nf.format(_selOrganism.getEnergy()):"0", JLabel.LEFT); //$NON-NLS-1$
 		_lEnergy.setPreferredSize(dimension);
 		gridBagConstraints.gridx = 8;
 		gridBagConstraints.gridy = 0;
@@ -158,7 +150,7 @@ public class InfoToolbar extends JToolBar {
 		gridBagConstraints.gridy = 1;
 		_lT_CHILDREN = new JLabel(Messages.getString("T_CHILDREN"),JLabel.CENTER); //$NON-NLS-1$
 		add(_lT_CHILDREN, gridBagConstraints);
-		_lChildren = new JLabel(_selOrganism!=null?_nf.format(_selOrganism.getTotalChildren()):"0",JLabel.CENTER); //$NON-NLS-1$
+		_lChildren = new JLabel(_selOrganism!=null?_nf.format(_selOrganism.getTotalChildren()):"0", JLabel.LEFT); //$NON-NLS-1$
 		_lChildren.setPreferredSize(dimension);
 		gridBagConstraints.gridx = 2;
 		gridBagConstraints.gridy = 1;
@@ -168,7 +160,7 @@ public class InfoToolbar extends JToolBar {
 		gridBagConstraints.gridy = 1;
 		_lT_VICTIMS =new JLabel(Messages.getString("T_VICTIMS"), JLabel.CENTER); //$NON-NLS-1$
 		add(_lT_VICTIMS, gridBagConstraints);
-		_lKills = new JLabel(_selOrganism!=null?_nf.format(_selOrganism.getTotalKills()):"0", JLabel.CENTER); //$NON-NLS-1$
+		_lKills = new JLabel(_selOrganism!=null?_nf.format(_selOrganism.getTotalKills()):"0", JLabel.LEFT); //$NON-NLS-1$
 		_lKills.setPreferredSize(dimension);
 		gridBagConstraints.gridx = 4;
 		gridBagConstraints.gridy = 1;
@@ -178,7 +170,7 @@ public class InfoToolbar extends JToolBar {
 		gridBagConstraints.gridy = 1;
 		_lT_INFECTED = new JLabel(Messages.getString("T_INFECTED"), JLabel.CENTER); //$NON-NLS-1$
 		add(_lT_INFECTED, gridBagConstraints);
-		_lInfected = new JLabel(_selOrganism!=null?_nf.format(_selOrganism.getTotalInfected()):"0", JLabel.CENTER); //$NON-NLS-1$
+		_lInfected = new JLabel(_selOrganism!=null?_nf.format(_selOrganism.getTotalInfected()):"0", JLabel.LEFT); //$NON-NLS-1$
 		_lInfected.setPreferredSize(dimension);
 		gridBagConstraints.gridx = 6;
 		gridBagConstraints.gridy = 1;
@@ -188,7 +180,7 @@ public class InfoToolbar extends JToolBar {
 		gridBagConstraints.gridy = 1;
 		_lT_MASS = new JLabel(Messages.getString("T_MASS"),JLabel.CENTER); //$NON-NLS-1$
 		add(_lT_MASS, gridBagConstraints);
-		_lMass = new JLabel(_selOrganism!=null?_nf.format(_selOrganism.getMass()):"0",JLabel.CENTER); //$NON-NLS-1$
+		_lMass = new JLabel(_selOrganism!=null?_nf.format(_selOrganism.getMass()):"0", JLabel.LEFT); //$NON-NLS-1$
 		_lMass.setPreferredSize(dimension);
 		gridBagConstraints.gridx = 8;
 		gridBagConstraints.gridy = 1;
@@ -228,7 +220,7 @@ public class InfoToolbar extends JToolBar {
 		gridBagConstraints.gridwidth = 1;
 		_lT_REPRODUCTION = new JLabel(Messages.getString("T_REPRODUCTION"), JLabel.CENTER); //$NON-NLS-1$
 		add(_lT_REPRODUCTION, gridBagConstraints);
-		_lReproduceEnergy = new JLabel(_selOrganism!=null?_nf.format(_selOrganism.getGeneticCode().getReproduceEnergy()):"0",JLabel.CENTER);
+		_lReproduceEnergy = new JLabel(_selOrganism!=null?_nf.format(_selOrganism.getGeneticCode().getReproduceEnergy()):"0", JLabel.LEFT);
 		_lReproduceEnergy.setPreferredSize(dimension);
 		gridBagConstraints.gridx = 4;
 		gridBagConstraints.gridy = 2;

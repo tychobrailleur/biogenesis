@@ -31,8 +31,8 @@ import org.apache.commons.lang3.event.EventListenerSupport;
 public class Organism extends Rectangle {
 	private final EventListenerSupport<OrganismCreatedListener> actionListeners = EventListenerSupport.create(OrganismCreatedListener.class);
 	private final EventListenerSupport<OrganismCollidedListener> actionCollidedListeners = EventListenerSupport.create(OrganismCollidedListener.class);
-	
-	
+
+
 	/**
 	 * The version of this class
 	 */
@@ -115,11 +115,11 @@ public class Organism extends Rectangle {
 	 */
 	protected double[] _m;
 	/**
-	 * X coordinate of this organim's center of gravity.
+	 * X coordinate of this organism's centre of gravity.
 	 */
 	protected int _centerX;
 	/**
-	 * Y coordinate of this organim's center of gravity.
+	 * Y coordinate of this organism's centre of gravity.
 	 */
 	protected int _centerY;
 	/**
@@ -221,10 +221,14 @@ public class Organism extends Rectangle {
 	 * Indicates if the organism is alive.
 	 */
 	protected boolean alive = true;
+
+	private long birthTime = -1;
+	private long deathTime = -1;
+
 	private static transient Vector2D v = new Vector2D();
 	/**
 	 * Returns true if this organism is alive, false otherwise.
-	 * 
+	 *
 	 * @return  true if this organism is alive, false otherwise.
 	 */
 	public boolean isAlive() {
@@ -232,7 +236,7 @@ public class Organism extends Rectangle {
 	}
 	/**
 	 * Returns the amount of chemical energy stored by this organism.
-	 * 
+	 *
 	 * @return  The amount of chemical energy stored by this organism.
 	 */
 	public double getEnergy() {
@@ -240,7 +244,7 @@ public class Organism extends Rectangle {
 	}
 	/**
 	 * Returns the identification number of this organism.
-	 * 
+	 *
 	 * @return  The identification number of this organism.
 	 */
 	public int getID() {
@@ -248,7 +252,7 @@ public class Organism extends Rectangle {
 	}
 	/**
 	 * Returns the identification number of this organism's parent.
-	 * 
+	 *
 	 * @return  The identification number of this organism's parent.
 	 */
 	public int getParentID() {
@@ -256,7 +260,7 @@ public class Organism extends Rectangle {
 	}
 	/**
 	 * Returns the generation number of this organism.
-	 * 
+	 *
 	 * @return  The generation number of this organism.
 	 */
 	public int getGeneration() {
@@ -264,7 +268,7 @@ public class Organism extends Rectangle {
 	}
 	/**
 	 * Returns the age of this organism.
-	 * 
+	 *
 	 * @return  The age of this organism, in number of frames.
 	 */
 	public int getAge() {
@@ -272,7 +276,7 @@ public class Organism extends Rectangle {
 	}
 	/**
 	 * Returns the number of children that this organism produced.
-	 * 
+	 *
 	 * @return  The number of children that this organism produced.
 	 */
 	public int getTotalChildren() {
@@ -280,7 +284,7 @@ public class Organism extends Rectangle {
 	}
 	/**
 	 * Returns the number of organisms killed by this organism.
-	 * 
+	 *
 	 * @return  The number of organisms killed by this organism.
 	 */
 	public int getTotalKills() {
@@ -288,7 +292,7 @@ public class Organism extends Rectangle {
 	}
 	/**
 	 * Returns the number of organisms infected by this organism.
-	 * 
+	 *
 	 * @return  The number of organisms infected by this organism.
 	 */
 	public int getTotalInfected() {
@@ -296,7 +300,7 @@ public class Organism extends Rectangle {
 	}
 	/**
 	 * Returns a reference to this organism's genetic code.
-	 * 
+	 *
 	 * @return  A reference to this organism's genetic code.
 	 */
 	public GeneticCode getGeneticCode() {
@@ -304,23 +308,33 @@ public class Organism extends Rectangle {
 	}
 	/**
 	 * Returns the total mass of this organism.
-	 * 
+	 *
 	 * @return  The total mass of this organism calculated as the sum
 	 * of all its segments length.
 	 */
 	public double getMass() {
 		return _mass;
 	}
+
+	public long getBirthTime() {
+		return birthTime;
+	}
+
+	public long getDeathTime() {
+		return deathTime;
+	}
+
 	/**
 	 * Basic constructor. Doesn't initialize it: use {@link randomCreate}
 	 * or {@link inherit} to do this.
-	 * 
+	 *
 	 * @param world  A reference to the world where this organism is in.
 	 */
 	public Organism(World world) {
 		_world = world;
 		_visibleWorld = world._visibleWorld;
 		_theta = Utils.random.nextDouble() * Math.PI * 2d;
+		birthTime = world.getTime();
 		addListener((OrganismCreatedListener)new MusicPlayer());
 		addListener((OrganismCollidedListener)new MusicPlayer());
 	}
@@ -328,7 +342,7 @@ public class Organism extends Rectangle {
 	 * Construct an organism with a given genetic code. Doesn't initialize it:
 	 * use {@link pasteOrganism} to do it. Use {@link World.addOrganism} to add
 	 * it to the world.
-	 * 
+	 *
 	 * @param world  A reference to the world where this organism is in.
 	 * @param geneticCode  A reference to the genetic code of this organism.
 	 */
@@ -337,6 +351,7 @@ public class Organism extends Rectangle {
 		_visibleWorld = world._visibleWorld;
 		_theta = Utils.random.nextDouble() * Math.PI * 2d;
 		_geneticCode = geneticCode;
+		birthTime = world.getTime();
 		addListener((OrganismCreatedListener)new MusicPlayer());
 		addListener((OrganismCollidedListener)new MusicPlayer());
 	}
@@ -360,14 +375,14 @@ public class Organism extends Rectangle {
 		y1 = new int[_segments];
 		x2 = new int[_segments];
 		y2 = new int[_segments];
-		
+
 		OrganismCreatedEvent event = new OrganismCreatedEvent();
 		actionListeners.fire().perform(event);
 	}
 	/**
 	 * Initializes variables for a new random organism and finds a place
 	 * to put it in the world.
-	 * 
+	 *
 	 * @return  true if it found a place for this organism or false otherwise.
 	 */
 	public boolean randomCreate() {
@@ -391,15 +406,15 @@ public class Organism extends Rectangle {
 	 * Initializes variables for a new organism born from an existing
 	 * organism. Generates a mutated genetic code based on the parent's one
 	 * and finds a place in the world to put it.
-	 * 
-	 * @param parent  The organism from which this organism is born. 
-	 * @param first   
+	 *
+	 * @param parent  The organism from which this organism is born.
+	 * @param first
 	 * @return  true if it found a place for this organism or false otherwise.
 	 */
 	public boolean inherit(Organism parent, boolean first) {
 		GeneticCode inheritGeneticCode;
 		boolean ok = true;
-		
+
 		// Create the inherited genetic code
 		if (parent._infectedGeneticCode != null)
 			inheritGeneticCode = parent._infectedGeneticCode;
@@ -423,13 +438,13 @@ public class Organism extends Rectangle {
 				parent.useEnergy(Utils.YELLOW_ENERGY_CONSUMPTION);
 		} else
 			ok = false;
-		
+
 		return ok;
 	}
 	/**
 	 * Places the organism at the specified position in the world and initializes its
 	 * variables. The organism must has an assigned genetic code.
-	 * 
+	 *
 	 * @param posx  The x coordinate of the position in the world we want to put this organism.
 	 * @param posy  The y coordinate of the position in the world we want to put this organism.
 	 * @return  true if there were enough space to put the organism, false otherwise.
@@ -523,7 +538,7 @@ public class Organism extends Rectangle {
 			// calculate points distance of the origin and modulus
 			_m1[i] = Math.sqrt(_startPointX[i]*_startPointX[i]+_startPointY[i]*_startPointY[i]);
 			_m2[i] = Math.sqrt(_endPointX[i]*_endPointX[i]+_endPointY[i]*_endPointY[i]);
-			_m[i] = Math.sqrt(Math.pow(_endPointX[i]-_startPointX[i],2) + 
+			_m[i] = Math.sqrt(Math.pow(_endPointX[i]-_startPointX[i],2) +
 					Math.pow(_endPointY[i]-_startPointY[i],2));
 			_mass += _m[i];
 			// calculate inertia moment
@@ -535,45 +550,12 @@ public class Organism extends Rectangle {
 				_m[i] * cx*cx + cy*cy;// mass * length^2 (center is at 0,0)
 		}
 	}
-	/**
-	 * Given a vector, calculates the resulting vector after a rotation, a scalation and possibly
-	 * after mirroring it.
-	 * The rotation degree and the mirroring is found using the Utils.degree array, where parameter
-	 * mirror is the row and step is the column. The step represents the repetition of this vector
-	 * following the organism symmetry.
-	 * The scalation is calculated using the Utils.scale coefficients, using the organism's
-	 * _growthRatio to find the appropriate value. 
-	 * 
-	 * @param p  The end point of the vector. The starting point is (0,0).
-	 * @param step  The repetition of the vectors pattern  we are calculating.
-	 * @param mirror  If mirroring is applied to this organism 1, otherwise 0.
-	 * @return  The translated vector.
-	 */
-/*	private Vector2D translate(Point p, int step, int mirror) {
-		if (p.x == 0 && p.y == 0)
-			return new Vector2D();
 
-		double px = p.x;
-		double py = p.y;
-
-		px /= Utils.scale[_growthRatio - 1];
-		py /= Utils.scale[_growthRatio - 1];
-
-		Vector2D v = new Vector2D(px,py);
-		v.addDegree(Utils.degree[mirror][step]);
-
-		if (Utils.invertX[mirror][step] != 0)
-			v.invertX();
-		if (Utils.invertY[mirror][step] != 0)
-			v.invertY();
-
-		return v;
-	}*/
 	/**
 	 * Tries to find a spare place in the world for this organism and place it.
 	 * It also generates an identification number for the organism if it can be placed
 	 * somewhere.
-	 * 
+	 *
 	 * @return  true if a suitable place has been found, false if not.
 	 */
 	private boolean placeRandom() {
@@ -603,8 +585,8 @@ public class Organism extends Rectangle {
 	/**
 	 * Tries to find a spare place near its parent for this organism and place it.
 	 * It also generates an identification number for the organism if it can be placed
-	 * somewhere and substracts its energy from its parent's energy.
-	 * 
+	 * somewhere and subtracts its energy from its parent's energy.
+	 *
 	 * @return  true if a suitable place has been found, false if not.
 	 */
 	private boolean placeNear(Organism parent) {
@@ -612,7 +594,7 @@ public class Organism extends Rectangle {
 		// Try to put it in any possible position, starting from a randomly chosen one.
 		for (int nSide = 0; nSide < 8; nSide++) {
 			// Calculate candidate position
-			_dCenterX = parent._dCenterX + (parent.width / 2 + width / 2+ 1) * Utils.side[nPos][0]; 
+			_dCenterX = parent._dCenterX + (parent.width / 2 + width / 2+ 1) * Utils.side[nPos][0];
 			_dCenterY = parent._dCenterY + (parent.height / 2 + height / 2 + 1) * Utils.side[nPos][1];
 			_centerX = (int) _dCenterX;
 			_centerY = (int) _dCenterY;
@@ -643,7 +625,7 @@ public class Organism extends Rectangle {
 	/**
 	 * Draws this organism to a graphics context.
 	 * The organism is drawn at its position in the world.
-	 * 
+	 *
 	 * @param g  The graphics context to draw to.
 	 */
 	public void draw(Graphics g) {
@@ -684,17 +666,17 @@ public class Organism extends Rectangle {
 	 * Calculates the position of all organism points in the world, depending on
 	 * its rotation. It also calculates the bounding rectangle of the organism.
 	 * This method must be called from outside this class only when doing
-	 * manual drawing.  
-	 * 
+	 * manual drawing.
+	 *
 	 * @param force  To avoid calculations, segments position are only calculated
 	 * if the organism's rotation has changed in the last frame. If it is necessary
 	 * to calculate them even when the rotation hasn't changed, assign true to this
 	 * parameter.
 	 */
 	public void calculateBounds(boolean force) {
-		double left=java.lang.Double.MAX_VALUE, right=java.lang.Double.MIN_VALUE, 
+		double left=java.lang.Double.MAX_VALUE, right=java.lang.Double.MIN_VALUE,
 		top=java.lang.Double.MAX_VALUE, bottom=java.lang.Double.MIN_VALUE;
-		
+
 		double theta;
 		for (int i=_segments-1; i>=0; i--) {
 			/* Save calculation: if rotation hasn't changed and it is not forced,
@@ -749,7 +731,7 @@ public class Organism extends Rectangle {
 				hasGrown = 0;
 		}
 	}
-	
+
 	/**
 	 * Makes this organism reproduce. It tries to create at least one
 	 * child and at maximum 8 (depending on the number of yellow segments
@@ -757,7 +739,7 @@ public class Organism extends Rectangle {
 	 */
 	public void reproduce() {
 		Organism newOrg;
-		
+
 		for (int i=0; i < Utils.between(_nChildren,1,8); i++) {
 			newOrg = new Organism(_world);
 			if (newOrg.inherit(this, i==0)) {
@@ -774,7 +756,7 @@ public class Organism extends Rectangle {
 	 * This includes segments upkeep and activation,
 	 * movement, growth, collision detection, reproduction,
 	 * respiration and death.
-	 * 
+	 *
 	 * @return boolean – true if the organism has energy after this move, false otherwise.
 	 */
 	public boolean move() {
@@ -794,7 +776,7 @@ public class Organism extends Rectangle {
 		double dxbak=dx, dybak=dy, dthetabak=dtheta;
 		offset(dx,dy,dtheta);
 		calculateBounds(hasGrown!=0);
-		
+
 		if (hasGrown!=0 || dx!=0 || dy!=0 || dtheta!=0) {
 			hasMoved = true;
 			// Check it is inside the world
@@ -839,7 +821,7 @@ public class Organism extends Rectangle {
 	/**
 	 * Makes the organism spend an amount of energy using the
 	 * respiration process.
-	 * 
+	 *
 	 * @param q  The quantity of energy to spend.
 	 * @return  true if the organism has enough energy and there are
 	 * enough oxygen in the atmosphere, false otherwise.
@@ -866,9 +848,7 @@ public class Organism extends Rectangle {
 				die(null);
 			} else {
 				if (_energy <= Utils.tol) {
-					alive = false;
-					_world.decreasePopulation();
-					_world.organismHasDied(this, null);
+					die(null);
 				}
 			}
 		} else {
@@ -879,7 +859,7 @@ public class Organism extends Rectangle {
 	/**
 	 * Kills the organism. Sets its segments to brown and tells the world
 	 * about the event.
-	 * 
+	 *
 	 * @param killingOrganism  The organism that has killed this organism,
 	 * or null if it has died of natural causes.
 	 */
@@ -893,12 +873,13 @@ public class Organism extends Rectangle {
 		if (killingOrganism != null)
 			killingOrganism._nTotalKills++;
 		_world.organismHasDied(this, killingOrganism);
+		deathTime = _world.getTime();
 	}
 	/**
 	 * Infects this organism with a genetic code.
 	 * Tells the world about this event.
 	 * Not currently used.
-	 * 
+	 *
 	 * @param infectingCode  The genetic code that infects this organism.
 	 */
 	public void infectedBy(GeneticCode infectingCode) {
@@ -908,7 +889,7 @@ public class Organism extends Rectangle {
 	/**
 	 * Infects this organism with the genetic code of another organism.
 	 * Tells the world about this event.
-	 * 
+	 *
 	 * @param infectingOrganism  The organism that is infecting this one.
 	 */
 	public void infectedBy(Organism infectingOrganism) {
@@ -919,7 +900,7 @@ public class Organism extends Rectangle {
 	/**
 	 * Calculates the resulting speeds after a collision between two organisms, following
 	 * physical rules.
-	 * 
+	 *
 	 * @param org  The other organism in the collision.
 	 * @param p  Intersection point between the organisms.
 	 * @param l  Line that has collided. Of the two lines, this is the one that collided
@@ -966,7 +947,7 @@ public class Organism extends Rectangle {
 			}
 		}
 		// This is the j in the parallel axis theorem
-		double j = (-(1+Utils.ELASTICITY) * (vab1x * nx + vab1y * ny)) / 
+		double j = (-(1+Utils.ELASTICITY) * (vab1x * nx + vab1y * ny)) /
 			(1/_mass + 1/org._mass + Math.pow(rapx * ny - rapy * nx, 2) / _I +
 					Math.pow(rbpx * ny - rbpy * nx, 2) / org._I);
 		// Final speed
@@ -982,7 +963,7 @@ public class Organism extends Rectangle {
 	 * speed after the collision with the world border.
 	 * This calculation should be updated to follow the parallel axis theorem, just
 	 * like the collision between two organisms.
-	 * 
+	 *
 	 * @return  true if the organism is inside the world, false otherwise.
 	 */
 	private boolean isInsideWorld() {
@@ -1000,19 +981,19 @@ public class Organism extends Rectangle {
 	}
 	/**
 	 * Moves the organism and rotates it.
-	 * 
+	 *
 	 * @param offsetx  displacement on the x axis.
 	 * @param offsety  displacement on the y axis.
 	 * @param offsettheta  rotation degree.
 	 */
 	private void offset(double offsetx, double offsety, double offsettheta) {
 		_dCenterX += offsetx; _dCenterY += offsety; _theta += offsettheta;
-		_centerX = (int)_dCenterX; _centerY = (int)_dCenterY; 
+		_centerX = (int)_dCenterX; _centerY = (int)_dCenterY;
 	}
 	/**
 	 * Finds if two organism are touching and if so applies the effects of the
 	 * collision.
-	 * 
+	 *
 	 * @param org  The organism to check for collisions.
 	 * @return  true if the two organisms are touching, false otherwise.
 	 */
@@ -1023,7 +1004,7 @@ public class Organism extends Rectangle {
 		// Check collisions for all segments
 		for (i = _segments-1; i >= 0; i--) {
 			// Consider only segments with modulus greater than 1
-			if (_m[i]>=1) { 
+			if (_m[i]>=1) {
 				line.setLine(x1[i]+_centerX, y1[i]+_centerY, x2[i]+_centerX, y2[i]+_centerY);
 				// First check if the line intersects the bounding box of the other organism
 				if (org.intersectsLine(line)) {
@@ -1051,10 +1032,10 @@ public class Organism extends Rectangle {
 									touchMove(org,intersec,bline,false);
 								else
 									touchMove(org,intersec,line,true);
-								
+
 								OrganismCollidedEvent event = new OrganismCollidedEvent();
 								actionCollidedListeners.fire().perform(event);
-								
+
 								// Find only one collision to speed up.
 								return true;
 							}
@@ -1068,12 +1049,12 @@ public class Organism extends Rectangle {
 
 	/**
 	 * Applies the effects produced by two touching segments.
-	 * 
+	 *
 	 * @param org  The organism which is touching.
-	 * @param seg  Index of this organism's segment. 
+	 * @param seg  Index of this organism's segment.
 	 * @param oseg  Index of the other organism's segment.
 	 * @param firstCall  Indicates if this organism is the one that has detected the collision
-	 * or this method is called by this same method in the other organism. 
+	 * or this method is called by this same method in the other organism.
 	 */
 	private void touchEffects(Organism org, int seg, int oseg, boolean firstCall) {
 		if ((_parentID == org._ID || _ID == org._parentID) && org.alive)
@@ -1094,7 +1075,7 @@ public class Organism extends Rectangle {
 						takenEnergy = Utils.between(_m[seg] * Utils.ORGANIC_OBTAINED_ENERGY, 0, org._energy);
 						// The other organism will be shown in yellow
 						org.setColor(Color.YELLOW);
-					}	
+					}
 				}
 				break;
 			case RED:
@@ -1135,7 +1116,7 @@ public class Organism extends Rectangle {
 							org.setColor(Color.YELLOW);
 							setColor(Color.WHITE);
 						}
-					}	
+					}
 				}
 				break;
 			case BROWN:
@@ -1180,7 +1161,7 @@ public class Organism extends Rectangle {
 		if (firstCall)
 			org.touchEffects(this, oseg, seg, false);
 	}
-	
+
 	/*
 	 * Perd velocitat pel fregament.
 	 */
@@ -1192,7 +1173,7 @@ public class Organism extends Rectangle {
 		dtheta *= Utils.RUBBING;
 		if (Math.abs(dtheta) < Utils.tol) dtheta = 0;
 	}
-	
+
 	/*
 	 * Perd el cost de manteniment dels segments
 	 * Aplica l'efecte de cadascun dels segments
@@ -1231,7 +1212,7 @@ public class Organism extends Rectangle {
 			_energy += _world.photosynthesis(photosynthesis);
 		}
 	}
-	
+
 	private static final int NOCOLOR=-1;
 	private static final int GREEN=0;
 	private static final int RED=1;
@@ -1269,12 +1250,12 @@ public class Organism extends Rectangle {
 			return BROWN;
 		return NOCOLOR;
 	}
-	
+
 	private void setColor(Color c) {
 		_color = c;
 		_framesColor = 10;
 	}
-	
+
 	public BufferedImage getImage() {
 		BufferedImage image = new BufferedImage(width,height,BufferedImage.TYPE_INT_RGB);
 		Graphics2D g = image.createGraphics();
@@ -1286,11 +1267,11 @@ public class Organism extends Rectangle {
 		}
 		return image;
 	}
-	
+
 	public void addListener(OrganismCreatedListener listener) {
 		actionListeners.addListener(listener);
 	}
-	
+
 	public void addListener(OrganismCollidedListener listener) {
 		actionCollidedListeners.addListener(listener);
 	}

@@ -1,4 +1,4 @@
-/* Copyright (c) 2012 Sebastien Le Callonnec
+/* Copyright (c) 2012-2018  Sebastien Le Callonnec
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -23,28 +23,42 @@ import java.util.List;
 
 /**
  * This class keeps track of all the organisms that have lived in the world.
+ *
  * @author Sebastien Le Callonnec
  */
 public class WorldMemory {
-	private final List<Organism> memory = new ArrayList<Organism>();
-	
+	private final List<Organism> memory = new ArrayList<>();
+
+	/**
+	 * Adds an organism to the {@link WorldMemory}.
+	 *
+	 * @param organism {@link Organism} to remember.
+	 */
 	public void addOrganism(Organism organism) {
 		memory.add(organism.getID(), organism);
 	}
-	
+
 	private Organism getOrganismById(int id) {
 		return memory.get(id);
 	}
-	
+
+	/**
+	 * Gives the family tree of a given organism.
+	 *
+	 * Trees only go upwards, i.e. we only return ancestors, not descendants.
+	 *
+	 * @param id
+	 * @return List&lt;Organism&gt; - List of {@link Organism} ancestry.
+	 */
 	public List<Organism> getFamilyTree(int id) {
-		List<Organism> tree = new ArrayList<Organism>();
+		List<Organism> tree = new ArrayList<>();
 		int parentId = id;
 		while (parentId >= 0) {
 			Organism o = getOrganismById(parentId);
 			tree.add(o);
 			parentId = o.getParentID();
 		}
-		
+
 		// Reverse to have ancestors first.
 		Collections.reverse(tree);
 		return tree;

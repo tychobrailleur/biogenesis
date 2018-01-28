@@ -1,4 +1,4 @@
-/* Copyright (c) 2012 Sebastien Le Callonnec
+/* Copyright (c) 2012-2018  Sebastien Le Callonnec
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -29,7 +29,7 @@ import javax.swing.border.EmptyBorder;
 
 /**
  * This panel displays the family tree for a selected organism.
- * 
+ *
  * TODO: display descendants, different colour for alive / dead,
  * possibility to select parent or child, show mutation.
  * @author Sebastien Le Callonnec
@@ -42,7 +42,7 @@ public class FamilyTreePanel extends JPanel {
 		setLayout(new BorderLayout(5,5));
 		setVisible(false);
 	}
-	
+
 	/**
 	 * shows the family tree for the given {@link Organism}.
 	 * Currently it does not display descendants.
@@ -55,7 +55,7 @@ public class FamilyTreePanel extends JPanel {
 
 		add(titleLabel, BorderLayout.NORTH);
 		titleLabel.setText(Messages.getString("T_FAMILY_TREE", String.valueOf(organism.getID())));
-		
+
 		add(new JScrollPane(new JPanel() {
 			{
 				setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -69,31 +69,36 @@ public class FamilyTreePanel extends JPanel {
 				}
 			}
 		}), BorderLayout.CENTER);
-		
+
 		setVisible(true);
 	}
-	
+
 	@Override
 	public void hide() {
 		removeAll();
 		super.hide();
 	}
-	
-	
+
+
 	final class OrganismEntryPanel extends JPanel {
 		public OrganismEntryPanel(Organism organism) {
 			setLayout(new BorderLayout(5,5));
 			setMaximumSize(new Dimension(100, 100));
-			
+
+			String dates = String.format("Born: %d", organism.getBirthTime());
+			if (!organism.isAlive()) {
+				dates += String.format("– Died: %d", organism.getDeathTime());
+			}
+			add(new JLabel(dates), BorderLayout.NORTH);
+
 			final JPanel geneticCodePanel = new GeneticCodePanel(organism.getGeneticCode(), organism._visibleWorld);
 			add(geneticCodePanel, BorderLayout.CENTER);
-			
+
 			String label = String.valueOf(organism.getID());
-			if (!organism.isAlive()) 
+			if (!organism.isAlive()) {
 				label = Messages.getString("T_DEAD", String.valueOf(organism.getID()));
+			}
 			add(new JLabel(label), BorderLayout.SOUTH);
 		}
-		
-		
 	}
 }

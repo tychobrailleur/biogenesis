@@ -62,6 +62,4 @@ public class OutCorridor extends Corridor {
 			}
 		}
 	}
-	
-	
 }

@@ -191,7 +191,7 @@ public class MainWindow extends JFrame {
 		JMenuItem menuItem;
 		JMenuBar menuBar = new JMenuBar();
 		_menuGame = new JMenu(Messages.getString("T_GAME")); //$NON-NLS-1$
-		_menuGame.setMnemonic(Messages.getMnemonic("T_GAME").intValue()); //$NON-NLS-1$
+		_menuGame.setMnemonic(Messages.getMnemonic("T_GAME")); //$NON-NLS-1$
 		menuBar.add(_menuGame);
 		menuItem = new JMenuItem(newGameAction);
 		menuItem.setIcon(null);
@@ -636,6 +636,7 @@ public class MainWindow extends JFrame {
 			super(text, icon_path, desc);
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e) {
 			_world.disperseAll();
 		}
@@ -691,6 +692,7 @@ public class MainWindow extends JFrame {
 			super(text, icon_path, desc);
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e) {
 			about();
 		}
@@ -704,6 +706,7 @@ public class MainWindow extends JFrame {
 			super(text, icon_path, desc);
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e) {
 			netConfig();
 		}
@@ -1048,12 +1051,12 @@ public class MainWindow extends JFrame {
 		killAllAction.changeLocale();
 		disperseAllAction.changeLocale();
 		_menuHelp.setText(Messages.getString("T_HELP")); //$NON-NLS-1$
-		_menuHelp.setMnemonic(Messages.getMnemonic("T_HELP").intValue()); //$NON-NLS-1$
+		_menuHelp.setMnemonic(Messages.getMnemonic("T_HELP")); //$NON-NLS-1$
 		manualAction.changeLocale();
 		checkLastVersionAction.changeLocale();
 		aboutAction.changeLocale();
 		_menuNet.setText(Messages.getString("T_NETWORK")); //$NON-NLS-1$
-		_menuNet.setMnemonic(Messages.getMnemonic("T_NETWORK").intValue()); //$NON-NLS-1$
+		_menuNet.setMnemonic(Messages.getMnemonic("T_NETWORK")); //$NON-NLS-1$
 		netConfigAction.changeLocale();
 		manageConnectionsAction.changeLocale();
 		setTitle(Messages.getString("T_BIOGENESIS")); //$NON-NLS-1$

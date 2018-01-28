@@ -39,7 +39,6 @@ public class WorldStatistics implements Serializable {
 
 	private long minPopulationTime;
 
-	// private int lastTimePopulation;
 	private int massExtintions;
 
 	private int massExtintionState;
@@ -120,15 +119,15 @@ public class WorldStatistics implements Serializable {
 	
 	private Organism oldestAliveBeing;
 
-	private List<Double> populationList = new ArrayList<Double>(100);
+	private final List<Double> populationList = new ArrayList<>(100);
 
-	private List<Double> deathList = new ArrayList<Double>(100);
+	private final List<Double> deathList = new ArrayList<>(100);
 
-	private List<Double> birthList = new ArrayList<Double>(100);
+	private final List<Double> birthList = new ArrayList<>(100);
 
-	private List<Double> oxygenList = new ArrayList<Double>(100);
+	private final List<Double> oxygenList = new ArrayList<>(100);
 
-	private List<Double> carbonDioxideList = new ArrayList<Double>(100);
+	private final List<Double> carbonDioxideList = new ArrayList<>(100);
 
 	public long getTime() {
 		return time;
@@ -405,9 +404,7 @@ public class WorldStatistics implements Serializable {
 				break;
 			}
 		}
-		//System.out.println(deathLastTime + " " + getAverageDeaths() + " " +
-		//massExtintionState + " " + massExtintions);
-		// lastTimePopulation = population;
+
 		populationSum += population;
 
 		if (O2 > maxOxygen) {
@@ -441,10 +438,10 @@ public class WorldStatistics implements Serializable {
 		birthList.add(Double.valueOf(birthLastTime));
 		if (oxygenList.size() == 100)
 			oxygenList.remove(0);
-		oxygenList.add(Double.valueOf(O2));
+		oxygenList.add(O2);
 		if (carbonDioxideList.size() == 100)
 			carbonDioxideList.remove(0);
-		carbonDioxideList.add(Double.valueOf(CO2));
+		carbonDioxideList.add(CO2);
 		deathLastTime = 0;
 		birthLastTime = 0;
 	}

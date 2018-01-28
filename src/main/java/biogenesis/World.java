@@ -25,6 +25,7 @@ import java.util.Collections;
 import java.io.*;
 import java.awt.*;
 import java.util.Observable;
+
 /**
  * This class contains all the information needed to run a world:
  * the organisms, the substances and the biological corridors. It
@@ -103,6 +104,7 @@ public class World extends Observable implements Serializable {
 	 * keeps track of all the organisms that ever lived in the world.
 	 */
 	private final WorldMemory memory = new WorldMemory();
+
 	/**
 	 * Called by the JRE when an instance of this class is read from a file
 	 *
@@ -117,7 +119,7 @@ public class World extends Observable implements Serializable {
 		outCorridors = Collections.synchronizedList(new ArrayList<OutCorridor>());
 	}
 	/**
-	 * Returns a new StatisticsWindow refering to this world.
+	 * Returns a new StatisticsWindow referring to this world.
 	 *
 	 * @return  A newly created StatisticsWindow.
 	 */
