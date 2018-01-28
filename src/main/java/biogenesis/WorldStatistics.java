@@ -43,6 +43,8 @@ public class WorldStatistics implements Serializable {
 
 	private int massExtintionState;
 
+	private final List<Long> massExtinctionLists = new ArrayList<>();
+
 	private static final int EXTINTION_NO = 0;
 
 	private static final int EXTINTION_POSSIBLE = 1;
@@ -116,7 +118,7 @@ public class WorldStatistics implements Serializable {
 	private GeneticCode lastDeadBeing;
 
 	private GeneticCode lastInfectedBeing;
-	
+
 	private Organism oldestAliveBeing;
 
 	private final List<Double> populationList = new ArrayList<>(100);
@@ -132,7 +134,7 @@ public class WorldStatistics implements Serializable {
 	public long getTime() {
 		return time;
 	}
-	
+
 	public int getMaxPopulation() {
 		return maxPopulation;
 	}
@@ -292,7 +294,7 @@ public class WorldStatistics implements Serializable {
 	public GeneticCode getLastInfectedBeing() {
 		return lastInfectedBeing;
 	}
-	
+
 	public Organism getOldestAliveBeing() {
 		return oldestAliveBeing;
 	}
@@ -308,13 +310,17 @@ public class WorldStatistics implements Serializable {
 	public List<Double> getBirthList() {
 		return birthList;
 	}
-	
+
 	public List<Double> getOxygenList() {
 		return oxygenList;
 	}
-	
+
 	public List<Double> getCarbonDioxideList() {
 		return carbonDioxideList;
+	}
+
+	public List<Long> getMassExtinctionLists() {
+		return massExtinctionLists;
 	}
 
 	public void eventPopulationIncrease(int newPopulation) {
@@ -376,8 +382,10 @@ public class WorldStatistics implements Serializable {
 		if (deathLastTime > 1.5 * getAverageDeaths()) {
 			if (deathLastTime > 3 * getAverageDeaths()) {
 				if (massExtintionState != EXTINTION_CONFIRMED
-						&& massExtintionState != EXTINTION_FINISHING)
+						&& massExtintionState != EXTINTION_FINISHING) {
+					massExtinctionLists.add(time);
 					massExtintions++;
+				}
 				massExtintionState = EXTINTION_CONFIRMED;
 			} else {
 				switch (massExtintionState) {

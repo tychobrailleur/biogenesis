@@ -1,5 +1,5 @@
 /* Copyright (C) 2006-2010  Joan Queralt Molina
- * Copyright (c) 2012 Sebastien Le Callonnec
+ * Copyright (c) 2012-2018 Sebastien Le Callonnec
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -380,8 +380,8 @@ public class StatisticsWindow extends JDialog implements Observer {
 class ColorPanel extends JPanel {
 	private static final long serialVersionUID = Utils.FILE_VERSION;
 	
-	private List<InfoAndColor> infoList = new ArrayList<InfoAndColor>();
-	private int total=0;
+	private final List<InfoAndColor> infoList = new ArrayList<>();
+	private int total = 0;
 	
 	public void addColor(int info, Color color) {
 		infoList.add(new InfoAndColor(info, color));
@@ -428,7 +428,7 @@ class InfoAndColor implements Comparable<InfoAndColor> {
 class GraphPanel extends JPanel {
 	private static final long serialVersionUID = Utils.FILE_VERSION;
 	
-	private List<GraphInfo> graphList = new ArrayList<GraphInfo>();
+	private final List<GraphInfo> graphList = new ArrayList<>();
 	private int width;
 	private int height;
 	private JPanel centralPanel;
@@ -514,7 +514,7 @@ class GraphInfo {
 		xPoints = new int[nPoints];
 		yPoints = new int[nPoints];
 		for (Iterator<Double> it = info.iterator(); it.hasNext() && x < width; x++) {
-			y = height-(it.next().doubleValue() - min)*height/(max-min);
+			y = height-(it.next() - min)*height/(max-min);
 			xPoints[x] = x;
 			yPoints[x] = (int)y; 	
 		}

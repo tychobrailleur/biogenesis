@@ -4,6 +4,8 @@
 -  Update dependency versions
 -  Fix some minor code issues.
 -  Migrate documents to =org-mode=.
+-  Delete Applet.
+-  Add time of birth and of death to organism.
 
 * biogenesis (0.9)
 

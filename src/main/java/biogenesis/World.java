@@ -284,17 +284,17 @@ public class World extends Observable implements Serializable {
 		_CO2 += q;
 	}
 	/**
-	 * Substracts O2 from the atmosphere.
+	 * Subtracts O2 from the atmosphere.
 	 *
-	 * @param q  The amount of O2 to substract.
+	 * @param q  The amount of O2 to subtract.
 	 */
 	public void decreaseO2(double q) {
 		_O2 -= Math.min(q, _O2);
 	}
 	/**
-	 * Substract CO2 from the atmosphere.
+	 * Subtracts CO2 from the atmosphere.
 	 *
-	 * @param q  The amount of CO2 to substract.
+	 * @param q  The amount of CO2 to subtract.
 	 */
 	public void decreaseCO2(double q) {
 		_CO2 -= Math.min(q, _CO2);
