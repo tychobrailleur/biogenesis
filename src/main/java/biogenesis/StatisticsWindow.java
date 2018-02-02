@@ -19,8 +19,6 @@
 package biogenesis;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -291,21 +289,13 @@ public class StatisticsWindow extends JDialog implements Observer {
 		updateButton = new JButton(Messages.getString("T_PAUSE")); //$NON-NLS-1$
 		closeButton = new JButton(Messages.getString("T_CLOSE")); //$NON-NLS-1$
 		
-		updateButton.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				pauseUpdate = !pauseUpdate;
-				updateButton.setText(pauseUpdate ? Messages.getString("T_UNPAUSE") : Messages.getString("T_PAUSE"));
-			}
+		updateButton.addActionListener((e) -> {
+		    pauseUpdate = !pauseUpdate;
+		    updateButton.setText(pauseUpdate ? Messages.getString("T_UNPAUSE") : Messages.getString("T_PAUSE"));
 		});
-		closeButton.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				pauseUpdate = true;
-				dispose();
-			}
+		closeButton.addActionListener((e) -> {
+		    pauseUpdate = true;
+		    dispose();
 		});
 		
 		buttonsPanel.add(updateButton);
@@ -331,7 +321,6 @@ public class StatisticsWindow extends JDialog implements Observer {
 	private ColorPanel createColorPanel() {
 		ColorPanel colorPanel = new ColorPanel();
 		colorPanel.setPreferredSize(new Dimension(100,20));
-		GeneticCode gc;
 		InfoAndColor[] colorCounter = new InfoAndColor[7];
 		colorCounter[0] = new InfoAndColor(0, Color.GREEN);
 		colorCounter[1] = new InfoAndColor(0, Color.RED);
@@ -344,11 +333,11 @@ public class StatisticsWindow extends JDialog implements Observer {
 		int i,j;
 		Color c;
 		synchronized(organisms) {
-			for (Iterator<Organism> it = organisms.iterator(); it.hasNext();) {
-				gc = it.next().getGeneticCode();
-				for (i=0; i<gc.getNGenes(); i++) {
+			for (Organism organism : organisms) {
+				GeneticCode gc = organism.getGeneticCode();
+				for (i = 0; i < gc.getNGenes(); i++) {
 					c = gc.getGene(i).getColor();
-					for (j=0; j<7; j++) {
+					for (j = 0; j < 7; j++) {
 						if (c.equals(colorCounter[j].color))
 							colorCounter[j].info++;
 					}
@@ -394,14 +383,12 @@ class ColorPanel extends JPanel {
 		int width = getSize().width;
 		int height = getSize().height;
 		int x, lastX = 0;
-		InfoAndColor infoAndColor;
 		
 		// Check total is greater than 0 (when there is no organism left)
 		if (total > 0)
-			for (Iterator<InfoAndColor> it = infoList.iterator(); it.hasNext();) {
-				infoAndColor = it.next();
-				x = width * infoAndColor.info / total;
-				g.setColor(infoAndColor.color);
+			for (InfoAndColor anInfoList : infoList) {
+				x = width * anInfoList.info / total;
+				g.setColor(anInfoList.color);
 				g.fillRect(lastX, 0, x, height);
 				lastX += x;
 			}
@@ -419,10 +406,8 @@ class InfoAndColor implements Comparable<InfoAndColor> {
 
 	@Override
 	public int compareTo(InfoAndColor o) {
-		if (info < o.info) return -1;
-		if (info > o.info) return 1;
-		return 0;
-	}
+        return Integer.compare(info, o.info);
+    }
 }
 
 class GraphPanel extends JPanel {
@@ -445,14 +430,12 @@ class GraphPanel extends JPanel {
 		JPanel legendPanel = new JPanel();
 		legendPanel.setBackground(Color.BLACK);
 		legendPanel.setLayout(new GridLayout(graphList.size(),1));
-		JLabel label;
-		GraphInfo graph;
-		for (Iterator<GraphInfo> it = graphList.iterator(); it.hasNext();) {
-			graph = it.next();
-			label = new JLabel(graph.name);
-			label.setForeground(graph.color);
-			legendPanel.add(label);
-		}
+
+        for (GraphInfo aGraphList : graphList) {
+            JLabel label = new JLabel(aGraphList.name);
+            label.setForeground(aGraphList.color);
+            legendPanel.add(label);
+        }
 		add(legendPanel, BorderLayout.EAST);
 	}
 	
@@ -478,10 +461,8 @@ class GraphPanel extends JPanel {
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		GraphInfo graph;
-		for (Iterator<GraphInfo> it = graphList.iterator(); it.hasNext();) {
-			graph = it.next();
-			graph.draw(g);
+		for (GraphInfo aGraphList : graphList) {
+			aGraphList.draw(g);
 		}
 	}
 }

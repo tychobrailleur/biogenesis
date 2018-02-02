@@ -73,13 +73,6 @@ public class FamilyTreePanel extends JPanel {
 		setVisible(true);
 	}
 
-	@Override
-	public void hide() {
-		removeAll();
-		super.hide();
-	}
-
-
 	final class OrganismEntryPanel extends JPanel {
 		public OrganismEntryPanel(Organism organism) {
 			setLayout(new BorderLayout(5,5));

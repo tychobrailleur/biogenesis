@@ -1,5 +1,5 @@
 /* Copyright (C) 2006-2010  Joan Queralt Molina
- * Copyright (c) 2012-2018 Sebastien Le Callonnec
+ * Copyright (c) 2012-2018  Sebastien Le Callonnec
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -1020,7 +1020,8 @@ public class MainWindow extends JFrame {
 	}
 
 	public void hideFamilyTree() {
-		_familyTree.hide();
+		_familyTree.removeAll();
+		_familyTree.setVisible(false);
 	}
 
 	void updateFamilyTree(final Organism selectedOrganism) {
