@@ -1,3 +1,7 @@
+* biogenesis (0.10.0)
+
+- Minimal JDK requirement now 1.8.
+
 * biogenesis (0.9.1)
 
 -  Cleanup
