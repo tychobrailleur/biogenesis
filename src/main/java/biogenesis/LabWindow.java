@@ -1,5 +1,5 @@
 /* Copyright (C) 2006-2010  Joan Queralt Molina
- * Copyright (c) 2012 Sebastien Le Callonnec
+ * Copyright (c) 2012-2018  Sebastien Le Callonnec
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -66,7 +66,7 @@ public class LabWindow extends JDialog implements ActionListener, ChangeListener
 	
 	private void init(MainWindow v, GeneticCode gc) {
 		mainWindow = v;
-		genesList = new ArrayList<Gene>();
+		genesList = new ArrayList<>();
 		if (gc != null)
 			importGeneticCode(gc);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);	
@@ -176,13 +176,13 @@ public class LabWindow extends JDialog implements ActionListener, ChangeListener
 		gridBagConstraints.gridx = 5;
 		gridBagConstraints.gridy = 1;
 		disperseCombo = new JComboBox(noyesValues);
-		disperseCombo.setSelectedIndex(disperseChildren==false?0:1);
+		disperseCombo.setSelectedIndex(!disperseChildren?0:1);
 		disperseCombo.addItemListener(new ItemListener() {
 			
 			@Override
 			public void itemStateChanged(ItemEvent evt) {
 				if (evt.getStateChange() == ItemEvent.SELECTED)
-					disperseChildren = disperseCombo.getSelectedIndex()==0? false: true; 
+					disperseChildren = disperseCombo.getSelectedIndex() != 0;
 			}
 		});
 		generalPanel.add(disperseCombo, gridBagConstraints);

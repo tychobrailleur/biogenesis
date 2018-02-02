@@ -1,4 +1,4 @@
-/* Copyright (C) 2014 Sébastien Le Callonnec
+/* Copyright (C) 2014-2018  Sébastien Le Callonnec
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -18,5 +18,5 @@
 package biogenesis.event;
 
 public interface OrganismCollidedListener {
-	public void perform(OrganismCollidedEvent event);
+	void perform(OrganismCollidedEvent event);
 }

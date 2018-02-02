@@ -30,7 +30,7 @@ import org.jruby.embed.ScriptingContainer;
  * @author Sebastien Le Callonnec
  */
 public final class ScriptHandler {
-	private final List<File> scriptList = new ArrayList<File>();
+	private final List<File> scriptList = new ArrayList<>();
 	
 	public final void runScript(ScriptingContainer container) {
 		if (scriptList.isEmpty()) {

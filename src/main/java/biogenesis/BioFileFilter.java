@@ -49,21 +49,16 @@ public class BioFileFilter extends FileFilter {
 	public boolean accept(File f) {
 		if (f.isDirectory())
 			return true;
-		
-		String extension = null;
-        String s = f.getName();
-        int i = s.lastIndexOf('.');
 
-        if (i > 0 &&  i < s.length() - 1) {
-            extension = s.substring(i+1).toLowerCase();
-        }
-        
-		if (extension != null) {
-			if (extension.equals(validExtension)) {
-				return true;
-		    }
+		String extension = null;
+		String s = f.getName();
+		int i = s.lastIndexOf('.');
+
+		if (i > 0 && i < s.length() - 1) {
+			extension = s.substring(i + 1).toLowerCase();
 		}
-		return false;
+
+		return extension != null && extension.equals(validExtension);
 	}
 
 	@Override

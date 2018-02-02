@@ -24,7 +24,7 @@ import java.util.Queue;
 
 public class InCorridor extends Corridor {
 	private static final long serialVersionUID = Utils.FILE_VERSION;
-	private Queue<GeneticCode> pendingOrganisms = new LinkedList<GeneticCode>();
+	private Queue<GeneticCode> pendingOrganisms = new LinkedList<>();
 	private Organism nextOrganism = null;
 	
 	public InCorridor(World w) {

@@ -19,7 +19,6 @@ package biogenesis;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 public class WorldStatistics implements Serializable {
@@ -455,7 +454,6 @@ public class WorldStatistics implements Serializable {
 	}
 
 	public void findBestAliveBeings(List<Organism> organisms) {
-		Organism org;
 		aliveBeingMostChildren = null;
 		aliveBeingMostChildrenNumber = 0;
 		aliveBeingMostKills = null;
@@ -464,23 +462,22 @@ public class WorldStatistics implements Serializable {
 		aliveBeingMostInfectionsNumber = 0;
 		oldestAliveBeing = null;
 		synchronized(organisms) {
-			for (Iterator<Organism> it = organisms.iterator(); it.hasNext();) {
-				org = it.next();
-				if (org.isAlive()) {
-					if (org.getTotalChildren() > aliveBeingMostChildrenNumber) {
-						aliveBeingMostChildrenNumber = org.getTotalChildren();
-						aliveBeingMostChildren = org.getGeneticCode();
+			for (Organism organism : organisms) {
+				if (organism.isAlive()) {
+					if (organism.getTotalChildren() > aliveBeingMostChildrenNumber) {
+						aliveBeingMostChildrenNumber = organism.getTotalChildren();
+						aliveBeingMostChildren = organism.getGeneticCode();
 					}
-					if (org.getTotalKills() > aliveBeingMostKillsNumber) {
-						aliveBeingMostKillsNumber = org.getTotalKills();
-						aliveBeingMostKills = org.getGeneticCode();
+					if (organism.getTotalKills() > aliveBeingMostKillsNumber) {
+						aliveBeingMostKillsNumber = organism.getTotalKills();
+						aliveBeingMostKills = organism.getGeneticCode();
 					}
-					if (org.getTotalInfected() > aliveBeingMostInfectionsNumber) {
-						aliveBeingMostInfectionsNumber = org.getTotalInfected();
-						aliveBeingMostInfections = org.getGeneticCode();
+					if (organism.getTotalInfected() > aliveBeingMostInfectionsNumber) {
+						aliveBeingMostInfectionsNumber = organism.getTotalInfected();
+						aliveBeingMostInfections = organism.getGeneticCode();
 					}
-					if (oldestAliveBeing == null || org.getAge() > oldestAliveBeing.getAge()) {
-						oldestAliveBeing = org;
+					if (oldestAliveBeing == null || organism.getAge() > oldestAliveBeing.getAge()) {
+						oldestAliveBeing = organism;
 					}
 				}
 			}

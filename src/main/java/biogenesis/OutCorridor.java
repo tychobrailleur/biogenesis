@@ -24,7 +24,7 @@ public class OutCorridor extends Corridor {
 	private static final long serialVersionUID = Utils.FILE_VERSION;
 	
 	public boolean canSendOrganism() {
-		return travellingOrganism == null ? true : false;
+		return travellingOrganism == null;
 	}
 	
 	public OutCorridor(World w, Connection c) {

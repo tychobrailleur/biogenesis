@@ -484,7 +484,7 @@ public final class Utils {
 	/**
 	 * Used through all program to calculate random numbers
 	 */
-	public static Random random = new Random();
+	public static final Random random = new Random();
 	/**
 	 * Used to get a random -1 or 1 to create numbers with random sign. 
 	 * 
@@ -535,10 +535,7 @@ public final class Utils {
 	}
 	/**
 	 * Return min if value<min, max if value>max and value otherwise.
-	 * 
-	 * @param value
-	 * @param min
-	 * @param max
+	 *
 	 * @return  min if value<min, max if value>max and value otherwise
 	 */
 	public static double between(double value, double min, double max) {

@@ -80,7 +80,7 @@ public class BioXMLParser implements ErrorHandler {
 	public GeneticCode parseGeneticCode(File f) throws SAXException, IOException {
 		int symmetry, mirror;
 		boolean disperse;
-		List<Gene> genes = new ArrayList<Gene>();
+		List<Gene> genes = new ArrayList<>();
 		String s;
 		doc = builder.parse(f);
 		Element geneticCode = doc.getDocumentElement();

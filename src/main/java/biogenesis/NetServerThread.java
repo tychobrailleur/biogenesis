@@ -119,12 +119,10 @@ public class NetServerThread extends Thread {
 	public void closeServer() {
 		isActive = false;
 		// Remove all connections
-		Connection c;
 		synchronized (connections) {
-			for (Iterator<Connection> it = connections.iterator();it.hasNext();) {
-				c = it.next();
-				c.send(DISCONNECT);
-				c.setState(DISCONNECTED);
+			for (Connection connection : connections) {
+				connection.send(DISCONNECT);
+				connection.setState(DISCONNECTED);
 			}
 		}
 		connections = Collections.synchronizedList(new ArrayList<Connection>());
@@ -292,28 +290,20 @@ public class NetServerThread extends Thread {
 				oos.writeInt(NOT_CONNECTED);
 				oos.flush();
 			}
-		} catch (IOException e) {
-			System.out.println("handleSendCode: "+e.getMessage()); //$NON-NLS-1$
-			if (c!=null) {
-				c.setState(Connection.STATE_DISCONNECTED);
-				System.out.println("Connection closed with "+c.remoteAddress+":"+c.remotePort);  //$NON-NLS-1$//$NON-NLS-2$
-			}
-		} catch (ClassNotFoundException e) {
+		} catch (IOException | ClassNotFoundException e) {
 			System.out.println("handleSendCode: "+e.getMessage()); //$NON-NLS-1$
 			if (c!=null) {
 				c.setState(Connection.STATE_DISCONNECTED);
 				System.out.println("Connection closed with "+c.remoteAddress+":"+c.remotePort);  //$NON-NLS-1$//$NON-NLS-2$
 			}
 		}
-	}
+    }
 	
 	private Connection checkConnectionNetCode() {
-		Connection c;
 		synchronized (connections) {
-			for (Iterator<Connection> it = connections.iterator();it.hasNext();) {
-				c = it.next();
-				if (c.netCode == netCode)
-					return c;
+			for (Connection connection : connections) {
+				if (connection.netCode == netCode)
+					return connection;
 			}
 		}
 		return null;
