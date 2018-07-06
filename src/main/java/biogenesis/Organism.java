@@ -22,7 +22,6 @@ import biogenesis.event.*;
 import java.awt.*;
 import java.awt.image.*;
 import java.awt.geom.*;
-import biogenesis.music.*;
 import org.apache.commons.lang3.event.EventListenerSupport;
 /**
  * This class implements an organism.
@@ -335,8 +334,6 @@ public class Organism extends Rectangle {
 		_visibleWorld = world._visibleWorld;
 		_theta = Utils.random.nextDouble() * Math.PI * 2d;
 		birthTime = world.getTime();
-		addListener((OrganismCreatedListener)new MusicPlayer());
-		addListener((OrganismCollidedListener)new MusicPlayer());
 	}
 	/**
 	 * Construct an organism with a given genetic code. Doesn't initialize it:
@@ -352,8 +349,6 @@ public class Organism extends Rectangle {
 		_theta = Utils.random.nextDouble() * Math.PI * 2d;
 		_geneticCode = geneticCode;
 		birthTime = world.getTime();
-		addListener((OrganismCreatedListener)new MusicPlayer());
-		addListener((OrganismCollidedListener)new MusicPlayer());
 	}
 	/**
 	 * Creates all data structures of this organism. Must be used after the organism
