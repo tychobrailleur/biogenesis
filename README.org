@@ -12,7 +12,6 @@ See http://biogenesis.sourceforge.net/ for original application.
   - Mavenized project :: it is now much easier to build and release Biogenesis,
   - Family tree :: it is possible to view the ancestors of a given
                    organism,
-  - Music :: organisms can now make sounds when colliding,
   - Scripting :: JRuby scripts can be used to extend Biogenesis,
   - Several UI improvements,
   - etc.
@@ -20,10 +19,6 @@ See http://biogenesis.sourceforge.net/ for original application.
 * Building
 
   Maven is required to build this project.
-
-  You must first ensure that the =jfugue= dependency is installed in
-  your local Maven repository by running the following command at the
-  root of your project:
 
 #+BEGIN_SRC bash
 mvn initialize
