@@ -22,7 +22,6 @@ import biogenesis.event.*;
 import java.awt.*;
 import java.awt.image.*;
 import java.awt.geom.*;
-import biogenesis.music.*;
 import org.apache.commons.lang3.event.EventListenerSupport;
 /**
  * This class implements an organism.
