@@ -141,7 +141,10 @@ public class MainWindow extends JFrame {
 			}
 		}
 		Utils.readPreferences();
-		new MainWindow();
+
+        SwingUtilities.invokeLater(() -> {
+            new MainWindow();
+        });
 	}
 
 	private void createActions() {

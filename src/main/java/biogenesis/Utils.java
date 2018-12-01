@@ -34,7 +34,7 @@ public final class Utils {
 	 * This value indicates the version of the program.
 	 * There are two digits for version, two for subversion and two for revision, so
 	 * a value of 400 or 000400 means version 0, subversion 4 and revision 0.
-	 * 
+	 *
 	 * All serializable classes use this value as their serialVersionUID.
 	 */
 	static final int FILE_VERSION = 700;
@@ -82,13 +82,13 @@ public final class Utils {
 	final static double DEF_RUBBING = 0.98d;
 	/**
 	 * This is the default probability that an specified gene has to be modified when
-	 * reproducing organisms. 
+	 * reproducing organisms.
 	 */
 	final static double DEF_MUTATION_RATE = 0.05d;
 	/**
 	 * This default value is used to calculate the energy cost that an organism must
 	 * pay to maintain a segment. It spends the length of the segment divided by this
-	 * number units of energy.  
+	 * number units of energy.
 	 */
 	final static int DEF_SEGMENT_COST_DIVISOR = 5000;
 	/**
@@ -222,7 +222,7 @@ public final class Utils {
 	 * This is the default hardware acceleration applied when drawing
 	 */
 	final static int DEF_HARDWARE_ACCELERATION = 0; //0 none, 1 try opengl, 2 opengl
-	
+
 	final static double DEF_DECAY_ENERGY = 0.1d;
 	// Effective parameters values
 	static int WINDOW_X = DEF_WINDOW_X;
@@ -266,13 +266,13 @@ public final class Utils {
 	static double RUBBING = DEF_RUBBING;
 	/**
 	 * This is the probability that an specified gene has to be modified when
-	 * reproducing organisms. 
+	 * reproducing organisms.
 	 */
 	static double MUTATION_RATE = DEF_MUTATION_RATE;
 	/**
 	 * This value is used to calculate the energy cost that an organism must
 	 * pay to maintain a segment. It spends the length of the segment divided by this
-	 * number units of energy.  
+	 * number units of energy.
 	 */
 	static int SEGMENT_COST_DIVISOR = DEF_SEGMENT_COST_DIVISOR;
 	/**
@@ -409,7 +409,7 @@ public final class Utils {
 	 * This is the port where the meta-server will listen. At the moment it is not used.
 	 */
 	static int SERVER_PORT = DEF_SERVER_PORT;
-	
+
 	static double DECAY_ENERGY = DEF_DECAY_ENERGY;
 	/**
 	 * Tolerance. Smaller numbers are considered equal to 0.
@@ -417,18 +417,18 @@ public final class Utils {
 	static final double tol = 0.0000001;
 	/**
 	 * Indicates the eight possible directions. The row is the direction we want, from 0 to 7, first
-	 * column is the x coordinate and second column the y coordinate.  
+	 * column is the x coordinate and second column the y coordinate.
 	 */
 	static final int side[][] = {{1,0},{1,1},{0,1},{-1,1},{-1,0},{-1,-1},{0,-1},{1,-1}};
 	/**
 	 * These are the scale factor applied to segments depending on the growth rate of the
 	 * organism. Segment length is divided by scale[i], where i is the growth rate.
 	 * scale[0] indicates that the organism is fully developed and scale[15] that it has just
-	 * been born. 
+	 * been born.
 	 */
 	static final double scale[] = {1.00, 1.12, 1.25, 1.40, 1.57, 1.76, 1.97, 2.21,
         2.47, 2.77, 3.11, 3.48, 3.90, 4.36, 4.89, 5.47};
-	
+
 	/**
 	 * Precalculated dark green color
 	 */
@@ -486,8 +486,8 @@ public final class Utils {
 	 */
 	public static final Random random = new Random();
 	/**
-	 * Used to get a random -1 or 1 to create numbers with random sign. 
-	 * 
+	 * Used to get a random -1 or 1 to create numbers with random sign.
+	 *
 	 * @return  a random -1 or 1
 	 */
 	public static int randomSign() {
@@ -495,7 +495,7 @@ public final class Utils {
 	}
 	/**
 	 * Calculates the minimum of three integers
-	 * 
+	 *
 	 * @return  The minimum of a, b, and c
 	 */
 	public static int min(int a, int b, int c) {
@@ -503,7 +503,7 @@ public final class Utils {
 	}
 	/**
 	 * Calculates the minimum of three doubles
-	 * 
+	 *
 	 * @return  The minimum of a, b, and c
 	 */
 	public static double min(double a, double b, double c) {
@@ -511,39 +511,39 @@ public final class Utils {
 	}
 	/**
 	 * Calculates the maximum of three integers
-	 * 
+	 *
 	 * @return  The maximum of a, b, and c
 	 */
 	public static int max(int a, int b, int c) {
 		return Math.max(Math.max(a,b),c);
 	}
 	/**
-	 * Calculates the maximum of three doubles 
-	 * 
+	 * Calculates the maximum of three doubles
+	 *
 	 * @return  The maximum of a, b, and c
 	 */
 	public static double max(double a, double b, double c) {
 		return Math.max(Math.max(a,b),c);
 	}
 	/**
-	 * Return min if value<min, max if value>max and value otherwise.
-	 * 
-	 * @return  min if value<min, max if value>max and value otherwise
+	 * Return min if value&lt;min, max if value&gt;max and value otherwise.
+	 *
+	 * @return  min if value&lt;min, max if value&gt;max and value otherwise
 	 */
 	public static int between(int value, int min, int max) {
 		return Math.max(Math.min(max, value), min);
 	}
 	/**
-	 * Return min if value<min, max if value>max and value otherwise.
+	 * Return min if value&lt;min, max if value&gt;max and value otherwise.
 	 *
-	 * @return  min if value<min, max if value>max and value otherwise
+	 * @return  min if value&lt;min, max if value&gt;max and value otherwise
 	 */
 	public static double between(double value, double min, double max) {
 		return Math.max(Math.min(max, value), min);
 	}
 	/**
 	 * Check if a mutation is produced or not, using a random number.
-	 * 
+	 *
 	 * @return  true if a mutations is produced and false otherwise
 	 */
 	public static boolean randomMutation() {
@@ -551,7 +551,7 @@ public final class Utils {
 	}
 	/**
 	 * Return the localized name of a color.
-	 * 
+	 *
 	 * @param c  A color
 	 * @return  A String representing the name of the color
 	 */
@@ -686,7 +686,7 @@ public final class Utils {
 				HARDWARE_ACCELERATION += 1;
 			}
 			Messages.setLocale(prefs.get("LOCALE",Messages.getLanguage())); //$NON-NLS-1$
-			
+
 		} catch (SecurityException ex) {
 			Messages.setLocale(Messages.getLanguage());
 		}
@@ -700,7 +700,7 @@ public final class Utils {
 				if (answer == JOptionPane.YES_OPTION)
 					prefs.putInt("HARDWARE_ACCELERATION", HARDWARE_ACCELERATION+1); //$NON-NLS-1$
 			}
-		
+
 			prefs.putInt("WINDOW_X", window.getX());
 			prefs.putInt("WINDOW_Y", window.getY());
 			prefs.putInt("WINDOW_WIDTH", window.getWidth());
@@ -711,7 +711,7 @@ public final class Utils {
 		}
 		savePreferences();
 	}
-	
+
 	public static void setHardwareAcceleration(int newValue) {
 		try {
 			switch (newValue) {
@@ -729,7 +729,7 @@ public final class Utils {
 			case 6:
 				System.setProperty("sun.java2d.opengl", "True"); //$NON-NLS-1$ //$NON-NLS-2$
 				System.setProperty("sun.java2d.noddraw", "true");  //$NON-NLS-1$//$NON-NLS-2$
-				// Used to workaround problems with some drivers 
+				// Used to workaround problems with some drivers
 				System.setProperty("sun.java2d.opengl.fbobject","false"); //$NON-NLS-1$ //$NON-NLS-2$
 			}
 			HARDWARE_ACCELERATION = newValue;

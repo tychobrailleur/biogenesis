@@ -419,7 +419,7 @@ public class World extends Observable implements Serializable {
 	}
 	/**
 	 * Draws all visible components of the world to a graphic context.
-	 * This includes organisms and corridors. Called from {@link biogenesis.VisibleWorld.paintComponents}.
+	 * This includes organisms and corridors. Called from {@link biogenesis.VisibleWorld#paintComponents}.
 	 *
 	 * @param g  The graphic context to draw to.
 	 */
@@ -447,7 +447,7 @@ public class World extends Observable implements Serializable {
 	}
 	/**
 	 * Determines the world's region that needs to be repainted in the associated
-	 * {@link biogenesis.VisualWorld} and instructs it to do it.
+	 * {@link biogenesis.VisibleWorld} and instructs it to do it.
 	 *
 	 * For optimization, only paints organisms that has moved in the last frame.
 	 */

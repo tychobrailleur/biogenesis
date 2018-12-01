@@ -17,8 +17,9 @@
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
   <modelVersion>4.0.0</modelVersion>
 
@@ -41,30 +42,30 @@
 
   <dependencies>
     <dependency>
-	  <groupId>junit</groupId>
-	  <artifactId>junit</artifactId>
-	  <version>4.12</version>
-	  <scope>test</scope>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.13-beta-1</version>
+      <scope>test</scope>
     </dependency>
     <dependency>
-	  <groupId>org.jruby</groupId>
-	  <artifactId>jruby</artifactId>
-	  <version>1.7.16</version>
+      <groupId>org.jruby</groupId>
+      <artifactId>jruby</artifactId>
+      <version>9.2.4.1</version>
     </dependency>
     <dependency>
-	  <groupId>org.jfugue</groupId>
-	  <artifactId>jfugue</artifactId>
-	  <version>4.1.0-20120125</version>
+      <groupId>org.jfugue</groupId>
+      <artifactId>jfugue</artifactId>
+      <version>4.1.0-20120125</version>
     </dependency>
     <dependency>
-	  <groupId>log4j</groupId>
-	  <artifactId>log4j</artifactId>
-	  <version>1.2.17</version>
+      <groupId>log4j</groupId>
+      <artifactId>log4j</artifactId>
+      <version>1.2.17</version>
     </dependency>
     <dependency>
-	  <groupId>org.apache.commons</groupId>
-	  <artifactId>commons-lang3</artifactId>
-	  <version>3.4</version>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-lang3</artifactId>
+      <version>3.8.1</version>
     </dependency>
   </dependencies>
 
@@ -74,7 +75,7 @@
       <plugin>
         <artifactId>maven-enforcer-plugin</artifactId>
         <version>3.0.0-M1</version>
-		<configuration>
+        <configuration>
           <rules>
             <requireMavenVersion>
               <version>3.3.0</version>
@@ -85,52 +86,52 @@
           </rules>
         </configuration>
       </plugin>
-	  <plugin>
-	    <artifactId>maven-compiler-plugin</artifactId>
-	    <version>3.7.0</version>
-	    <configuration>
-		  <source>1.8</source>
-		  <target>1.8</target>
-	    </configuration>
-	  </plugin>
-	  <plugin>
-	    <groupId>org.apache.maven.plugins</groupId>
-	    <artifactId>maven-shade-plugin</artifactId>
-	    <version>2.4.3</version>
-	    <executions>
-		  <execution>
-		    <phase>package</phase>
-		    <goals>
-			  <goal>shade</goal>
-		    </goals>
-		    <configuration>
-			  <transformers>
-			    <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-				  <mainClass>biogenesis.MainWindow</mainClass>
-			    </transformer>
-			  </transformers>
-		    </configuration>
-		  </execution>
-	    </executions>
-	  </plugin>
-	  <plugin>
-	    <artifactId>maven-javadoc-plugin</artifactId>
-	    <version>2.10.4</version>
-	    <executions>
-		  <execution>
-		    <id>attach-javadocs</id>
-		    <goals>
-			  <goal>jar</goal>
-		    </goals>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.8.0</version>
+        <configuration>
+          <source>1.8</source>
+          <target>1.8</target>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>3.2.1</version>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+            <configuration>
+              <transformers>
+                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                  <mainClass>biogenesis.MainWindow</mainClass>
+                </transformer>
+              </transformers>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>3.0.1</version>
+        <executions>
+          <execution>
+            <id>attach-javadocs</id>
+            <goals>
+              <goal>jar</goal>
+            </goals>
             <configuration>
               <additionalparam>${javadoc.opts}</additionalparam>
             </configuration>
-		  </execution>
-	    </executions>
-	  </plugin>
-	  <plugin>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
         <artifactId>maven-install-plugin</artifactId>
-	    <version>2.5.2</version>
+        <version>3.0.0-M1</version>
         <executions>
           <execution>
             <phase>initialize</phase>
@@ -138,31 +139,31 @@
               <goal>install-file</goal>
             </goals>
             <configuration>
-			  <file>${basedir}/lib/jfugue-4.1.0-20120125.jar</file>
-			  <artifactId>jfugue</artifactId>
-			  <groupId>org.jfugue</groupId>
-			  <version>4.1.0-20120125</version>
-			  <packaging>jar</packaging>
-			  <generatePom>true</generatePom>
+              <file>${basedir}/lib/jfugue-4.1.0-20120125.jar</file>
+              <artifactId>jfugue</artifactId>
+              <groupId>org.jfugue</groupId>
+              <version>4.1.0-20120125</version>
+              <packaging>jar</packaging>
+              <generatePom>true</generatePom>
             </configuration>
           </execution>
-	    </executions>
-	  </plugin>
-	  <plugin>
-		<groupId>org.codehaus.mojo</groupId>
-		<artifactId>findbugs-maven-plugin</artifactId>
-		<version>3.0.5</version>
-	  </plugin>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>findbugs-maven-plugin</artifactId>
+        <version>3.0.5</version>
+      </plugin>
     </plugins>
   </build>
 
   <reporting>
-	<plugins>
-	  <plugin>
-		<groupId>org.codehaus.mojo</groupId>
-		<artifactId>findbugs-maven-plugin</artifactId>
-		<version>3.0.5</version>
-	  </plugin>
-	</plugins>
+    <plugins>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>findbugs-maven-plugin</artifactId>
+        <version>3.0.5</version>
+      </plugin>
+    </plugins>
   </reporting>
 </project>

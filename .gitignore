@@ -1,3 +1,8 @@
 target/
 *~
 dependency-reduced-pom.xml
+.idea/
+*.iml
+*.versionsBackup
+.classpath
+.project
