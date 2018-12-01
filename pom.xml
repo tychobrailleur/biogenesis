@@ -139,10 +139,10 @@
               <goal>install-file</goal>
             </goals>
             <configuration>
-              <file>${basedir}/lib/jfugue-4.1.0-20120125.jar</file>
+              <file>${basedir}/lib/jfugue-5.0.9.jar</file>
               <artifactId>jfugue</artifactId>
               <groupId>org.jfugue</groupId>
-              <version>4.1.0-20120125</version>
+              <version>5.0.9</version>
               <packaging>jar</packaging>
               <generatePom>true</generatePom>
             </configuration>
