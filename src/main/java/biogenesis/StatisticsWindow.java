@@ -416,7 +416,6 @@ class GraphPanel extends JPanel {
 	private final List<GraphInfo> graphList = new ArrayList<>();
 	private int width;
 	private int height;
-	private JPanel centralPanel;
 	
 	public void addGraph(List<Double> info, double max, double min, Color color, String name) {
 		graphList.add(new GraphInfo(info, max, min, width, height, color, name));
@@ -444,7 +443,7 @@ class GraphPanel extends JPanel {
 		width = w;
 		height = h;
 		setLayout(new BorderLayout());
-		centralPanel = new JPanel();
+		JPanel centralPanel = new JPanel();
 		centralPanel.setPreferredSize(new Dimension(width, height));
 		centralPanel.setBackground(Color.BLACK);
 		centralPanel.setOpaque(false);

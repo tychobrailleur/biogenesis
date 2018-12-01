@@ -26,6 +26,8 @@ import java.util.List;
 import org.jruby.embed.ScriptingContainer;
 
 /**
+ * Adds a scripting capability to Biogenesis.
+ * Scripts can be added to a configuration directory stored in <code>~/.biogenesis</code>.
  *
  * @author Sebastien Le Callonnec
  */
@@ -52,14 +54,7 @@ public final class ScriptHandler {
 		if (configDir.exists()) {
 			File scriptDir = new File(configDir, "scripts");
 			if (scriptDir.exists()) {
-				File files[] = scriptDir.listFiles(new FilenameFilter() {
-
-					@Override
-					public boolean accept(File directory, String filename) {
-						return filename.endsWith(".rb");
-					}
-				});
-				
+				File files[] = scriptDir.listFiles((directory, filename) -> filename.endsWith(".rb"));
 				scriptList.addAll(Arrays.asList(files));
 			}
 		}

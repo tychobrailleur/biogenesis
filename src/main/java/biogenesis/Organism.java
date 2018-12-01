@@ -325,8 +325,8 @@ public class Organism extends Rectangle {
 	}
 
 	/**
-	 * Basic constructor. Doesn't initialize it: use {@link randomCreate}
-	 * or {@link inherit} to do this.
+	 * Basic constructor. Doesn't initialize it: use {@link Organism#randomCreate()}
+	 * or {@link Organism#inherit(Organism, boolean)} to do this.
 	 *
 	 * @param world  A reference to the world where this organism is in.
 	 */
@@ -340,7 +340,8 @@ public class Organism extends Rectangle {
 	}
 	/**
 	 * Construct an organism with a given genetic code. Doesn't initialize it:
-	 * use {@link pasteOrganism} to do it. Use {@link World.addOrganism} to add
+	 * use {@link Organism#pasteOrganism(int, int)} to do it. Use
+	 * {@link World#addOrganism(Organism, Organism)} to add
 	 * it to the world.
 	 *
 	 * @param world  A reference to the world where this organism is in.

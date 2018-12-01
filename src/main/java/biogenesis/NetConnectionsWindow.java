@@ -34,7 +34,6 @@ public class NetConnectionsWindow extends JDialog {
 	
 	private JTextField ipText, portText;
 	private JPanel connectionsPanel;
-	private JScrollPane connectionsScroll;
 	
 	public String getPortText() {
 		return portText.getText();
@@ -63,33 +62,31 @@ public class NetConnectionsWindow extends JDialog {
 		portText = new JTextField(5);
 		newConnectionPanel.add(portText);
 		JButton newConnectionButton = new JButton(Messages.getString("T_NEW_CONNECTION")); //$NON-NLS-1$
-		newConnectionButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
-				try {
-					int port = Integer.parseInt(getPortText());
-					if (port > 0) {
-						try {
-							InetAddress address = InetAddress.getByName(getIPText());
-							NetServerThread netServer = mainWindow.startServer();
-							Connection connection = netServer.newConnection(address, port);
-							if (connection != null)
-								connection.connect();
-							refreshConnectionsPanel();
-						} catch (UnknownHostException e) {
-							JOptionPane.showMessageDialog(null,Messages.getString("T_CONNECTION_FAILED"), //$NON-NLS-1$
-									Messages.getString("T_CANT_STABLISH_CONNECTION")+e.getLocalizedMessage(),JOptionPane.ERROR_MESSAGE); //$NON-NLS-1$
-						}
+		newConnectionButton.addActionListener(evt -> {
+			try {
+				int port = Integer.parseInt(getPortText());
+				if (port > 0) {
+					try {
+						InetAddress address = InetAddress.getByName(getIPText());
+						NetServerThread netServer = mainWindow.startServer();
+						Connection connection = netServer.newConnection(address, port);
+						if (connection != null)
+							connection.connect();
+						refreshConnectionsPanel();
+					} catch (UnknownHostException e) {
+						JOptionPane.showMessageDialog(null,Messages.getString("T_CONNECTION_FAILED"), //$NON-NLS-1$
+								Messages.getString("T_CANT_STABLISH_CONNECTION")+e.getLocalizedMessage(),JOptionPane.ERROR_MESSAGE); //$NON-NLS-1$
 					}
-				} catch (NumberFormatException e) {
-					JOptionPane.showMessageDialog(null,Messages.getString("T_CONNECTION_FAILED"), //$NON-NLS-1$
-							Messages.getString("T_PORT_MUST_BE_A_NUMBER"),JOptionPane.ERROR_MESSAGE); //$NON-NLS-1$
 				}
+			} catch (NumberFormatException e) {
+				JOptionPane.showMessageDialog(null,Messages.getString("T_CONNECTION_FAILED"), //$NON-NLS-1$
+						Messages.getString("T_PORT_MUST_BE_A_NUMBER"),JOptionPane.ERROR_MESSAGE); //$NON-NLS-1$
 			}
 		});
 		newConnectionPanel.add(newConnectionButton);
 		
 		connectionsPanel = new JPanel();
-		connectionsScroll = new JScrollPane(connectionsPanel);
+		JScrollPane connectionsScroll = new JScrollPane(connectionsPanel);
 		connectionsScroll.setPreferredSize(new Dimension(440,300));
 		refreshConnectionsPanel();
 		getContentPane().setLayout(new BorderLayout());
