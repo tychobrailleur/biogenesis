@@ -61,44 +61,44 @@ public class VisibleWorld extends JPanel {
 	 */
 	protected StdAction feedAction;
 	/**
-	 * Menu option in {@link popupAlive} used to remove energy from an organism.
+	 * Menu option in {@link VisibleWorld#popupAlive} used to remove energy from an organism.
 	 */
 	protected StdAction weakenAction;
 	/**
-	 * Menu option in {@link popupAlive} used to kill an organism.
+	 * Menu option in {@link VisibleWorld#popupAlive} used to kill an organism.
 	 */
 	protected StdAction killAction;
 	/**
-	 * Menu option in {@link popupAlive} used to copy an organism genetic code
+	 * Menu option in {@link VisibleWorld#popupAlive} used to copy an organism genetic code
 	 * to use it to create new organisms or to edit it in the genetic lab.
 	 */
 	protected StdAction copyAction;
 	/**
-	 * Menu option in {@link popupAlive} used to save an image of an organism to
+	 * Menu option in {@link VisibleWorld#popupAlive} used to save an image of an organism to
 	 * a jpg file.
 	 */
 	protected StdAction saveImageAction;
 	/**
-	 * Menu option in {@link popupDead} used to give live to a dead organism.
+	 * Menu option in {@link VisibleWorld#popupAlive} used to give live to a dead organism.
 	 */
 	protected StdAction reviveAction;
 	/**
-	 * Menu option in {@link popupDead} used to return all its carbony back to
+	 * Menu option in {@link VisibleWorld#popupDead} used to return all its carbony back to
 	 * the atmosphere, in form of CO2, and make the corpse disappear.
 	 */
 	protected StdAction disperseAction;
 	/**
-	 * Menu option in {@link popupAlive} used to force the reproduction of the
+	 * Menu option in {@link VisibleWorld#popupAlive} used to force the reproduction of the
 	 * organism, even if it dies.
 	 */
 	protected StdAction reproduceAction;
 	/**
-	 * Menu option in {@link popupAlive} used to set the age counter of the
+	 * Menu option in {@link VisibleWorld#popupAlive} used to set the age counter of the
 	 * organism back to 0.
 	 */
 	protected StdAction rejuvenateAction;
 	/**
-	 * Menu option in {@link popupAlive} used to save the genetic code of an
+	 * Menu option in {@link VisibleWorld#popupAlive} used to save the genetic code of an
 	 * organism to a file.
 	 */
 	protected StdAction exportAction;
@@ -111,16 +111,16 @@ public class VisibleWorld extends JPanel {
 	 */
 	protected JPopupMenu popupVoid;
 	/**
-	 * Menu option in {@link popupVoid} used to create a new organism with the
+	 * Menu option in {@link VisibleWorld#popupVoid} used to create a new organism with the
 	 * genetic code previously copies with the Copy option.
 	 */
 	protected StdAction pasteAction;
 	/**
-	 * Menu option in {@link popupVoid} used to create a new organism randomly.
+	 * Menu option in {@link VisibleWorld#popupVoid} used to create a new organism randomly.
 	 */
 	protected StdAction randomCreateAction;
 	/**
-	 * Menu option in {@link popupVoid} used to create a new organism with a
+	 * Menu option in {@link VisibleWorld#popupVoid} used to create a new organism with a
 	 * genetic code obtained from a file.
 	 */
 	protected StdAction importAction;

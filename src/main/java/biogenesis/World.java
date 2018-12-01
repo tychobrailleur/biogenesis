@@ -491,8 +491,8 @@ public class World extends Observable implements Serializable {
 		Organism b;
 		InCorridor c;
 		synchronized (inCorridors) {
-			for (Iterator<InCorridor> it = inCorridors.iterator(); it.hasNext();) {
-				c = it.next();
+			for (InCorridor inCorridor : inCorridors) {
+				c = inCorridor;
 				c.frame();
 			}
 		}
