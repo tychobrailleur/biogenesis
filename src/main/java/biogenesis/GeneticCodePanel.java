@@ -35,7 +35,7 @@ public class GeneticCodePanel extends JPanel {
 	protected GeneticCode code;
 	protected VisibleWorld visible;
 	protected JPopupMenu popup;
-	
+
 	public GeneticCodePanel(GeneticCode geneticCode, VisibleWorld visibleWorld) {
 		setBackground(Color.BLACK);
 		setPreferredSize(defaultSize);
@@ -46,10 +46,10 @@ public class GeneticCodePanel extends JPanel {
 	    JMenuItem menuCopy = new JMenuItem(Messages.getString("T_COPY")); //$NON-NLS-1$
 	    menuCopy.addActionListener(new ActionListener() {
 			@Override
-			public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent e) {
 				visible.setClippedGeneticCode(code);
 			}
-	    	
+
 	    });
 	    popup.add(menuCopy);
 		addMouseListener(new MouseAdapter() {
@@ -61,7 +61,7 @@ public class GeneticCodePanel extends JPanel {
 					// double-click opens the lab
 					new LabWindow(visible._mainWindow, code);
 				}
-				
+
 			}
 			@Override
 			public void mouseReleased(MouseEvent e) {
@@ -71,11 +71,11 @@ public class GeneticCodePanel extends JPanel {
 			}
 		});
 	}
-	
+
 	public void setGeneticCode(GeneticCode geneticCode) {
 		code = geneticCode;
 	}
-	
+
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);

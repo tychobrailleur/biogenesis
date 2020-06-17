@@ -43,7 +43,7 @@ mvn package
 
   Copyright (c) 2006-2010  Joan Queralt Molina \\
   Copyright (c) 2006-2014  Biogenesis Development team \\
-  Copyright (c) 2014-2018  Sébastien Le Callonnec
+  Copyright (c) 2014-2020  Sébastien Le Callonnec
 
   Licensed under GPLv2.
 

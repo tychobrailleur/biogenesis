@@ -154,23 +154,6 @@ public class World extends Observable implements Serializable {
 	}
 
 	/**
-	 * returns an organism by its ID.
-	 * @param id - ID of the organism we are looking for.
-	 * @return Organism - Organism if found, <code>null</code> otherwise.
-	 */
-	public Organism findOrganismById(int id) {
-		synchronized (_organisms) {
-			for (Organism organism: _organisms) {
-				if (id == organism.getID()) {
-					return organism;
-				}
-			}
-		}
-
-		return null;
-	}
-
-	/**
 	 * Returns the world's width.
 	 *
 	 * @return  The world's width.

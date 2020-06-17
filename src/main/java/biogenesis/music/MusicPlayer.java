@@ -22,7 +22,7 @@ import biogenesis.event.OrganismCollidedListener;
 import biogenesis.event.OrganismCreatedEvent;
 import biogenesis.event.OrganismCreatedListener;
 import java.util.Random;
-import org.jfugue.Player;
+import org.jfugue.player.Player;
 
 /**
  * Plays music on different events, using JFugue.

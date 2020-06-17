@@ -1,4 +1,4 @@
-/* Copyright (c) 2012-2018  Sebastien Le Callonnec
+/* Copyright (c) 2012-2020  Sebastien Le Callonnec
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -73,7 +73,7 @@ public class FamilyTreePanel extends JPanel {
 		setVisible(true);
 	}
 
-	final class OrganismEntryPanel extends JPanel {
+	static final class OrganismEntryPanel extends JPanel {
 		public OrganismEntryPanel(Organism organism) {
 			setLayout(new BorderLayout(5,5));
 			setMaximumSize(new Dimension(100, 100));

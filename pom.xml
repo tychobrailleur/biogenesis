@@ -1,6 +1,6 @@
 <!--
 
-  Copyright (c) 2014-2018  Sébastien Le Callonnec
+  Copyright (c) 2014-2020  Sébastien Le Callonnec
 
  This program is free software; you can redistribute it and/or
  modify it under the terms of the GNU General Public License
@@ -25,7 +25,7 @@
 
   <groupId>biogenesis</groupId>
   <artifactId>biogenesis</artifactId>
-  <version>0.10.0-SNAPSHOT</version>
+  <version>0.11.0-SNAPSHOT</version>
   <name>Biogenesis</name>
 
   <licenses>
@@ -44,7 +44,7 @@
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>4.13-beta-1</version>
+      <version>4.13</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -55,7 +55,7 @@
     <dependency>
       <groupId>org.jfugue</groupId>
       <artifactId>jfugue</artifactId>
-      <version>4.1.0-20120125</version>
+      <version>5.0.9</version>
     </dependency>
     <dependency>
       <groupId>log4j</groupId>
@@ -116,7 +116,7 @@
       </plugin>
       <plugin>
         <artifactId>maven-javadoc-plugin</artifactId>
-        <version>3.0.1</version>
+        <version>3.2.0</version>
         <executions>
           <execution>
             <id>attach-javadocs</id>
